@@ -30,20 +30,25 @@ autoload -U promptinit; promptinit
 #EDITOR
   # If available, use neovim instead of vim
   if type nvim > /dev/null 2>&1; then
-      alias vim='nvim'
-      export VISUAL=vim
+      alias vim="nvim"
+      export VISUAL="nvim"
       export EDITOR="$VISUAL"
   fi
 
 #ALIASES
   alias l="ls -al"
-  alias r=R # `r` is a build-in command in zsh (redo previous command)
 
 #SUFFIX ALIASES. Use to open files without typing vim
   alias -s txt="vim "
   alias -s md="vim "
   alias -s tex="vim "
   alias -s sty="vim "
+  alias -s py="vim "
+  alias -s js="vim "
+  alias -s rs="vim "
+  alias -s hs="vim "
+  alias -s rkt="vim "
+  alias -s lua="vim "
 
 # COLORS
   # a: black; b: red; c: green; d:yellow; e: blue; f: magenta; g:cyan; h: grey
@@ -63,7 +68,6 @@ autoload -U promptinit; promptinit
   export CLICOLOR=1
   export LSCOLORS="exfxcxdxbxegedBxGxCxDx"
 
-
 #PROMPT SETTINGS
   zstyle :prompt:pure:path color blue
   zstyle :prompt:pure:prompt:success color blue
@@ -71,6 +75,6 @@ autoload -U promptinit; promptinit
   PURE_PROMPT_VICMD_SYMBOL='<'
   #prompt pure
 
-
 source $ZDOTDIR/adb.sh
 #source $ZDOTDIR/conda.sh
+

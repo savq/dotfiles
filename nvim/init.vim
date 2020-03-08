@@ -8,30 +8,28 @@ source ~/.vimrc
 call plug#begin(stdpath('data') . '/plugged')
     """" ESSENTIALS
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    "Plug 'kyazdani42/nvim-tree.lua'
     Plug 'vim-airline/vim-airline' " statusline w/ wordcount, spelling locale
     Plug 'tpope/vim-fugitive'      " Git stuff
-    
+
     """" THEME
     Plug 'morhetz/gruvbox'
     "Plug 'joshdick/onedark.vim'
-    
+
     """" WRITING & FORMATTED TEXT
     Plug 'lervag/vimtex'
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
-    
+
     """" CSV FILES
     Plug 'mechatroner/rainbow_csv'
     Plug 'junegunn/vim-easy-align'
-    
+
     """" PROGRAMMING
     Plug 'tmhedberg/simpylfold',    { 'for' : 'python' }
     Plug 'pangloss/vim-javascript', { 'for' : 'javascript' }
 call plug#end()
 
-
-"OPTIONS
-set nowrap
 
 "APPEARANCE
 set termguicolors
@@ -39,7 +37,6 @@ colorscheme gruvbox "nvim background defaults to dark
 highlight Comment gui=italic
 let g:lightline = {'colorscheme': 'gruvbox'}
 "set guifont=IBMPlexMono "Let the terminal decide what font to use
-
 
 "MAPPINGS
 let mapleader=","
@@ -53,6 +50,7 @@ noremap <C-l> <C-W>l
 
 " Nerdtree shortcut
 noremap <silent> <leader>m :NERDTreeToggle<CR>
+"noremap <silent> <leader>m :LuaTreeToggle<CR>
 
 "SPELLING
 "Correct last word
