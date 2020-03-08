@@ -42,11 +42,11 @@ let g:lightline = {'colorscheme': 'gruvbox'}
 let mapleader=","
 "inoremap `` <Esc> "When there's no escape :o
 "NOTE:Colemak nav keys: j = up; l = right; h = left; k = down.
-set langmap=jk,kj "
-noremap <C-j> <C-W>k
-noremap <C-k> <C-W>j
-noremap <C-h> <C-W>h
-noremap <C-l> <C-W>l
+"set langmap=jk,kj "
+"noremap <C-j> <C-W>k
+"noremap <C-k> <C-W>j
+"noremap <C-h> <C-W>h
+"noremap <C-l> <C-W>l
 
 " Nerdtree shortcut
 noremap <silent> <leader>m :NERDTreeToggle<CR>
