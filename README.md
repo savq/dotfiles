@@ -1,5 +1,3 @@
-# dotfiles
-
 Dotfiles for:
 - Installing all the programs I commonly use with Homebrew.
 - Alacritty
