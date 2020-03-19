@@ -35,16 +35,7 @@ if [["$success" = true]]; then
 fi
 
 if [["$success" = true]]; then
-  #Racket
-  raco install xrepl --auto #Better repl, with dependencies (There's a lot).
-
-  #Python
-  conda init zsh #Initialize base conda environment
-  conda install -c conda-forge jupyterlab #Install and setup Jupyter
-  conda install jupyterthemes
-  jt -t gruvbox
-
-  #Javascript
+  #raco pkg install --auto xrepl #Better repl, with dependencies (There's a lot).
   npm install -g p5-manager
 if 
 

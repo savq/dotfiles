@@ -6,7 +6,7 @@ autoload -U promptinit; promptinit
   antibody bundle < $ZDOTDIR/plugins.txt
 
 #OPTIONS
-  #bindkey -v #Enable vi-mode
+  bindkey -v #Enable vi-mode
   setopt autocd
   setopt nocaseglob
   setopt correct
@@ -76,5 +76,5 @@ autoload -U promptinit; promptinit
   #prompt pure
 
 source $ZDOTDIR/adb.sh
-#source $ZDOTDIR/conda.sh
+source $ZDOTDIR/conda.sh
 

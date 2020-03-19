@@ -37,7 +37,7 @@ cask "itsycal"
 cask "spotify"
 cask "spotmenu" #Spotify status bar
 cask "qbittorrent"
-cask "zotero"
+#cask "zotero"
 cask "android-file-transfer"
 cask "google-backup-and-sync"
 

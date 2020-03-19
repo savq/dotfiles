@@ -1,7 +1,6 @@
 "NOTE:
 "I use init.vim for plugins and mappings.
 "For basic configuration see my vimrc.
-
 source ~/.vimrc
 
 """ VIM-PLUG
@@ -34,6 +33,7 @@ call plug#end()
 "APPEARANCE
 set termguicolors
 colorscheme gruvbox "nvim background defaults to dark
+"set bg=light
 highlight Comment gui=italic
 let g:lightline = {'colorscheme': 'gruvbox'}
 "set guifont=IBMPlexMono "Let the terminal decide what font to use
