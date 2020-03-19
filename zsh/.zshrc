@@ -1,6 +1,9 @@
 autoload -U compinit; compinit
 autoload -U promptinit; promptinit
 
+#RUST
+export PATH="$HOME/.cargo/bin:$PATH"
+
 #ANTIBODY (Plugin manager)
   source <(antibody init)
   antibody bundle < $ZDOTDIR/plugins.txt

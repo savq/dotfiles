@@ -13,13 +13,12 @@ brew "tmux"
 brew "getantibody/tap/antibody" #Zsh plugin manager
 
 #### PROGRAMMING LANGUAGES
-brew "haskell-stack"
 brew "lua"
-cask "miniconda" #Install Python3 w/ miniconda
+cask "miniconda" #Python3
 brew "minimal-racket"
 brew "node"
 brew "rustup-init"
-#brew "mongodb-community" #Non-relational database
+#brew "mongodb-community"
 
 #### WRITING
 cask "mactex-no-gui"
@@ -28,16 +27,15 @@ brew "pandoc"
 #### IDES
 cask "arduino"
 cask "supercollider"
-#cask "tidal"
 
 #### APPS
 cask "firefox"
-cask "iina" #Media player
-cask "itsycal"
+cask "iina"     # Media player
+cask "itsycal"  # Calendar
 cask "spotify"
-cask "spotmenu" #Spotify status bar
+cask "spotmenu" # Spotify status bar
 cask "qbittorrent"
-#cask "zotero"
+cask "zotero"
 cask "android-file-transfer"
 cask "google-backup-and-sync"
 
