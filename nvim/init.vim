@@ -2,18 +2,24 @@
 "I use init.vim for plugins and mappings.
 "For basic configuration see my vimrc.
 source ~/.vimrc
+if has('nvim')
+  let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+endif
 
-""" VIM-PLUG
+"""" VIM-PLUG
 call plug#begin(stdpath('data') . '/plugged')
     """" ESSENTIALS
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
     "Plug 'kyazdani42/nvim-tree.lua'
+    Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
     Plug 'vim-airline/vim-airline' " statusline w/ wordcount, spelling locale
+    Plug 'vim-airline/vim-airline-themes'
+
     Plug 'tpope/vim-fugitive'      " Git stuff
 
     """" THEME
-    Plug 'morhetz/gruvbox'
-    "Plug 'joshdick/onedark.vim'
+    "Plug 'morhetz/gruvbox'
+    Plug 'joshdick/onedark.vim'
 
     """" WRITING & FORMATTED TEXT
     Plug 'lervag/vimtex'
@@ -30,34 +36,37 @@ call plug#begin(stdpath('data') . '/plugged')
 call plug#end()
 
 
-"APPEARANCE
-set termguicolors
-colorscheme gruvbox "nvim background defaults to dark
-"set bg=light
-highlight Comment gui=italic
-let g:lightline = {'colorscheme': 'gruvbox'}
-"set guifont=IBMPlexMono "Let the terminal decide what font to use
+""" APPEARANCE
+    set termguicolors "Enables true color support
+    "set bg=light
+    colorscheme onedark "nvim background defaults to dark
+    let g:airline_theme='onedark'
+    let g:onedark_termcolors=256
+    highlight Comment gui=italic
+    "set guifont=IBMPlexMono "Let the terminal decide what font to use
 
-"MAPPINGS
-let mapleader=","
-"inoremap `` <Esc> "When there's no escape :o
-"NOTE:Colemak nav keys: j = up; l = right; h = left; k = down.
-"set langmap=jk,kj "
-"noremap <C-j> <C-W>k
-"noremap <C-k> <C-W>j
-"noremap <C-h> <C-W>h
-"noremap <C-l> <C-W>l
 
-" Nerdtree shortcut
-noremap <silent> <leader>m :NERDTreeToggle<CR>
-"noremap <silent> <leader>m :LuaTreeToggle<CR>
+""" MAPPINGS
+    let mapleader=","
+    "inoremap `` <Esc> "When there's no escape :o
 
-"SPELLING
-"Correct last word
-noremap <Leader>z b1z=e
-"Toggle spelling (Credit to Kev at: stackoverflow.com/questions/12006508)
-noremap <silent> <leader>s :call CycleLang()<CR>
+""" Filetree shortcut
+    noremap <silent><leader>m :NERDTreeToggle<CR>
+    "noremap <silent><leader>m :LuaTreeToggle<CR>
+
+""" Print date & time
+    noremap <silent><leader>d !!date +"\%Y-\%m-\%d \%H:\%M"<cr>
+
+""" SPELLING
+    "Correct last word
+    noremap <Leader>z b1z=e
+    "Toggle spelling
+    noremap <silent><leader>s :set spell!<CR>
+    "Change spelllang
+    noremap <silent><space> :call CycleLang()<CR>
+
 fun! CycleLang() 
+    "Credit to Kev at: <stackoverflow.com/questions/12006508>
     let langs = ['', 'en', 'es', 'de']
     let i = index(langs, &spl)
     let &spelllang = langs[(i + 1) % len(langs)]
@@ -67,4 +76,13 @@ fun! CycleLang()
         set spell
     endif
 endfun
+
+
+""" COLEMAK (Navegation keys: j = up; l = right; h = left; k = down)
+    "set langmap=jk,kj "
+    "noremap <C-j> <C-W>k
+    "noremap <C-k> <C-W>j
+    "noremap <C-h> <C-W>h
+    "noremap <C-l> <C-W>l
+
 

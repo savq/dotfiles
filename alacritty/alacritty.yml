@@ -1,7 +1,7 @@
 # Any items in `env` will be added as environment variables.
 # Some entries may override variables set by alacritty itself.
-env:
-  TERM: xterm-256color
+#env:
+#  TERM: xterm-256color
 
 window:
   dimensions:
@@ -97,7 +97,38 @@ font:
 draw_bold_text_with_bright_colors: true
 
 schemes:
-  gruvboxDark: &dark
+    # Colors (One Dark)
+  onedark: &onedark
+    # Default colors
+    primary:
+      background: '#282c34'
+      foreground: '#abb2bf'
+  
+    # Normal colors
+    normal:
+      # NOTE: Use '#131613' for the `black` color if you'd like to see
+      # black text on the background.
+      black:   '#282c34'
+      red:     '#e06c75'
+      green:   '#98c379'
+      yellow:  '#d19a66'
+      blue:    '#61afef'
+      magenta: '#c678dd'
+      cyan:    '#56b6c2'
+      white:   '#abb2bf'
+  
+    # Bright colors
+    bright:
+      black:   '#5c6370'
+      red:     '#e06c75'
+      green:   '#98c379'
+      yellow:  '#d19a66'
+      blue:    '#61afef'
+      magenta: '#c678dd'
+      cyan:    '#56b6c2'
+      white:   '#ffffff'
+
+  gruvboxDark: &gruvboxdark
     primary:
       # hard contrast: background = '0x1d2021'
       background: '0x282828'
@@ -124,7 +155,7 @@ schemes:
       cyan:    '0x8ec07c'
       white:   '0xebdbb2'
 
-  gruvboxLight: &light
+  gruvboxLight: &gruvboxlight
     primary:
       # hard contrast: background = '#f9f5d7'
       background: '#fbf1c7'
@@ -151,7 +182,8 @@ schemes:
       cyan:    '#427b58'
       white:   '#3c3836'
 
-colors: *dark
+
+colors: *onedark
 
   # Indexed Colors
   #
