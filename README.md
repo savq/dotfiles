@@ -5,6 +5,7 @@ Dotfiles for:
 - Tmux
 - Zsh, with Antibody
 
+These are dotfiles for MacOS mojave, they require git and curl.
 `install.sh` is used to install Homebrew and Vim-plug, to run `brew bundle`,
 to add symlinks, and to download some packages for various programming languages.
 After that, sourcing `init.vim` and running `:PlugInstall` should install all

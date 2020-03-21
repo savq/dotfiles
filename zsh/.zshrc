@@ -46,12 +46,12 @@ export PATH="$HOME/.cargo/bin:$PATH"
   alias -s md="vim "
   alias -s tex="vim "
   alias -s sty="vim "
-  alias -s py="vim "
-  alias -s js="vim "
-  alias -s rs="vim "
-  alias -s hs="vim "
-  alias -s rkt="vim "
   alias -s lua="vim "
+  alias -s py="vim "
+  alias -s rs="vim "
+  alias -s rkt="vim "
+  alias -s js="vim "
+  alias -s html="vim "
 
 # COLORS
   # a: black; b: red; c: green; d:yellow; e: blue; f: magenta; g:cyan; h: grey

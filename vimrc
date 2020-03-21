@@ -61,9 +61,9 @@ set list listchars=tab:\|·,space:·,trail:•,eol:¬,extends:>,precedes:<
 
 """ WHITESPACE
 set expandtab     "tab key inserts spaces
-set tabstop=2     "witdh of \t
-set softtabstop=2
-set shiftwidth=2  "size of indent (2 spaces)
+set tabstop=4     "witdh of \t
+set softtabstop=4
+set shiftwidth=4  "size of indent (2 spaces)
 
 """ SCROLLING
 set nowrap
