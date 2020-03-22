@@ -1,4 +1,4 @@
-#!usr/bin/env zsh
+#!/bin/zsh
 
 # Installing miniconda with brew doesn't update zsh's path.
 export PATH="$PATH:/usr/local/Caskroom/miniconda/base/bin"
