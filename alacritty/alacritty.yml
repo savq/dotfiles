@@ -97,14 +97,10 @@ font:
 draw_bold_text_with_bright_colors: true
 
 schemes:
-    # Colors (One Dark)
   onedark: &onedark
-    # Default colors
     primary:
       background: '#282c34'
       foreground: '#abb2bf'
-  
-    # Normal colors
     normal:
       # NOTE: Use '#131613' for the `black` color if you'd like to see
       # black text on the background.
@@ -116,8 +112,6 @@ schemes:
       magenta: '#c678dd'
       cyan:    '#56b6c2'
       white:   '#abb2bf'
-  
-    # Bright colors
     bright:
       black:   '#5c6370'
       red:     '#e06c75'
@@ -130,11 +124,8 @@ schemes:
 
   gruvboxDark: &gruvboxdark
     primary:
-      # hard contrast: background = '0x1d2021'
       background: '0x282828'
-      # soft contrast: background = '0x32302f'
       foreground: '0xebdbb2'
-
     normal:
       black:   '0x282828'
       red:     '0xcc241d'
@@ -144,7 +135,6 @@ schemes:
       magenta: '0xb16286'
       cyan:    '0x689d6a'
       white:   '0xa89984'
-
     bright:
       black:   '0x928374'
       red:     '0xfb4934'
@@ -157,11 +147,8 @@ schemes:
 
   gruvboxLight: &gruvboxlight
     primary:
-      # hard contrast: background = '#f9f5d7'
       background: '#fbf1c7'
-      # soft contrast: background = '#f2e5bc'
       foreground: '#3c3836'
-
     normal:
       black:   '#fbf1c7'
       red:     '#cc241d'
@@ -171,7 +158,6 @@ schemes:
       magenta: '#b16286'
       cyan:    '#689d6a'
       white:   '#7c6f64'
-
     bright:
       black:   '#928374'
       red:     '#9d0006'
@@ -182,8 +168,30 @@ schemes:
       cyan:    '#427b58'
       white:   '#3c3836'
 
+  ayudark: &ayu
+    primary:
+      background: '0x0f1419'
+      foreground: '0xe6e1cf'
+    normal:
+      black:   '0x000000'
+      red:     '0xf34a4a'
+      green:   '0xbae67e'
+      yellow:  '0xffee99'
+      blue:    '0x73d0ff'
+      magenta: '0xd4bfff'
+      cyan:    '0x83CEC6'
+      white:   '0xf2f2f2'
+    bright:
+      black:   '0x737d87'
+      red:     '0xff3333'
+      green:   '0xc2d94c'
+      yellow:  '0xe7c547'
+      blue:    '0x59c2ff'
+      magenta: '0xb77ee0'
+      cyan:    '0x5ccfe6'
+      white:   '0xffffff'
 
-colors: *onedark
+colors: *ayu
 
   # Indexed Colors
   #

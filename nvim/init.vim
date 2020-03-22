@@ -14,12 +14,12 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'junegunn/goyo.vim', {'on': 'Goyo'}
     Plug 'vim-airline/vim-airline' " statusline w/ wordcount, spelling locale
     Plug 'vim-airline/vim-airline-themes'
-
     Plug 'tpope/vim-fugitive'      " Git stuff
 
     """" THEME
-    "Plug 'morhetz/gruvbox'
+    Plug 'morhetz/gruvbox'
     Plug 'joshdick/onedark.vim'
+    Plug 'ayu-theme/ayu-vim'
 
     """" WRITING & FORMATTED TEXT
     Plug 'lervag/vimtex'
@@ -31,6 +31,7 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'junegunn/vim-easy-align'
 
     """" PROGRAMMING
+
     Plug 'tmhedberg/simpylfold',    { 'for' : 'python' }
     Plug 'pangloss/vim-javascript', { 'for' : 'javascript' }
 call plug#end()
@@ -38,10 +39,12 @@ call plug#end()
 
 """ APPEARANCE
     set termguicolors "Enables true color support
-    "set bg=light
-    colorscheme onedark "nvim background defaults to dark
-    let g:airline_theme='onedark'
-    let g:onedark_termcolors=256
+    let ayucolor="dark"
+    colorscheme ayu
+    let g:airline_theme='ayu'
+    "colorscheme onedark
+    "let g:airline_theme='onedark'
+    "let g:onedark_termcolors=256
     highlight Comment gui=italic
     "set guifont=IBMPlexMono "Let the terminal decide what font to use
 
@@ -84,5 +87,4 @@ endfun
     "noremap <C-k> <C-W>j
     "noremap <C-h> <C-W>h
     "noremap <C-l> <C-W>l
-
 
