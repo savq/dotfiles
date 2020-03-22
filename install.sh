@@ -28,8 +28,7 @@ if [["$success" = true]]; then
   ln -s ~/.dotfiles/nvim/  ~/.config/nvim/
   ln -s ~/.dotfiles/zsh/  ~/.config/zsh/
 
-  ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
-  ln -s ~/.dotfiles/.vimrc ~/.vimrc
+  ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
   ln -s ~/.dotfiles/.zshenv ~/.zshenv
   echo "Created symlinks"
 fi
