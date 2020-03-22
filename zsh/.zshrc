@@ -4,6 +4,7 @@ autoload -U promptinit; promptinit
 #RUST
 export PATH="$HOME/.cargo/bin:$PATH"
 
+
 #ANTIBODY (Plugin manager)
   source <(antibody init)
   antibody bundle < $ZDOTDIR/plugins.txt
@@ -78,6 +79,10 @@ export PATH="$HOME/.cargo/bin:$PATH"
   PURE_PROMPT_VICMD_SYMBOL='<'
   #prompt pure
 
-source $ZDOTDIR/adb.sh
+
+# My LaTeX utilites savargasqu/latex-templates
+path+="$HOME/.latex"
+
+#source $ZDOTDIR/adb.sh
 source $ZDOTDIR/conda.sh
 
