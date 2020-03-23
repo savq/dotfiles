@@ -8,11 +8,11 @@ call plug#begin(stdpath('data') . '/plugged')
 
     """" PROGRAMMING
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
-    Plug 'tmhedberg/simpylfold',    { 'for' : 'python' }
-    Plug 'pangloss/vim-javascript', { 'for' : 'javascript' }
+    Plug 'tmhedberg/simpylfold',    {'for' : 'python'}
+    Plug 'pangloss/vim-javascript', {'for' : 'javascript'}
 
     """" WRITING PROSE & FORMATTED TEXT
-    Plug 'junegunn/goyo.vim', {'on': 'Goyo'} "
+    Plug 'junegunn/goyo.vim', {'on': 'Goyo'} "Reduce clutter when writing prose
     Plug 'lervag/vimtex'
     Plug 'vim-pandoc/vim-pandoc'
     Plug 'vim-pandoc/vim-pandoc-syntax'
@@ -25,6 +25,9 @@ call plug#begin(stdpath('data') . '/plugged')
     Plug 'ayu-theme/ayu-vim'
 
 call plug#end()
+
+"CoC settings go in this file:
+runtime coc_config.vim
 
 """ GENERAL SETTINGS
 set mouse=a
