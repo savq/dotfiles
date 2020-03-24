@@ -77,25 +77,23 @@ let g:airline_theme='ayu'
 highlight Comment gui=italic
 
 """ MAPPINGS
-let mapleader=","
-"inoremap `` <Esc> "When there's no escape :o
+    let mapleader=","
+    "inoremap `` <Esc> "When there's no escape :o
 
-""" File tree shortcut
+    " File tree shortcut
     noremap <silent><leader>m :NERDTreeToggle<CR>
 
-""" Print date & time
-    noremap <silent><leader>d !!date +"\%Y-\%m-\%d \%H:\%M"<cr>
+    " Print date & time
+    noremap <silent><leader>d !!date +"\%Y-\%m-\%d \%H:\%M"<CR>
 
 """ SPELLING
     "Correct last word
     noremap <Leader>z b1z=e
-    "Toggle spelling
-    noremap <silent><leader>s :set spell!<CR>
     "Change spelllang
     noremap <silent><space> :call CycleLang()<CR>
 
 fun! CycleLang() "Credit to Kev at: <stackoverflow.com/questions/12006508>
-    let langs = ['', 'en', 'es', 'de']
+    let langs = ['en', 'es', 'de', '']
     let i = index(langs, &spl)
     let &spelllang = langs[(i + 1) % len(langs)]
     if empty(&spl)
