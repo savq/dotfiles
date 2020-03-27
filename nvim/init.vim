@@ -32,6 +32,7 @@ runtime coc_config.vim
 """ GENERAL SETTINGS
 set mouse=a
 set number
+set relativenumber
 set confirm            "Ask to save stuff
 set hidden             "Hides buffers instead of closing them
 set conceallevel=2     "Hide markup
@@ -47,10 +48,6 @@ set colorcolumn=81
 set ignorecase
 set smartcase
 
-""" FOLDS
-"set foldmethod=indent
-"set foldlevel=1
-
 """ INVISIBLE CHARACTERS
 set list listchars=tab:\|·,space:·,trail:•,eol:¬,extends:>,precedes:<
 
@@ -65,6 +62,10 @@ set nowrap
 set scrolloff=40
 set sidescrolloff=40
 
+""" FOLDS
+"set foldmethod=indent
+"set foldlevel=1
+
 """ TRANSLATION
 "set scrollbind "Keeps buffers vertically aligned
 "set cursorbind
@@ -76,20 +77,29 @@ colorscheme ayu
 let g:airline_theme='ayu'
 highlight Comment gui=italic
 
-""" MAPPINGS
-    let mapleader=","
-    "inoremap `` <Esc> "When there's no escape :o
+
+""" GENERAL MAPPINGS
+    "NOTE: Currently using macOS ABC keyboard
+    "Good keys for harmless mappings: - _ + <space>
+    let mapleader = ","
+
+    "When there's no escape :o
+    "inoremap `` <Esc>
+
+    "More intuitive way to start writing
+    nnoremap <enter> a
 
     " File tree shortcut
     noremap <silent><leader>m :NERDTreeToggle<CR>
 
     " Print date & time
-    noremap <silent><leader>d !!date +"\%Y-\%m-\%d \%H:\%M"<CR>
+    noremap <silent><leader>d !!date +"\%Y-\%m-\%d \%H:\%M"<CR> 
 
-""" SPELLING
+
+""" SPELLING MAPPINGS
     "Correct last word
     noremap <Leader>z b1z=e
-    "Change spelllang
+    "Change spelling language
     noremap <silent><space> :call CycleLang()<CR>
 
 fun! CycleLang() "Credit to Kev at: <stackoverflow.com/questions/12006508>
@@ -104,7 +114,7 @@ fun! CycleLang() "Credit to Kev at: <stackoverflow.com/questions/12006508>
 endfun
 
 """ COLEMAK (Navegation keys: j = up; l = right; h = left; k = down)
-    "set langmap=jk,kj "
+    "set langmap=jk,kj
     "noremap <C-j> <C-W>k
     "noremap <C-k> <C-W>j
     "noremap <C-h> <C-W>h
