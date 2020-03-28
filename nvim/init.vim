@@ -4,7 +4,7 @@ runtime general_settings.vim
 """" VIM-PLUG
 call plug#begin(stdpath('data') . '/plugged')
     """" ESSENTIALS
-    Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+    "Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
     Plug 'kyazdani42/nvim-tree.lua'
     Plug 'vim-airline/vim-airline' "Status line with word count, spelling locale
     Plug 'vim-airline/vim-airline-themes'
