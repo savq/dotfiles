@@ -43,15 +43,17 @@ highlight Comment gui=italic
 """ COC SETTINGS GO HERE
 runtime coc_config.vim
 
+""" PANDOC
+let g:pandoc#syntax#conceal#urls = 1
 
-""" WIKI SETTINGS
+""" WIKI.VIM
 let g:wiki_root = '~/Documents/notes/'
 let g:wiki_filetypes = ['md']
-let g:wiki_link_extension = 'md'
+let g:wiki_link_target_type = 'md'
 let g:wiki_link_target_map = 'CreateLinkNames'
 
 function CreateLinkNames(text) abort
-  "Adds timestamp ID, turns text to lowercase and removes spaces
+  "return substitute(tolower(a:text), '\s\+', '_', 'g')
   return strftime("%Y%m%d%H%M_") . substitute(tolower(a:text), '\s\+', '_', 'g')
 endfunction
 
@@ -78,13 +80,13 @@ noremap <Leader>z b1z=e
 noremap <silent><space> :call CycleLang()<CR>
 
 function CycleLang() "Credit to Kev at: <stackoverflow.com/questions/12006508>
-    let langs = ['en', 'es', 'de', '']
-    let i = index(langs, &spl)
-    let &spelllang = langs[(i + 1) % len(langs)]
-    if empty(&spl)
-        set nospell
-    else
-        set spell
-    endif
+  let langs = ['en', 'es', 'de', '']
+  let i = index(langs, &spl)
+  let &spelllang = langs[(i + 1) % len(langs)]
+  if empty(&spl)
+    set nospell
+  else
+    set spell
+  endif
 endfun
 
