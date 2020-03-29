@@ -1,3 +1,7 @@
+" Note: you can add extension names to the `g:coc_global_extensions` variable,
+" and coc will install the missing extensions for you on server start.
+let g:coc_global_extensions = ["coc-json", "coc-vimtex", "coc-rls"]
+
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup

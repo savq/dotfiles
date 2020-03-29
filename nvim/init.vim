@@ -1,13 +1,13 @@
 "General setting go here:
-runtime general_settings.vim
+runtime general_config.vim
 
 """" VIM-PLUG
 call plug#begin(stdpath('data') . '/plugged')
 """" ESSENTIALS
 Plug 'vim-airline/vim-airline' "Status line with word count, spelling locale
 Plug 'vim-airline/vim-airline-themes'
-Plug 'kyazdani42/nvim-tree.lua'
-"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"Plug 'kyazdani42/nvim-tree.lua'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fugitive' "Git stuff
 
 """" PROGRAMMING
@@ -66,8 +66,8 @@ let mapleader = ","
 "inoremap `` <Esc>
 
 " File tree shortcut
-"noremap <silent><leader>m :NERDTreeToggle<CR>
-noremap <silent><leader>m :LuaTreeToggle<CR>
+noremap <silent><leader>m :NERDTreeToggle<CR>
+"noremap <silent><leader>m :LuaTreeToggle<CR>
 
 " Print date & time
 noremap <silent><leader>d "=strftime("%Y-%m-%d %T")<CR>p
