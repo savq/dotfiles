@@ -52,14 +52,14 @@ tabspaces: 4
 # value specified for the normal font.
 font:
   normal:
-    family: Fira Code
+    family: IBM Plex Mono
     style: Light
 
   bold:
     style: Bold
 
   italic:
-    style: Italic
+    style: Light Italic
 
   bold_italic:
     style: Bold Italic

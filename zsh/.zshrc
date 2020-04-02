@@ -33,14 +33,15 @@ export LANG=en_US.UTF-8
 #EDITOR
 # If available, use neovim instead of vim
 if type nvim > /dev/null 2>&1; then
-    alias vim="nvim"
-    export VISUAL="nvim"
-    export EDITOR="$VISUAL"
+  alias vi="nvim"
+  alias vim="nvim"
+  export VISUAL="nvim"
+  export EDITOR="$VISUAL"
 fi
 
 #ALIASES
 alias rm="rm -v"
-alias l="ls -al"
+alias l="ls -Al"
 
 #SUFFIX ALIASES. Use to open files without typing vim
 alias -s txt="vim "
