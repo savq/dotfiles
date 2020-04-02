@@ -1,6 +1,5 @@
 # My dotfiles
 
-For MacOS mojave (but I don't use any system specific apps except iina).
 They require `git` and `curl`. I use them for:
 
 - Homebrew
