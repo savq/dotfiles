@@ -43,7 +43,7 @@ set sidescrolloff=20
 "set stl+=%f%m                 " Relative path[modified flag]
 "set stl+=%h%w                 " Relative path[modified flag]
 "set stl+=%=                   " Left/right separator
-"set stl+=%y[%{&fenc}][%{&ff}] " Syntax[encoding][format]
+"set stl+=%y%{&fenc}\|%{&ff}\| " Syntax[encoding][format]
 "set stl+=\ %3.3p%%            " Percentage through file
 "set stl+=\ %3l/%-3L           " Current line/# of lines
 "set stl+=:\ %3c%V             " Current columns.

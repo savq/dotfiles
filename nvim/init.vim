@@ -4,10 +4,9 @@ runtime general_config.vim
 """" VIM-PLUG
 call plug#begin(stdpath('data') . '/plugged')
 """" ESSENTIALS
-Plug 'vim-airline/vim-airline' "Status line with word count, spelling locale
-Plug 'vim-airline/vim-airline-themes'
-"Plug 'kyazdani42/nvim-tree.lua'
+Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"Plug 'kyazdani42/nvim-tree.lua'
 Plug 'tpope/vim-fugitive' "Git stuff
 
 """" PROGRAMMING
@@ -28,23 +27,33 @@ Plug 'junegunn/vim-easy-align'
 
 """" COLORSCHEME
 Plug 'ayu-theme/ayu-vim'
-
 call plug#end()
-
 
 """ APPEARANCE (Let the TUI decide the font)
 set termguicolors "Enables true color support
-colorscheme ayu
 let ayucolor="dark"
-let g:airline_theme='ayu'
-highlight Comment gui=italic
-
+colorscheme ayu
+hi Comment gui=italic
 
 """ COC SETTINGS GO HERE
 runtime coc_config.vim
 
-""" PANDOC
-let g:pandoc#syntax#conceal#urls = 1
+""" LIGHTLINE
+let g:lightline = {
+    \ 'colorscheme': 'ayu_mirage',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'gitbranch', 'readonly', 'filename', 'modified' ],
+    \             [ 'cocstatus', 'cocCurrentFun'] ],
+    \  'right': [ [ 'percent', 'lineinfo'],
+    \            [ 'spell', 'filetype', 'fileencoding', 'fileformat' ] ],
+    \ },
+    \ 'component_function': {
+    \   'gitbranch': 'FugitiveHead',
+    \   'cocstatus': 'coc#status',
+    \   'cocCurFun': 'CocCurrentFunction'
+    \ },
+    \ }
 
 """ WIKI.VIM
 let g:wiki_root = '~/Documents/notes/'
@@ -56,6 +65,9 @@ function CreateLinkNames(text) abort
   "return substitute(tolower(a:text), '\s\+', '_', 'g')
   return strftime("%Y%m%d%H%M_") . substitute(tolower(a:text), '\s\+', '_', 'g')
 endfunction
+
+""" PANDOC
+let g:pandoc#syntax#conceal#urls = 1
 
 
 """ GENERAL MAPPINGS
