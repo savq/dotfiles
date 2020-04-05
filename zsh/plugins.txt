@@ -1,3 +1,0 @@
-mafredri/zsh-async #For pure
-sindresorhus/pure  #Prettier prompt
-zsh-users/zsh-syntax-highlighting #Put this plugin last
