@@ -2,44 +2,41 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
-# brew "mas" #For App Store apps
 tap "mongodb/brew"
-tap "getantibody/tap"
+tap "zegervdv/zathura"
+# brew "mas" #For App Store apps
 
 #### TERMINAL
-cask "alacritty"
 brew "neovim" #Install vim-plug with install.sh
 brew "tmux"
-brew "getantibody/tap/antibody" #Zsh plugin manager
+brew "zsh-syntax-highlighting"
+cask "alacritty"
+cask "font-ibm-plex"
 
 #### PROGRAMMING LANGUAGES
 brew "lua"
-cask "miniconda" #Python3
 brew "minimal-racket"
 brew "node"
 brew "rustup-init"
+cask "miniconda" #Python3
+brew "ccls" #C and & C++ language server
 #brew "mongodb-community"
 
 #### WRITING
-cask "mactex-no-gui"
 brew "pandoc"
+cask "mactex-no-gui"
 
-#### IDES
+#### GUI
 cask "arduino"
-cask "supercollider"
-
-#### APPS
 cask "firefox"
 cask "iina"     # Media player
 cask "itsycal"  # Calendar
+cask "qbittorrent"
 cask "spotify"
 cask "spotmenu" # Spotify status bar
-cask "qbittorrent"
+cask "supercollider"
+cask "zathura"  #pdf viewer
 cask "zotero"
-cask "android-file-transfer"
-cask "google-backup-and-sync"
-
-#### FONTS
-cask "font-ibm-plex"
-cask "font-fira-code"
+#cask "android-file-transfer"
+#cask "google-backup-and-sync"
 

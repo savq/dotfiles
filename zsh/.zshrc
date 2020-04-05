@@ -1,18 +1,34 @@
 autoload -U compinit; compinit
 autoload -U promptinit; promptinit
+autoload -Uz vcs_info # automatically retrieve version control information
 
 #RUST
 export PATH="$HOME/.cargo/bin:$PATH"
 
-#ANTIBODY (Plugin manager)
-source <(antibody init)
-antibody bundle < $ZDOTDIR/plugins.txt
+#Syntax highlighting
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+#PROMPT WITH GIT SUPPORT
+# TODO:
+# - Show Vi-mode
+# - Define nice characters for %u, %c etc
+#     (Spaceship and Typewritten seem to have nice defaults)
+PROMPT='%F{blue}%1~%f ' #Current directory in blue
+PROMPT+='%F{magenta}${vcs_info_msg_0_}%f' #Git info in magenta
+PROMPT+='%(?.%F{green}>%f.%F{red}>%f) ' # Exit code in green (0) or red (not 0)
+RPROMPT='%D{%Y-%m-%d T %H:%M}' #ISO 8601
+
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' actionformats "[%b|%a]%u%c "
+zstyle ':vcs_info:git:*' formats "%b%u%c "
+precmd () { vcs_info }
 
 #OPTIONS
 bindkey -v #Enable vi-mode
 setopt autocd
 setopt nocaseglob
 setopt correct
+setopt prompt_subst
 
 #COMPLETION
 setopt complete_in_word
@@ -42,6 +58,7 @@ fi
 #ALIASES
 alias rm="rm -v"
 alias l="ls -Al"
+alias zathura="zathura --fork"
 
 #SUFFIX ALIASES. Use to open files without typing vim
 alias -s txt="vim "
@@ -56,7 +73,7 @@ alias -s js="vim "
 alias -s html="vim "
 
 #COLORS
-# a: black; b: red; c: green; d:yellow; e: blue; f: magenta; g:cyan; h: grey
+# a: black; b: red; c: green; d:yellow; e: blue; f: magenta; g:cyan
 # x: default foreground or background. Capital letter makes it bold.
 #Code, color         , file
 # ex , blue          , directories
@@ -72,12 +89,6 @@ alias -s html="vim "
 # Dx , bold yellow   , dir writable to others without sticky
 export CLICOLOR=1
 export LSCOLORS="exfxcxdxbxegedBxGxCxDx"
-
-#PROMPT SETTINGS
-zstyle :prompt:pure:path color blue
-zstyle :prompt:pure:prompt:success color blue
-PURE_PROMPT_SYMBOL='>'
-PURE_PROMPT_VICMD_SYMBOL='<'
 
 # My LaTeX utilites savargasqu/latex-templates
 path+="$HOME/.latex"
