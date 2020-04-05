@@ -19,11 +19,12 @@ brew "minimal-racket"
 brew "node"
 brew "rustup-init"
 cask "miniconda" #Python3
-brew "ccls" #C and & C++ language server
+brew "ccls" #C and C++ language server
 #brew "mongodb-community"
 
 #### WRITING
 brew "pandoc"
+brew "zathura"  #pdf viewer
 cask "mactex-no-gui"
 
 #### GUI
@@ -35,7 +36,6 @@ cask "qbittorrent"
 cask "spotify"
 cask "spotmenu" # Spotify status bar
 cask "supercollider"
-cask "zathura"  #pdf viewer
 cask "zotero"
 #cask "android-file-transfer"
 #cask "google-backup-and-sync"
