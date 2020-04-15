@@ -34,6 +34,7 @@ set termguicolors "Enables true color support
 let ayucolor="dark"
 colorscheme ayu
 hi Comment gui=italic
+hi Normal guibg=NONE ctermbg=NONE
 
 """ COC SETTINGS GO HERE
 runtime coc_config.vim
@@ -67,8 +68,10 @@ function CreateLinkNames(text) abort
 endfunction
 
 """ PANDOC
+let g:pandoc#spell#enabled = 0
 let g:pandoc#syntax#conceal#urls = 1
-
+au BufNewFile,BufRead *.md set nowrap " Vim-Pandoc can't fucking disable wrapping
+"au BufNewFile,BufRead *.md call pandoc#formatting#DisableAutoformat()
 
 """ GENERAL MAPPINGS
 " NOTE: Currently using macOS ABC keyboard
