@@ -1,14 +1,10 @@
 #!/bin/zsh
 
 #Symlinks
-ln -s ~/.dotfiles/alacritty/  ~/.config/alacritty/
-ln -s ~/.dotfiles/git/        ~/.config/git/
-ln -s ~/.dotfiles/nvim/       ~/.config/nvim/
+ln -s ~/.config/zsh/   ~/.config/zsh/
+ln -s ~/.config/zshenv ~/.zshenv
 
-ln -s ~/.dotfiles/zsh/   ~/.config/zsh/
-ln -s ~/.dotfiles/zshenv ~/.zshenv
-
-ln -s ~/.dotfiles/tmux.conf ~/.tmux.conf
+ln -s ~/.config/tmux.conf ~/.tmux.conf
 echo "Created symlinks"
 
 #Install Homebrew

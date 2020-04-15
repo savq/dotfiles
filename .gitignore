@@ -1,4 +1,10 @@
+# Programs that use XDG_CONFIG_HOME but I don't customize
+coc/
+configstore/
+qBittorrent/
+
+# Other not relvant stuff
 zsh/.zcompdump
 zsh/.zsh_history
 alacritty/defaults.yml
-backup_checklist.md
+
