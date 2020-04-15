@@ -62,7 +62,12 @@ fi
 
 # ALIASES
 alias rm="rm -v"
-alias l="ls -Al"
+alias l="ls -AlF"
+
+alias cc="clang"
+alias python="python3"
+alias pip="pip3"
+
 alias zathura="zathura --fork"
 alias -s txt="vi" \
          md="vi"  \
@@ -94,5 +99,4 @@ export CLICOLOR=1 LSCOLORS="exfxcxdxbxegedBxGxCxDx"
 
 path+="$HOME/.latex" # LaTeX utilites: savargasqu/latex-templates
 #source $ZDOTDIR/adb.sh
-#source $ZDOTDIR/conda.sh
 
