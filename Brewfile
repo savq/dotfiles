@@ -1,3 +1,4 @@
+### TAPS
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
@@ -27,8 +28,13 @@ brew "pandoc"
 brew "zathura"  #pdf viewer
 cask "mactex-no-gui"
 
-#### GUI
+#### HARDWARE
 cask "arduino"
+cask "ghdl" # VHDL compiler
+cask "gtkwave" # Wave viewer
+
+#### GUI
+#cask ""
 cask "firefox"
 cask "iina"     # Media player
 cask "itsycal"  # Calendar
