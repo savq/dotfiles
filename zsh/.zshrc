@@ -1,6 +1,7 @@
+fpath=($fpath $ZDOTDIR) # Same directory for user defined config and functions
 autoload -Uz compinit; compinit
-#autoload -U promptinit; promptinit
-autoload -Uz vcs_info # automatically retrieve version control information
+autoload -U promptinit; promptinit
+prompt savq
 
 # RUST
 export PATH="$HOME/.cargo/bin:$PATH"
@@ -10,20 +11,6 @@ export LANG="en_US.UTF-8" LC_ALL="en_US.UTF-8"
 
 # Syntax highlighting plugin
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# PROMPT (with Git support)
-# TODO:
-# - Show Vi-mode
-# - Define nice characters for %u, %c etc
-#    (Spaceship and Typewritten seem to have nice defaults)
-PROMPT='%F{blue}%1~%f '                   # Current directory: blue
-PROMPT+='%F{magenta}${vcs_info_msg_0_}%f' # Git info: magenta
-PROMPT+='%(?.%F{green}>%f.%F{red}>%f) '   # Exit code: green (0) or red (not 0)
-RPROMPT='%D{%H:%M}'
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' actionformats "[%b|%a]%u%c "
-zstyle ':vcs_info:git:*' formats "%b%u%c "
-precmd () { vcs_info }
 
 # OPTIONS
 bindkey -v #Enable vi-mode
@@ -83,20 +70,22 @@ alias -s txt="vi" \
 
 # COLORS
 # a: black; b: red; c: green; d:yellow; e: blue; f: magenta; g:cyan; x: default
-#   , Color      , File
-# ex, blue       , directories
-# fx, magenta    , symlinks
-# cx, green      , sockets
-# dx, yellow     , pipes
-# bx, red        , executables
-# eg, blue/cyan  , block special
-# ed, blue/yellow, char special
-# Bx, bold red   , ex with setuid bit set
-# Gx, bold cyan  , ex with setgid bit set
-# Cx, bold green , dir writable to others with sticky
-# Dx, bold yellow, dir writable to others without sticky
-export CLICOLOR=1 LSCOLORS="exfxcxdxbxegedBxGxCxDx"
+#   , Color            , File
+# ex, blue             , directories
+# fx, magenta          , symlinks
+# cx, green            , sockets
+# dx, yellow           , pipes
+# bx, red              , executables
+# Ef, bold blue/magenta, block special
+# Ed, bold blue/yellow , char special
+# Bx, bold red         , ex with setuid bit set
+# Gx, bold cyan        , ex with setgid bit set
+# Cx, bold green       , dir writable to others with sticky
+# Dx, bold yellow      , dir writable to others without sticky
+export CLICOLOR=1 LSCOLORS="exfxcxdxbxEfEdBxGxCxDx"
+#"exfxcxdxbx eg ed ab ag ac ad"
 
 path+="$HOME/.latex" # LaTeX utilites: savargasqu/latex-templates
 #source $ZDOTDIR/adb.sh
+#source $ZDOTDIR/conda.sh
 
