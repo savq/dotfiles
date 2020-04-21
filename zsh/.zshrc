@@ -1,6 +1,6 @@
 fpath=($fpath $ZDOTDIR) # Same directory for user defined config. and functions
 autoload -Uz compinit; compinit    # `New' completion system
-autoload -U promptinit; promptinit # Enabling prompt themes
+autoload -U promptinit; promptinit # Enable prompt themes
 prompt savq # my own prompt
 
 # LOCALE
@@ -16,8 +16,8 @@ export CLICOLOR=1 LSCOLORS="exfxcxdxbxEfEdBxGxCxDx" # man ls explains the string
 bindkey -v #Enable vi-mode
 setopt auto_cd
 setopt no_case_glob
-setopt correct      # If you miss type a command, Zsh suggests a correction
-setopt prompt_subst # For nice prompt theme
+setopt correct      # If you mistype a command, Zsh suggests a correction
+setopt prompt_subst # For prompt theme
 
 # COMPLETION
 setopt complete_in_word
@@ -40,7 +40,7 @@ bindkey "^[[B" history-beginning-search-forward
 bindkey "^[[A" history-beginning-search-backward 
 
 # EDITOR
-# If available, use neovim instead of vim
+# If available, use Neovim instead of Vim
 if type nvim > /dev/null 2>&1; then
   alias vi="nvim"
   export VISUAL="nvim"
@@ -69,7 +69,7 @@ alias -s txt="vi" \
 
 # PATH
 
-# My LaTeX utilites: savargasqu/latex-templates
+# My LaTeX utilities: savargasqu/latex-templates
 export PATH="$HOME/.latex:$PATH" 
 
 # Cargo (for Rust)
