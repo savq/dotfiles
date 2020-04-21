@@ -13,12 +13,13 @@ precmd () { vcs_info }
 
 # Prompt
 PS1='%F{blue}%1~%f '                   # Current directory: blue
-PS1+='%F{magenta}${vcs_info_msg_0_}%f' # Git info: magenta
-PS1+='%(?.%F{green}>%f.%F{red}>%f) '   # Exit code: green (0) or red (not 0)
-RPS1='%D{%H:%M}' # Show time on the right
+PS1+='%F{yellow}${vcs_info_msg_0_}%f' # Git info: yellow
+PS1+='%(?.%F{green}%#%f.%F{red}%#%f) '   # Exit code: green (0) or red (not 0)
+RPS1='%D{%Y-%m-%d} T %T' # Show time on the right
 
 # Docs on Git support and prompt themes:
-# <zsh.sourceforge.net/Doc/Release/User-Contributions.html>
+# % man zshcontrib
+# or online: <zsh.sourceforge.net/Doc/Release/User-Contributions.html>
 # 26.5 Gathering information from version control systems
 # 26.6 Prompt Themes
 
