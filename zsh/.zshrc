@@ -82,7 +82,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 # Conda package manager
 # NOTE: Conda slows down start up quite a bit,
-# so its best to keep this in a separate file
-# and call when necessary.
+#       so its best to keep it in a separate file
+#       and call it when necessary.
 #source $ZDOTDIR/conda.sh
 
