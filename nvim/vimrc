@@ -38,13 +38,27 @@ set sidescrolloff=20
 "set scrollbind "Keeps buffers vertically aligned
 "set cursorbind
 
-""" STATUS LINE
-"set stl=
-"set stl+=%f%m                 " Relative path[modified flag]
-"set stl+=%h%w                 " Relative path[modified flag]
-"set stl+=%=                   " Left/right separator
-"set stl+=%y%{&fenc}\|%{&ff}\| " Syntax[encoding][format]
-"set stl+=\ %3.3p%%            " Percentage through file
-"set stl+=\ %3l/%-3L           " Current line/# of lines
-"set stl+=:\ %3c%V             " Current columns.
+""" VIM
+if !has('nvim')
+  syntax on
+  colorscheme desert
+  set ruler
+  set showcmd
+  set autoread
+  set wildmenu
+  set hlsearch
+  set incsearch
+  set autoindent
+
+  """ status line
+  set laststatus=2 "nvim-d
+  set stl=
+  set stl+=%f%m                 " Relative path[modified flag]
+  set stl+=%h%w                 " Relative path[modified flag]
+  set stl+=%=                   " Left/right separator
+  set stl+=%y%{&fenc}\|%{&ff}\| " Syntax[encoding][format]
+  set stl+=\ %3.3p%%            " Percentage through file
+  set stl+=\ %3l/%-3L           " Current line/# of lines
+  set stl+=:\ %3c%V             " Current columns.
+endif
 

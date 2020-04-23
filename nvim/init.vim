@@ -1,8 +1,13 @@
-"General setting go here:
-runtime general_config.vim
+" NOTE:
+"I use init.vim for plugins and mappings.
+"For basic configuration see my vimrc.
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath = &runtimepath
+source ~/.vimrc
 
 """" VIM-PLUG
 call plug#begin(stdpath('data') . '/plugged')
+
 """" ESSENTIALS
 Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
