@@ -53,13 +53,13 @@ tabspaces: 4
 font:
   normal:
     family: IBM Plex Mono
-    style: Light
+    style: Regular
 
   bold:
     style: Bold
 
   italic:
-    style: Light Italic
+    style: Italic
 
   bold_italic:
     style: Bold Italic
