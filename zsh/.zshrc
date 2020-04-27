@@ -70,7 +70,7 @@ alias -s txt="vi" \
 # PATH
 
 # My LaTeX utilities: savargasqu/latex-templates
-export PATH="$HOME/.latex:$PATH" 
+export PATH="$HOME/.tex:$PATH" 
 
 # Cargo (for Rust)
 export PATH="$HOME/.cargo/bin:$PATH" 
