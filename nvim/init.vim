@@ -80,13 +80,13 @@ au BufNewFile,BufRead *.md set nowrap " Vim-Pandoc can't fucking disable wrappin
 
 """ GENERAL MAPPINGS
 " NOTE: Currently using macOS ABC keyboard
-let mapleader = ","
+let mapleader = " " "<space>
 
 " When there's no escape :o
 "inoremap `` <Esc>
 
 " File tree shortcut
-noremap <silent><leader>m :NERDTreeToggle<CR>
+noremap <silent><leader>t :NERDTreeToggle<CR>
 "noremap <silent><leader>m :LuaTreeToggle<CR>
 
 " Print date & time
@@ -95,9 +95,9 @@ noremap <silent><leader>d "=strftime("%Y-%m-%d %T")<CR>p
 
 """ SPELLING MAPPINGS
 " Correct last word
-noremap <Leader>z b1z=e
+noremap <silent><Leader>z b1z=e
 " Change spelling language
-noremap <silent><space> :call CycleLang()<CR>
+noremap <silent><leader>s :call CycleLang()<CR>
 
 function CycleLang() "Credit to Kev at: <stackoverflow.com/questions/12006508>
   let langs = ['en', 'es', 'de', '']
