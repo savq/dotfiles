@@ -7,7 +7,7 @@ prompt savq # my own prompt
 export LANG="en_US.UTF-8" LC_ALL="en_US.UTF-8"
 
 # COLOR
-export CLICOLOR=1 LSCOLORS="exfxcxdxbxEfEdBxGxCxDx" # man ls explains the string
+export CLICOLOR=1 LSCOLORS="gxfxcxdxbxEfEdBxGxCxDx" # man ls explains the string
 # Check if syntax highlighting is installed
 [[ -a "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
   source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
