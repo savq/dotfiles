@@ -7,7 +7,10 @@ prompt savq # my own prompt
 export LANG="en_US.UTF-8" LC_ALL="en_US.UTF-8"
 
 # COLOR
-export CLICOLOR=1 LSCOLORS="gxfxcxdxbxEfEdBxGxCxDx" # man ls explains the string
+export CLICOLOR=1
+export LSCOLORS="gxfxcxdxbxEfEdBxGxCxDx" # BSD ls colors
+export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=1;34;45:cd=1;34;43:su=1;31:sg=1;36:tw=1;32:ow=1;33' # GNU ls colors
+#
 # Check if syntax highlighting is installed
 [[ -a "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
   source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
@@ -19,17 +22,6 @@ setopt no_case_glob
 setopt correct      # If you mistype a command, Zsh suggests a correction
 setopt prompt_subst # For prompt theme
 
-# COMPLETION
-setopt complete_in_word
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}'\
-        'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' completer _expand _complete #_correct #_approximate
-zstyle ':completion:*:match:*' original only
-# Errors allowed by _approximate increase with the length of what's typed
-# <https://grml.org/zsh/zsh-lovers.html>
-zstyle -e ':completion:*:approximate:*' \
-        max-errors 'reply=($((($#PREFIX+$#SUFFIX)/3))numeric)'
-
 # HISTORY
 setopt hist_ignore_all_dups # Remove older duplicate entries from history
 setopt hist_reduce_blanks   # Remove blanks from history items
@@ -38,6 +30,32 @@ HISTSIZE=1000
 SAVEHIST=1000
 bindkey "^[[B" history-beginning-search-forward
 bindkey "^[[A" history-beginning-search-backward 
+
+
+# COMPLETION
+zstyle ':completion:*' auto-description 'specify: %d'
+zstyle ':completion:*' completer _expand _complete _correct _approximate
+zstyle ':completion:*:approximate:*' max-errors 2 numeric
+zstyle ':completion:*:match:*' original only
+zstyle ':completion:*' format '%d:'
+zstyle ':completion:*' group-name ''
+zstyle ':completion:*' menu select=2
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS} # this doesn't work with BSD colors >:[
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+zstyle ':completion:*' menu select=long
+zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+zstyle ':completion:*' use-compctl false
+zstyle ':completion:*' verbose true
+
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+
+# Referances for the `new' completion system
+# User's guide Ch. 6: <http://zsh.sourceforge.net/Guide/zshguide06.html#l144>
+# man zshcompsys
+
 
 # EDITOR
 # If available, use Neovim instead of Vim
@@ -50,7 +68,7 @@ fi
 # ALIASES
 alias rm="rm -v"  # List all deleted files
 alias l="ls -AlF"
-alias cc="clang"  # Make doesn't care about aliases. This is just for me
+alias cc="clang"
 alias python="python3" pip="pip3"
 alias zathura="zathura --fork"
 # Prefix aliases
@@ -81,7 +99,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 #fi
 
 # Conda package manager
-# NOTE: Conda slows down start up quite a bit,
+# NOTE: Conda slows down start-up quite a bit,
 #       so its best to keep it in a separate file
 #       and call it when necessary.
 #source $ZDOTDIR/conda.sh
