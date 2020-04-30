@@ -1,6 +1,8 @@
 # This is Git's per-user configuration file.
 [user]
     name = Sergio Alejandro Vargas
+    user = savargasqu
     email = savargasqu@unal.edu.co
-#[core]
-#    editor = nvim #Define editor in shell
+[credential]
+    helper = store # THIS IS DANGEROUS. USE ONLY ON PERSONAL COMPUTER
+
