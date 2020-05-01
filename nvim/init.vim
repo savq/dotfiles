@@ -86,7 +86,7 @@ let mapleader = " " "<space>
 "inoremap `` <Esc>
 
 " File tree shortcut
-noremap <silent><leader>t :NERDTreeToggle<CR>
+noremap <silent><leader>m :NERDTreeToggle<CR>
 "noremap <silent><leader>m :LuaTreeToggle<CR>
 
 " Print date & time
