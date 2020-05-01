@@ -24,6 +24,8 @@ set smartindent   "autoindent is nvim default
 set expandtab     "<Tab> inserts spaces
 set shiftwidth=2
 set softtabstop=2
+"set shiftwidth=4
+"set softtabstop=4
 
 """ FOLDS
 set foldmethod=indent
