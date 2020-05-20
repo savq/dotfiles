@@ -9,7 +9,7 @@ export LANG="en_US.UTF-8" LC_ALL="en_US.UTF-8"
 # COLOR
 export CLICOLOR=1
 export LSCOLORS="gxfxcxdxbxEfEdBxGxCxDx" # BSD ls colors
-export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=1;34;45:cd=1;34;43:su=1;31:sg=1;36:tw=1;32:ow=1;33' # GNU ls colors
+export LS_COLORS=$LS_COLORS:'di=36:ln=35:so=32:pi=33:ex=31:bd=1;34;45:cd=1;34;43:su=1;31:sg=1;36:tw=1;32:ow=1;33' # GNU ls colors
 #
 # Check if syntax highlighting is installed
 [[ -a "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
