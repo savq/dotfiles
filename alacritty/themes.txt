@@ -1,0 +1,22 @@
+# from: <https://github.com/ayu-theme/ayu-colors>
+Path     Light     Mirage    Dark
+accent   '#FF9940' '#FFCC66' '#E6B450'
+bg       '#FAFAFA' '#1F2430' '#0A0E14'
+fg       '#6C7680' '#CBCCC6' '#B3B1AD'
+ui       '#959DA6' '#707A8C' '#3D424D'
+tag      '#55B4D4' '#5CCFE6' '#39BAE6'
+func     '#F2AE49' '#FFD580' '#FFB454'
+entity   '#399EE6' '#73D0FF' '#59C2FF'
+string   '#86B300' '#BAE67E' '#C2D94C'
+regexp   '#4CBF99' '#95E6CB' '#95E6CB'
+markup   '#F07171' '#F28779' '#F07178'
+keyword  '#FA8D3E' '#FFA759' '#FF8F40'
+special  '#E6BA7E' '#FFE6B3' '#E6B673'
+comment  '#ABB0B6' '#5C6773' '#626A73'
+constant '#A37ACC' '#D4BFFF' '#FFEE99'
+operator '#ED9366' '#F29E74' '#F29668'
+error    '#F51818' '#FF3333' '#FF3333'
+added    '#99BF4D' '#A6CC70' '#91B362'
+modified '#709ECC' '#77A8D9' '#6994BF'
+removed  '#F27983' '#F27983' '#D96C75'
+

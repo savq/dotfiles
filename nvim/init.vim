@@ -32,11 +32,12 @@ Plug 'junegunn/vim-easy-align'
 
 """" COLORSCHEME
 Plug 'ayu-theme/ayu-vim'
+Plug 'chrisbra/Colorizer'
 call plug#end()
 
 """ APPEARANCE (Let the TUI decide the font)
 set termguicolors "Enables true color support
-let ayucolor="dark"
+let ayucolor="mirage"
 colorscheme ayu
 hi Comment gui=italic
 hi Normal guibg=NONE ctermbg=NONE

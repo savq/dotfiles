@@ -65,55 +65,30 @@ font:
 draw_bold_text_with_bright_colors: true
 
 schemes:
-  onedark: &onedark
+  ayu_mirage: &ayu_mirage
     primary:
-      background: '#282c34'
-      foreground: '#abb2bf'
+      background: '#1F2430'
+      foreground: '#CBCCC6'
     normal:
-      # NOTE: Use '#131613' for the `black` color if you'd like to see
-      # black text on the background.
-      black:   '#282c34'
-      red:     '#e06c75'
-      green:   '#98c379'
-      yellow:  '#d19a66'
-      blue:    '#61afef'
-      magenta: '#c678dd'
-      cyan:    '#56b6c2'
-      white:   '#abb2bf'
+      black:      '#0A0E14'
+      red:        '#F27983' #'#F28779'
+      green:      '#A6CC70'
+      yellow:     '#FFCC66'
+      blue:       '#77A8D9'
+      magenta:    '#A37ACC'
+      cyan:       '#95E6CB' 
+      white:      '#F0F0F1'
     bright:
-      black:   '#5c6370'
-      red:     '#e06c75'
-      green:   '#98c379'
-      yellow:  '#d19a66'
-      blue:    '#61afef'
-      magenta: '#c678dd'
-      cyan:    '#56b6c2'
-      white:   '#ffffff'
+      black:      '#3D424D'
+      red:        '#FF3333' 
+      green:      '#BAE67E' 
+      yellow:     '#FFA759' 
+      blue:       '#73D0FF' 
+      magenta:    '#D4BFFF' 
+      cyan:       '#5CCFE6'
+      white:      '#FAFAFA'
 
-  ayudark: &ayudark
-    primary:
-      background: '0x0f1419'
-      foreground: '0xe6e1cf'
-    normal:
-      black:   '0x000000'
-      red:     '0xf34a4a'
-      green:   '0xbae67e'
-      yellow:  '0xffee99'
-      blue:    '0x73d0ff'
-      magenta: '0xd4bfff'
-      cyan:    '0x83CEC6'
-      white:   '0xf2f2f2'
-    bright:
-      black:   '0x737d87'
-      red:     '0xff3333'
-      green:   '0xc2d94c'
-      yellow:  '0xe7c547'
-      blue:    '0x59c2ff'
-      magenta: '0xb77ee0'
-      cyan:    '0x5ccfe6'
-      white:   '0xffffff'
-
-colors: *ayudark
+colors: *ayu_mirage
 
   # Indexed Colors
   #
