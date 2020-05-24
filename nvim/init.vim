@@ -75,6 +75,7 @@ endfunction
 """ PANDOC
 let g:pandoc#spell#enabled = 0
 let g:pandoc#syntax#conceal#urls = 1
+let g:pandoc#syntax#conceal#use = 0
 au BufNewFile,BufRead *.md set nowrap " Vim-Pandoc can't fucking disable wrapping
 "au BufNewFile,BufRead *.md call pandoc#formatting#DisableAutoformat()
 

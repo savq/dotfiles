@@ -4,7 +4,7 @@ set relativenumber
 set wildignorecase
 set confirm            "Ask to save stuff
 set hidden             "Hides buffers instead of closing them
-set conceallevel=2     "Hide markup
+"set conceallevel=2     "Hide markup
 set fileencoding=utf-8 "Encoding written to file
 
 """ POSITION
@@ -17,7 +17,9 @@ set ignorecase
 set smartcase
 
 """ INVISIBLE CHARACTERS
-set list listchars=tab:\|·,space:·,trail:•,eol:¬,extends:>,precedes:<
+set list
+set listchars=eol:~,tab:\|-,trail:*,extends:>,precedes:<,nbsp:_
+set listchars+=space:· "non ASCII
 
 """ INDENTATION & WHITESPACE
 set smartindent   "autoindent is nvim default
