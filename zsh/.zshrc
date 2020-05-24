@@ -19,7 +19,6 @@ export LS_COLORS='di=36:ln=35:so=32:pi=33:ex=31:bd=1;34;45:cd=1;34;43:su=1;31:sg
 bindkey -v #Enable vi-mode
 setopt auto_cd
 setopt no_case_glob
-setopt correct      # If you mistype a command, Zsh suggests a correction
 setopt prompt_subst # For prompt theme
 
 # HISTORY
@@ -104,3 +103,8 @@ export PATH="$HOME/.cargo/bin:$PATH"
 #       and call it when necessary.
 #source $ZDOTDIR/conda.sh
 
+
+# LLVM (version installed with homebrew)
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"

@@ -4,14 +4,14 @@
             "command": "ccls",
             "filetypes": [
                 "c",
-                "cpp"
+                "cpp",
+                "ino"
             ],
             "rootPatterns": [
                 ".ccls",
                 "compile_commands.json",
                 ".vim/",
-                ".git/",
-                ".hg/"
+                ".git/"
             ],
             "initializationOptions": {
                 "cache": {
