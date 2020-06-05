@@ -57,11 +57,12 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 
 # EDITOR
-# If available, use Neovim instead of Vim
-if type nvim > /dev/null 2>&1; then
+if type nvim > /dev/null 2>&1; then # Use Neovim as default editor
   alias vi="nvim"
   export VISUAL="nvim"
   export EDITOR="$VISUAL"
+  export MANPAGER='nvim +Man!' # Use nvim as manpager `:h Man`
+  export MANWIDTH=999
 fi
 
 # ALIASES
