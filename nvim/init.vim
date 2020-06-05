@@ -8,31 +8,25 @@ source ~/.vimrc
 """" VIM-PLUG
 call plug#begin(stdpath('data') . '/plugged')
 
-"""" ESSENTIALS
+Plug 'ayu-theme/ayu-vim'
 Plug 'itchyny/lightline.vim'
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-"Plug 'kyazdani42/nvim-tree.lua'
-Plug 'tpope/vim-fugitive' "Git stuff
+Plug 'kyazdani42/nvim-tree.lua'
+
+"""" PROSE & FORMATTED TEXT
+Plug 'lervag/vimtex'
+Plug 'lervag/wiki.vim'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
 """" PROGRAMMING
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tmhedberg/simpylfold',    {'for' : 'python'}
 Plug 'pangloss/vim-javascript', {'for' : 'javascript'}
 
-"""" WRITING PROSE & FORMATTED TEXT
-Plug 'junegunn/goyo.vim', {'on': 'Goyo'} "Reduce clutter when writing prose
-Plug 'lervag/vimtex'
-Plug 'lervag/wiki.vim'
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
-
-"""" CSV FILES
-Plug 'mechatroner/rainbow_csv'
+"""" OTHER STUFF
 Plug 'junegunn/vim-easy-align'
-
-"""" COLORSCHEME
-Plug 'ayu-theme/ayu-vim'
-Plug 'chrisbra/Colorizer'
+Plug 'mechatroner/rainbow_csv' "Highlight csv columns
+Plug 'chrisbra/Colorizer' "Highlight hex and rgb w/ their respective colors
 call plug#end()
 
 """ APPEARANCE (Let the TUI decide the font)
@@ -88,8 +82,7 @@ let mapleader = " " "<space>
 "inoremap `` <Esc>
 
 " File tree shortcut
-noremap <silent><leader>m :NERDTreeToggle<CR>
-"noremap <silent><leader>m :LuaTreeToggle<CR>
+noremap <silent><leader>m :LuaTreeToggle<CR>
 
 " Print date & time
 noremap <silent><leader>d "=strftime("%Y-%m-%d %T")<CR>p
