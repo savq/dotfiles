@@ -36,9 +36,6 @@ colorscheme ayu
 hi Comment gui=italic
 hi Normal guibg=NONE ctermbg=NONE
 
-""" COC SETTINGS GO HERE
-runtime coc_config.vim
-
 """ LIGHTLINE
 let g:lightline = {
     \ 'colorscheme': 'ayu_mirage',
@@ -71,15 +68,17 @@ endfunction
 let g:pandoc#spell#enabled = 0
 let g:pandoc#syntax#conceal#urls = 1
 let g:pandoc#syntax#conceal#use = 0
-au BufNewFile,BufRead *.md set nowrap " Vim-Pandoc can't fucking disable wrapping
-"au BufNewFile,BufRead *.md call pandoc#formatting#DisableAutoformat()
+au BufNewFile,BufRead *.md set nowrap "Vim-Pandoc can't disable wrapping
 
-""" GENERAL MAPPINGS
-" NOTE: Currently using macOS ABC keyboard
-let mapleader = " " "<space>
+""" CoC settings go here
+runtime coc_config.vim
+" Coc Format
+noremap <silent><leader>f :call CocAction('format')<CR>
 
-" When there's no escape :o
-"inoremap `` <Esc>
+
+""" MAPPINGS
+let mapleader = " "
+nnoremap ; :
 
 " File tree shortcut
 noremap <silent><leader>m :LuaTreeToggle<CR>
