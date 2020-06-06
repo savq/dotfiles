@@ -70,20 +70,9 @@ alias rm="rm -v"  # List all deleted files
 alias l="ls -AlF"
 alias cc="clang"
 alias python="python3" pip="pip3"
-alias zathura="zathura --fork"
-# Prefix aliases
-alias -s txt="vi" \
-         md="vi"  \
-         tex="vi" \
-         sty="vi" \
-         lua="vi" \
-         py="vi"  \
-         rs="vi"  \
-         rkt="vi" \
-         js="vi"  \
-         html="vi"\
-         pdf="zathura"
-
+alias serve="python3 -m http.server" # simple http server
+alias myp5="p5 g -b" # Stand alone p5 project
+alias zat="zathura --fork"
 
 # PATH
 
