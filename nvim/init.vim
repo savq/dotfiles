@@ -10,7 +10,8 @@ call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'ayu-theme/ayu-vim'
 Plug 'itchyny/lightline.vim'
-Plug 'kyazdani42/nvim-tree.lua'
+Plug 'preservim/nerdtree'
+"Plug 'kyazdani42/nvim-tree.lua' "Needs nvim nightly
 
 """" PROSE & FORMATTED TEXT
 Plug 'lervag/vimtex'
@@ -57,7 +58,7 @@ let g:lightline = {
 let g:wiki_root = '~/Documents/notes/'
 let g:wiki_filetypes = ['md']
 let g:wiki_link_target_type = 'md'
-let g:wiki_link_target_map = 'CreateLinkNames'
+let g:wiki_map_link_create =  'CreateLinkNames'
 
 function CreateLinkNames(text) abort
   "return substitute(tolower(a:text), '\s\+', '_', 'g')
@@ -72,19 +73,20 @@ au BufNewFile,BufRead *.md set nowrap "Vim-Pandoc can't disable wrapping
 
 """ CoC settings go here
 runtime coc_config.vim
-" Coc Format
-noremap <silent><leader>f :call CocAction('format')<CR>
-
 
 """ MAPPINGS
 let mapleader = " "
 nnoremap ; :
 
 " File tree shortcut
-noremap <silent><leader>m :LuaTreeToggle<CR>
+noremap <silent><leader>m :NERDTreeToggle<CR>
+"noremap <silent><leader>m :LuaTreeToggle<CR>
 
 " Print date & time
 noremap <silent><leader>d "=strftime("%Y-%m-%d %T")<CR>p
+
+" Coc Format
+noremap <silent><leader>f :call CocAction('format')<CR>
 
 
 """ SPELLING MAPPINGS
