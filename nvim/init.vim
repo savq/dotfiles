@@ -78,14 +78,27 @@ runtime coc_config.vim
 let mapleader = " "
 nnoremap ; :
 
-" File tree shortcut
+"Faster navegation
+nnoremap J }
+nnoremap K {
+
+"Why is K for help?
+nnoremap H K
+
+"Copy to system clipboard
+vnoremap Y "+y
+
+"Open the vimrc file anytime
+noremap <silent><leader>rc :e ~/.config/nvim/init.vim <CR>
+
+"File tree shortcut
 noremap <silent><leader>m :NERDTreeToggle<CR>
 "noremap <silent><leader>m :LuaTreeToggle<CR>
 
-" Print date & time
+"Print date & time
 noremap <silent><leader>d "=strftime("%Y-%m-%d %T")<CR>p
 
-" Coc Format
+"Coc Format
 noremap <silent><leader>f :call CocAction('format')<CR>
 
 
