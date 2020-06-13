@@ -4,7 +4,6 @@ set relativenumber
 set wildignorecase
 set confirm            "Ask to save stuff
 set hidden             "Hides buffers instead of closing them
-"set conceallevel=2     "Hide markup
 set fileencoding=utf-8 "Encoding written to file
 
 """ POSITION
@@ -16,18 +15,16 @@ set colorcolumn=81
 set ignorecase
 set smartcase
 
-""" INVISIBLE CHARACTERS
+""" WHITESPACE
 set list
 set listchars=eol:~,tab:\|-,trail:*,extends:>,precedes:<,nbsp:_
-set listchars+=space:· "non ASCII
+set listchars+=space:· "not ASCII
 
-""" INDENTATION & WHITESPACE
-set smartindent   "autoindent is nvim default
-set expandtab     "<Tab> inserts spaces
+""" INDENTATION
+set smartindent
+set expandtab    "<tab> inserts spaces
 set shiftwidth=2
 set softtabstop=2
-"set shiftwidth=4
-"set softtabstop=4
 
 """ FOLDS
 set foldmethod=indent
@@ -35,11 +32,11 @@ set foldlevel=2
 
 """ SCROLLING
 set nowrap
-set scrolloff=20
+set scrolloff=20    "Keeps cursor centred
 set sidescrolloff=20
 
-""" TRANSLATION
-"set scrollbind "Keeps buffers vertically aligned
+""" TRANSLATION WORK
+"set scrollbind
 "set cursorbind
 
 """ VIM
@@ -53,16 +50,15 @@ if !has('nvim')
   set hlsearch
   set incsearch
   set autoindent
-
   """ status line
-  set laststatus=2 "nvim-d
-  set stl=
-  set stl+=%f%m                 " Relative path[modified flag]
-  set stl+=%h%w                 " Relative path[modified flag]
-  set stl+=%=                   " Left/right separator
-  set stl+=%y%{&fenc}\|%{&ff}\| " Syntax[encoding][format]
-  set stl+=\ %3.3p%%            " Percentage through file
-  set stl+=\ %3l/%-3L           " Current line/# of lines
-  set stl+=:\ %3c%V             " Current columns.
+  set laststatus=2
+  set stl=%f          "relative path
+  set stl+=%m%r%h%w   "flags: modified, read-only, help, preview
+  set stl+=%=         "separator
+  set stl+=%y         "syntax
+  set stl+=%{&fenc}\| "encoding
+  set stl+=%{&ff}\|   "format
+  set stl+=\ %p%%     "percentage through file
+  set stl+=\ %3l:%3c  "current line and column
 endif
 
