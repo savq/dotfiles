@@ -10,7 +10,7 @@ export LANG="en_US.UTF-8" LC_ALL="en_US.UTF-8"
 export CLICOLOR=1
 export LSCOLORS="gxfxcxdxbxEfEdBxGxCxDx" # BSD ls colors
 export LS_COLORS=$LS_COLORS:'di=36:ln=35:so=32:pi=33:ex=31:bd=1;34;45:cd=1;34;43:su=1;31:sg=1;36:tw=1;32:ow=1;33' # GNU ls colors
-#
+
 # Check if syntax highlighting is installed
 [[ -a "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
   source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
@@ -69,10 +69,13 @@ fi
 alias rm="rm -v"  # List all deleted files
 alias l="ls -AlF"
 alias cc="clang"
-alias python="python3" pip="pip3"
-alias serve="python3 -m http.server" # simple http server
 alias myp5="p5 g -b" # Stand alone p5 project
 alias zat="zathura --fork"
+
+alias python="python3"
+alias pip="pip3"
+alias venv="python3 -m venv"
+alias serve="python3 -m http.server"
 
 # PATH
 
@@ -86,13 +89,6 @@ export PATH="$HOME/.cargo/bin:$PATH"
 #if [ -d "$HOME/lineage_os/platform-tools" ] ; then
 # export PATH="$HOME/lineage_os/platform-tools:$PATH"
 #fi
-
-# Conda package manager
-# NOTE: Conda slows down start-up quite a bit,
-#       so its best to keep it in a separate file
-#       and call it when necessary.
-#source $ZDOTDIR/conda.sh
-
 
 # LLVM (version installed with homebrew)
 export PATH="/usr/local/opt/llvm/bin:$PATH"
