@@ -1,4 +1,4 @@
-fpath=($fpath $ZDOTDIR) # Same directory for user defined config. and functions
+fpath=($fpath $ZDOTDIR) # Same directory for user defined config and functions
 autoload -Uz compinit; compinit    # `New' completion system
 autoload -U promptinit; promptinit # Enable prompt themes
 prompt savq # my own prompt
@@ -51,17 +51,17 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-# Referances for the `new' completion system
+# References for the `new' completion system
 # User's guide Ch. 6: <http://zsh.sourceforge.net/Guide/zshguide06.html#l144>
 # man zshcompsys
 
 
-# EDITOR
-if type nvim > /dev/null 2>&1; then # Use Neovim as default editor
+# EDITOR - Neovim
+if type nvim > /dev/null 2>&1; then
   alias vi="nvim"
   export VISUAL="nvim"
   export EDITOR="$VISUAL"
-  export MANPAGER='nvim +Man!' # Use nvim as manpager `:h Man`
+  export MANPAGER='nvim +Man!' # :help Man
   export MANWIDTH=999
 fi
 
@@ -71,6 +71,13 @@ alias l="ls -AlF"
 alias cc="clang"
 alias myp5="p5 g -b" # Stand alone p5 project
 alias zat="zathura --fork"
+
+alias gadd='git add'
+alias gcm='git commit -m'
+alias gpl='git pull'
+alias gsh='git push'
+alias gst='git status'
+alias gdf='git diff'
 
 alias python="python3"
 alias pip="pip3"
