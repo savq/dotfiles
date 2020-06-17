@@ -15,7 +15,7 @@ precmd () { vcs_info }
 PS1='%F{cyan}%1~%f '                  # Current directory: blue
 PS1+='%F{yellow}${vcs_info_msg_0_}%f' # Git info: yellow
 PS1+='%(?.%F{cyan}.%F{red})%#%f '    # Exit code: green (0) or red (not 0)
-RPS1='%D{%Y-%m-%d} T %T' # Show time on the right
+RPS1='%T' # Show time on the right
 
 # Docs on Git support and prompt themes:
 # % man zshcontrib
