@@ -2,6 +2,7 @@ set mouse=a
 set number
 set relativenumber
 set wildignorecase
+set noshowmode
 set confirm            "Ask to save stuff
 set hidden             "Hides buffers instead of closing them
 set fileencoding=utf-8 "Encoding written to file
@@ -17,12 +18,13 @@ set smartcase
 
 """ WHITESPACE
 set list
-set listchars=eol:~,tab:\|-,trail:*,extends:>,precedes:<,nbsp:_
+set listchars=tab:\|-,trail:*,extends:>,precedes:<,nbsp:_ "eol:~
 set listchars+=space:· "not ASCII
 
 """ INDENTATION
 set smartindent
 set expandtab    "<tab> inserts spaces
+set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 
