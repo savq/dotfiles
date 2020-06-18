@@ -78,18 +78,20 @@ runtime coc_config.vim
 let mapleader = " "
 nnoremap ; :
 
-"Disable arrow keys
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
+"Why is K for help?
+noremap <c-h> K
 
 "Better navegation
 noremap J }
 noremap K {
+noremap H ^
+noremap L $
 
-"Why is K for help? H is more helpful
-noremap H K
+"Disable arrow keys
+noremap <Up>    <Nop>
+noremap <Down>  <Nop>
+noremap <Left>  <Nop>
+noremap <Right> <Nop>
 
 "Copy to system clipboard
 noremap Y "+y
