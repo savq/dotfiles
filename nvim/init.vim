@@ -78,15 +78,21 @@ runtime coc_config.vim
 let mapleader = " "
 nnoremap ; :
 
-"Faster navegation
-nnoremap J }
-nnoremap K {
+"Disable arrow keys
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+noremap <Left> <Nop>
+noremap <Right> <Nop>
 
-"Why is K for help?
-nnoremap H K
+"Better navegation
+noremap J }
+noremap K {
+
+"Why is K for help? H is more helpful
+noremap H K
 
 "Copy to system clipboard
-vnoremap Y "+y
+noremap Y "+y
 
 "Open the vimrc file anytime
 noremap <silent><leader>rc :e ~/.config/nvim/init.vim <CR>
