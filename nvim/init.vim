@@ -76,7 +76,7 @@ runtime coc_config.vim
 
 """ MAPPINGS
 let mapleader = " "
-nnoremap ; :
+noremap ; :
 
 "Why is K for help?
 noremap <c-h> K

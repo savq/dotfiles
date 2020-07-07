@@ -79,7 +79,7 @@ alias gpl='git pull'
 alias gsh='git push'
 alias gst='git status'
 
-alias python="python3"
+alias py="python3"
 alias pip="pip3"
 alias venv="python3 -m venv"
 alias serve="python3 -m http.server"
