@@ -62,7 +62,7 @@ let g:wiki_map_link_create =  'CreateLinkNames'
 
 function CreateLinkNames(text) abort
   "return substitute(tolower(a:text), '\s\+', '_', 'g')
-  return strftime("%Y%m%d%H%M_") . substitute(tolower(a:text), '\s\+', '_', 'g')
+  return strftime("%Y%m%dT%H%M-") . substitute(tolower(a:text), '\s\+', '-', 'g')
 endfunction
 
 """ PANDOC
@@ -77,6 +77,7 @@ runtime coc_config.vim
 """ MAPPINGS
 let mapleader = " "
 noremap ; :
+noremap : ;
 
 "Why is K for help?
 noremap <c-h> K
