@@ -67,7 +67,9 @@ fi
 # ALIASES
 alias rm="rm -v"
 alias l="ls -AlF"
+
 alias cc="clang"
+alias lua="luajit"
 alias myp5="p5 g -b" # Stand alone p5 project
 alias zat="zathura --fork"
 
