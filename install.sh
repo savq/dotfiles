@@ -14,17 +14,13 @@ echo "Created symlinks"
 
 # Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" &&
-  brew bundle || { echo 'brew bundle failed' ; exit 1; }
+  brew bundle || { echo 'brew failed' ; exit 1; }
 
 # Vim-plug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-# Jupyter
-pip3 install jupyterlab &&
+# Python/Jupyter
+pip3 install jupyter &&
   pip3 install jupyterthemes &&
   jt -t onedork -vim
-
-# p5.js
-npm install -g p5-manager
-
