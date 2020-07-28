@@ -20,8 +20,8 @@ Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 
 """" PROGRAMMING
+Plug 'JuliaEditorSupport/julia-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'tmhedberg/simpylfold',    {'for' : 'python'}
 Plug 'pangloss/vim-javascript', {'for' : 'javascript'}
 
 """" OTHER STUFF
@@ -71,13 +71,16 @@ let g:pandoc#syntax#conceal#urls = 1
 let g:pandoc#syntax#conceal#use = 0
 au BufNewFile,BufRead *.md set nowrap "Vim-Pandoc can't disable wrapping
 
+""" Julia
+let g:latex_to_unicode_tab = 0
+
 """ CoC settings go here
 runtime coc_config.vim
 
 """ MAPPINGS
 let mapleader = " "
 noremap ; :
-noremap : ;
+"noremap : ;
 
 "Why is K for help?
 noremap <c-h> K
