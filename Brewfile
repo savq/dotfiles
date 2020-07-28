@@ -8,17 +8,20 @@ tap "zegervdv/zathura"
 
 #### TERMINAL
 brew "neovim"
-brew "tmux"
+#brew "tmux"
 brew "zsh-syntax-highlighting"
 cask "alacritty"
+#cask "font-fira-code"
 cask "font-ibm-plex"
 
 #### PROGRAMMING LANGUAGES
-brew "lua" # >= 5.3
-brew "minimal-racket" # SICP
-brew "node"
+#brew "ccls" # C language server
+brew "deno"
+#brew "node"
+#brew "minimal-racket" # SICP
 brew "python" # >= 3.8
-brew "rustup-init"
+brew "rustup-init" # Rust toolchain installer
+cask "julia"
 
 #### WRITING
 brew "pandoc"
@@ -27,7 +30,10 @@ cask "mactex-no-gui"
 
 #### GUI
 cask "arduino"
+#cask "balenaetcher"
 cask "firefox"
+#cask "ghdl"
+#cask "gtkwave"
 cask "iina"     # Media player
 cask "itsycal"  # Calendar
 cask "qbittorrent"
@@ -37,4 +43,3 @@ cask "supercollider"
 cask "zotero"
 #cask "android-file-transfer"
 #cask "google-backup-and-sync"
-
