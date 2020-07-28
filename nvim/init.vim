@@ -75,7 +75,7 @@ au BufNewFile,BufRead *.md set nowrap "Vim-Pandoc can't disable wrapping
 let g:latex_to_unicode_tab = 0
 
 """ CoC settings go here
-runtime coc_config.vim
+runtime coc.vim
 
 """ MAPPINGS
 let mapleader = " "
