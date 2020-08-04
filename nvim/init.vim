@@ -5,29 +5,22 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let &packpath = &runtimepath
 source ~/.vimrc
 
-"""" VIM-PLUG
+"""" PLUGINS
 call plug#begin(stdpath('data') . '/plugged')
-
 Plug 'ayu-theme/ayu-vim'
 Plug 'itchyny/lightline.vim'
-Plug 'preservim/nerdtree'
-"Plug 'kyazdani42/nvim-tree.lua' "Needs nvim nightly
-
+"""" PROGRAMMING
+Plug 'neoclide/coc.nvim', {'branch': 'release'} "rls, ccls, etc
+Plug 'JuliaEditorSupport/julia-vim'
 """" PROSE & FORMATTED TEXT
 Plug 'lervag/vimtex'
 Plug 'lervag/wiki.vim'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-
-"""" PROGRAMMING
-Plug 'JuliaEditorSupport/julia-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'pangloss/vim-javascript', {'for' : 'javascript'}
-
 """" OTHER STUFF
+Plug 'mechatroner/rainbow_csv'     "Highlight csv columns
+Plug 'norcalli/nvim-colorizer.lua' "Highlight hex and rgb colors
 Plug 'junegunn/vim-easy-align'
-Plug 'mechatroner/rainbow_csv' "Highlight csv columns
-Plug 'chrisbra/Colorizer' "Highlight hex and rgb w/ their respective colors
 call plug#end()
 
 """ APPEARANCE (Let the TUI decide the font)
@@ -71,16 +64,12 @@ let g:pandoc#syntax#conceal#urls = 1
 let g:pandoc#syntax#conceal#use = 0
 au BufNewFile,BufRead *.md set nowrap "Vim-Pandoc can't disable wrapping
 
-""" Julia
-let g:latex_to_unicode_tab = 0
-
 """ CoC settings go here
 runtime coc.vim
 
 """ MAPPINGS
 let mapleader = " "
 noremap ; :
-"noremap : ;
 
 "Why is K for help?
 noremap <c-h> K
@@ -100,12 +89,8 @@ noremap <Right> <Nop>
 "Copy to system clipboard
 noremap Y "+y
 
-"Open the vimrc file anytime
+"Open this file
 noremap <silent><leader>rc :e ~/.config/nvim/init.vim <CR>
-
-"File tree shortcut
-noremap <silent><leader>m :NERDTreeToggle<CR>
-"noremap <silent><leader>m :LuaTreeToggle<CR>
 
 "Print date & time
 noremap <silent><leader>d "=strftime("%Y-%m-%d %T")<CR>p
@@ -113,10 +98,15 @@ noremap <silent><leader>d "=strftime("%Y-%m-%d %T")<CR>p
 "Coc Format
 noremap <silent><leader>f :call CocAction('format')<CR>
 
+""" Julia
+let g:latex_to_unicode_tab = 0 "This messes with coc, FIXME after nvim 0.5 + lsp
+noremap <silent><leader>j :!julia %<CR>
 
 """ SPELLING MAPPINGS
-" Correct last word
+" Correct last word 
 noremap <silent><Leader>z b1z=e
+" Correct current word
+noremap <silent><Leader>x 1z=1
 " Change spelling language
 noremap <silent><leader>s :call CycleLang()<CR>
 
@@ -130,4 +120,5 @@ function CycleLang() "Credit to Kev at: <stackoverflow.com/questions/12006508>
     set spell
   endif
 endfun
+
 

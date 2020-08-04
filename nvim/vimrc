@@ -24,9 +24,9 @@ set listchars+=space:· "not ASCII
 """ INDENTATION
 set smartindent
 set expandtab    "<tab> inserts spaces
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 
 """ FOLDS
 set foldmethod=indent
