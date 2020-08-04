@@ -69,12 +69,13 @@ alias rm="rm -v"
 alias l="ls -AlF"
 
 alias cc="clang"
+alias jl="julia"
 alias lua="luajit"
 alias myp5="p5 g -b" # Stand alone p5 project
 alias zat="zathura --fork"
 
 alias gdd='git add'
-alias gcm='git commit'
+alias gcm='git commit --verbose'
 alias gdf='git diff'
 alias glg='git log'
 alias gpl='git pull'
