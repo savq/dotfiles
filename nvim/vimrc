@@ -7,6 +7,10 @@ set confirm            "Ask to save stuff
 set hidden             "Hides buffers instead of closing them
 set fileencoding=utf-8 "Encoding written to file
 
+""" SPLIT WINDOWS
+set splitright
+set splitbelow
+
 """ POSITION
 set cursorline
 set cursorcolumn

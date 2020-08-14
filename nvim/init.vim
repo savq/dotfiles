@@ -90,17 +90,17 @@ noremap <Right> <Nop>
 noremap Y "+y
 
 "Open this file
-noremap <silent><leader>rc :e ~/.config/nvim/init.vim <CR>
+noremap <silent><leader>rc :e ~/.config/nvim/init.vim<cr>
 
 "Print date & time
-noremap <silent><leader>d "=strftime("%Y-%m-%d %T")<CR>p
+noremap <silent><leader>d "=strftime("%Y-%m-%d %T")<cr>p
 
 "Coc Format
-noremap <silent><leader>f :call CocAction('format')<CR>
+noremap <silent><leader>f :call CocAction('format')<cr>
 
 """ Julia
 let g:latex_to_unicode_tab = 0 "This messes with coc, FIXME after nvim 0.5 + lsp
-noremap <silent><leader>j :!julia %<CR>
+noremap <silent><leader>j :!julia %<cr>
 
 """ SPELLING MAPPINGS
 " Correct last word 
@@ -108,7 +108,7 @@ noremap <silent><Leader>z b1z=e
 " Correct current word
 noremap <silent><Leader>x 1z=1
 " Change spelling language
-noremap <silent><leader>s :call CycleLang()<CR>
+noremap <silent><leader>s :call CycleLang()<cr>
 
 function CycleLang() "Credit to Kev at: <stackoverflow.com/questions/12006508>
   let langs = ['en', 'es', 'de', '']
