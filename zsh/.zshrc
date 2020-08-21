@@ -66,10 +66,12 @@ fi
 
 # ALIASES
 alias rm="rm -v"
-alias l="ls -AlF"
+alias l="ls -1A"
+alias ll="ls -AlF"
 
 alias cc="clang"
 alias jl="julia"
+alias pluto="julia -e 'using Pluto; Pluto.run()'"
 alias lua="luajit"
 alias myp5="p5 g -b" # Stand alone p5 project
 alias zat="zathura --fork"
