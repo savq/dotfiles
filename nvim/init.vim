@@ -58,6 +58,9 @@ function CreateLinkNames(text) abort
   return strftime("%Y%m%dT%H%M-") . substitute(tolower(a:text), '\s\+', '-', 'g')
 endfunction
 
+""" VIMTEX
+let g:tex_flavor = 'latex'
+
 """ PANDOC
 let g:pandoc#spell#enabled = 0
 let g:pandoc#syntax#conceal#urls = 1
@@ -88,6 +91,9 @@ noremap <Right> <Nop>
 
 "Copy to system clipboard
 noremap Y "+y
+
+"Terminal
+noremap <silent><leader>t :vs\|:te<cr>
 
 "Open this file
 noremap <silent><leader>rc :e ~/.config/nvim/init.vim<cr>
@@ -120,5 +126,4 @@ function CycleLang() "Credit to Kev at: <stackoverflow.com/questions/12006508>
     set spell
   endif
 endfun
-
 
