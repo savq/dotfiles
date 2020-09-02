@@ -220,8 +220,6 @@ mouse:
 #
 
 key_bindings:
-  - { key: LBracket,            chars: "("}
-  - { key: RBracket,            chars: ")"}
-  - { key: LBracket, mods: Alt, chars: "["}
-  - { key: RBracket, mods: Alt, chars: "]"}
+  - { key: LBracket, mods: Alt, chars: "("}
+  - { key: RBracket, mods: Alt, chars: ")"}
 
