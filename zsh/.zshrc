@@ -74,7 +74,6 @@ alias jl="julia"
 alias pluto="julia -e 'using Pluto; Pluto.run(8000)'"
 alias lua="luajit"
 alias myp5="p5 g -b" # Stand alone p5 project
-alias zat="zathura --fork"
 
 alias gdd='git add'
 alias gcm='git commit --verbose'
