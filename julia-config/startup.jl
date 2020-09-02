@@ -1,29 +1,15 @@
-#=
-#using Crayons
-#import OhMyREPL: Passes.SyntaxHighlighter
+import OhMyREPL: Passes.SyntaxHighlighter
 
-### Revise (slow)
+#= Revise (slow) =#
 try
     using Revise
 catch e
     @warn(e.msg)
 end
 
-### OhMyREPL (ridiculously slow)
-atreplinit() do repl
-    try
-        @eval using OhMyREPL
-        OhMyREPL.input_prompt!(">")
-        SyntaxHighlighter.add!("savq", create_savq_colorscheme())
-        OhMyREPL.enable_pass!("RainbowBrackets", enable=false)
-        OhMyREPL.colorscheme!("savq")
-    catch e
-        @warn "error while importing OhMyREPL" e
-    end
-end
-
-#Colorscheme for OhMyREPL
+#= Color scheme for OhMyREPL =#
 function create_savq_colorscheme()
+    Crayon = SyntaxHighlighter.Crayon
     SyntaxHighlighter.ColorScheme(
         Crayon(foreground = :light_blue),   # symbol
         Crayon(foreground = :dark_gray),    # comment
@@ -39,5 +25,13 @@ function create_savq_colorscheme()
         Crayon(foreground = :light_magenta) # number
     )
 end
-=#
+
+#= OhMyREPL =#
+atreplinit() do repl
+    # There should be a try-catch here but initialization is already rather slow
+    OhMyREPL.input_prompt!("> ")
+    OhMyREPL.enable_pass!("RainbowBrackets", false)
+    SyntaxHighlighter.add!("savq", create_savq_colorscheme())
+    OhMyREPL.colorscheme!("savq")
+end
 
