@@ -65,15 +65,16 @@ if type nvim > /dev/null 2>&1; then
 fi
 
 # ALIASES
-alias rm="rm -v"
-alias l="ls -1A"
-alias ll="ls -AlF"
+alias rm='rm -v'
+alias l='ls -1A'
+alias ll='ls -AlF'
 
-alias cc="clang"
-alias jl="julia"
+alias cc='clang'
+alias jl='julia'
 alias pluto="julia -e 'using Pluto; Pluto.run(8000)'"
-alias lua="luajit"
-alias myp5="p5 g -b" # Stand alone p5 project
+alias lua='luajit'
+alias myp5='p5 g -b' # Stand alone p5 project
+alias arduino='arduino-cli'
 
 alias gdd='git add'
 alias gcm='git commit --verbose'
@@ -83,10 +84,10 @@ alias gpl='git pull'
 alias gsh='git push'
 alias gst='git status'
 
-alias py="python3"
-alias pip="pip3"
-alias venv="python3 -m venv"
-alias serve="python3 -m http.server"
+alias py='python3'
+alias pip='pip3'
+alias venv='python3 -m venv'
+alias serve='python3 -m http.server'
 
 # PATH
 
