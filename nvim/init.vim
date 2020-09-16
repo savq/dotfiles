@@ -1,9 +1,5 @@
-" NOTE:
-"I use init.vim for plugins and mappings.
-"For basic configuration see my vimrc.
-set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let &packpath = &runtimepath
-source ~/.vimrc
+" NOTE: Plugins and mappings are in init.vim. Options are in vimrc
+source $HOME/.config/nvim/vimrc
 
 """" PLUGINS
 call plug#begin(stdpath('data') . '/plugged')
@@ -77,7 +73,7 @@ noremap ; :
 "Why is K for help?
 noremap <c-h> K
 
-"Better navegation
+"Better navigation
 noremap J }
 noremap K {
 noremap H ^
@@ -109,21 +105,20 @@ let g:latex_to_unicode_tab = 0 "This messes with coc, FIXME after nvim 0.5 + lsp
 noremap <silent><leader>j :!julia %<cr>
 
 """ SPELLING MAPPINGS
-" Correct last word 
+" Correct last word
 noremap <silent><Leader>z b1z=e
 " Correct current word
 noremap <silent><Leader>x 1z=1
 " Change spelling language
-noremap <silent><leader>s :call CycleLang()<cr>
+noremap <silent><leader>s :lua CycleLang()<cr>
 
-function CycleLang() "Credit to Kev at: <stackoverflow.com/questions/12006508>
-  let langs = ['en', 'es', 'de', '']
-  let i = index(langs, &spl)
-  let &spelllang = langs[(i + 1) % len(langs)]
-  if empty(&spl)
-    set nospell
-  else
-    set spell
-  endif
-endfun
+"Lua version of this solution: <stackoverflow.com/questions/12006508>
+lua << EOF
+    local spl = {i = 1, langs = {'', 'en', 'es', 'de'}}
+    function CycleLang()
+        spl.i = (spl.i % #spl.langs) + 1      --update index
+        vim.bo.spelllang = spl.langs[spl.i]   --change spelllang
+        vim.wo.spell = spl.langs[spl.i] ~= '' --if empty then nospell
+    end
+EOF
 
