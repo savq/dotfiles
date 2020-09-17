@@ -24,25 +24,19 @@ lua require('config')
 
 """ LIGHTLINE
 let g:lightline = {
-  \ 'colorscheme': 'ayu_mirage',
-  \ 'active': {
-  \   'left': [ ['mode', 'paste'],
-  \             ['gitbranch', 'readonly', 'filename', 'modified'],
-  \             ['cocstatus', 'cocCurrentFun'] ],
-  \  'right': [ ['percent', 'lineinfo'],
-  \             ['spell', 'filetype', 'fileencoding', 'fileformat'] ],
-  \ },
-  \ 'component_function': {
-  \   'gitbranch': 'FugitiveHead',
-  \   'cocstatus': 'coc#status',
-  \   'cocCurFun': 'CocCurrentFunction'
-  \ },
-  \ }
+\   'colorscheme': 'ayu_mirage',
+\   'active':{'left':  [['mode', 'paste'],
+\                       ['gitbranch', 'readonly', 'filename', 'modified'],
+\                       ['cocstatus', 'cocCurrentFun']],
+\             'right': [['percent', 'lineinfo'],
+\                       ['spell', 'filetype', 'fileencoding', 'fileformat']]},
+\   'component_function': {'gitbranch': 'FugitiveHead',
+\                          'cocstatus': 'coc#status',
+\                          'cocCurFun': 'CocCurrentFunction'}}
 
-"function CreateLinkNames(text) abort
-"  "return substitute(tolower(a:text), '\s\+', '_', 'g')
-"  return strftime("%Y%m%dT%H%M-") . substitute(tolower(a:text), '\s\+', '-', 'g')
-"endfunction
+function CreateLinkNames(text) abort
+  return strftime("%Y%m%dT%H%M-") . substitute(tolower(a:text), '\s\+', '-', 'g')
+endfunction
 
 " PANDOC FIXME Find alternative markdown plugins. variables with number signs can't be called from Lua
 let pandoc#spell#enabled = 0
