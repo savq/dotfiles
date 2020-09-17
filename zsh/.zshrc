@@ -7,12 +7,11 @@ prompt savq # my own prompt
 export LANG="en_US.UTF-8" LC_ALL="en_US.UTF-8"
 
 # COLOR
-export CLICOLOR=1
-export LSCOLORS="gxfxcxdxbxEfEdBxGxCxDx" # BSD ls colors
+export CLICOLOR=1 LSCOLORS="gxfxcxdxbxEfEdBxGxCxDx" # BSD ls colors
 
 # Check if syntax highlighting is installed
-[[ -a "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
-  source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+#[[ -a "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
+source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 
 # OPTIONS
 bindkey -v #Enable vi-mode
@@ -24,8 +23,6 @@ setopt prompt_subst # For prompt theme
 setopt hist_ignore_all_dups # Remove older duplicate entries from history
 setopt hist_reduce_blanks   # Remove blanks from history items
 setopt share_history        # Same history for all open terminals
-HISTSIZE=1000
-SAVEHIST=1000
 bindkey "^[[B" history-beginning-search-forward
 bindkey "^[[A" history-beginning-search-backward 
 
@@ -46,13 +43,12 @@ zstyle ':completion:*' menu select=long
 zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
 zstyle ':completion:*' use-compctl false
 zstyle ':completion:*' verbose true
-
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # References for the `new' completion system
-# User's guide Ch. 6: <http://zsh.sourceforge.net/Guide/zshguide06.html#l144>
 # man zshcompsys
+# User's guide Ch. 6: <http://zsh.sourceforge.net/Guide/zshguide06.html#l144>
 
 
 # EDITOR - Neovim
@@ -65,44 +61,38 @@ if type nvim > /dev/null 2>&1; then
 fi
 
 # ALIASES
-alias rm='rm -v'
 alias l='ls -1A'
 alias ll='ls -AlF'
+alias rm='rm -v'
 
-alias cc='clang'
-alias jl='julia'
-alias pluto="julia -e 'using Pluto; Pluto.run(8000)'"
-alias lua='luajit'
-alias myp5='p5 g -b' # Stand alone p5 project
 alias arduino='arduino-cli'
+alias cc='clang'
+alias jl='julia' pluto="julia -e 'using Pluto; Pluto.run(8000)'"
+alias lua='luajit'
+alias py='python3' pip='pip3' pyvenv='python3 -m venv'
+alias serve='file_server'   # Deno file server
 
-alias gdd='git add'
 alias gcm='git commit --verbose'
+alias gdd='git add'
 alias gdf='git diff'
 alias glg='git log'
 alias gpl='git pull'
 alias gsh='git push'
 alias gst='git status'
 
-alias py='python3'
-alias pip='pip3'
-alias venv='python3 -m venv'
-alias serve='python3 -m http.server'
-
 # PATH
+export PATH="$HOME/.cargo/bin:$HOME/.deno/bin:$PATH"
 
-# My LaTeX utilities: savargasqu/latex-templates
-export PATH="$HOME/.tex:$PATH" 
-
-# Cargo (for Rust)
-export PATH="$HOME/.cargo/bin:$PATH" 
+# LLVM (homebrew installed version)
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
 # Android Debug Bridge (for LineageOS)
 #if [ -d "$HOME/lineage_os/platform-tools" ] ; then
 # export PATH="$HOME/lineage_os/platform-tools:$PATH"
 #fi
 
-# LLVM (version installed with homebrew)
-export PATH="/usr/local/opt/llvm/bin:$PATH"
-export LDFLAGS="-L/usr/local/opt/llvm/lib"
-export CPPFLAGS="-I/usr/local/opt/llvm/include"
+# TODO update this after redoing templates
+# export PATH="$HOME/.tex:$PATH" 
+
