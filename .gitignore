@@ -2,3 +2,5 @@ zsh/.zcompdump
 zsh/.zcompcache
 zsh/.zsh_history
 spell/
+# symlink to plugins
+nvim/paq
