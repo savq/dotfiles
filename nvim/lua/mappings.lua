@@ -1,31 +1,34 @@
 ---- MAPPINGS ----
 
 vim.g.mapleader = ' '
-noremap'; :'
-noremap'<c-h> K' -- Why is K for help?
-noremap'Y "+y'   -- Copy to system clipboard
+noremap '; :'
+noremap '<C-]> K' -- Help
+noremap 'Y "+y'   -- Copy to system clipboard
 
 -- Better navigation
-noremap'J }'
-noremap'K {'
-noremap'H ^'
-noremap'L $'
+noremap 'J }'
+noremap 'K {'
+noremap 'H ^'
+noremap 'L $'
 
-noremap'<C-h> <C-w>h'
-noremap'<C-j> <C-w>j'
-noremap'<C-k> <C-w>k'
-noremap'<C-l> <C-w>l'
+noremap '<C-h> <C-w>h'
+noremap '<C-j> <C-w>j'
+noremap '<C-k> <C-w>k'
+noremap '<C-l> <C-w>l'
 
 -- Disable arrow keys
-noremap'<Up>    <Nop>'
-noremap'<Down>  <Nop>'
-noremap'<Left>  <Nop>'
-noremap'<Right> <Nop>'
+noremap '<Up>    <Nop>'
+noremap '<Down>  <Nop>'
+noremap '<Left>  <Nop>'
+noremap '<Right> <Nop>'
 
 -- Miscellaneous
-noremap(SL .. 't :sp\\|:te<cr>')                   -- Open terminal
-noremap(SL .. 'rc :e ~/.config/nvim/init.vim<cr>') -- Open init.vim
-noremap(SL .. 'd "=strftime("%Y-%m-%d %T")<cr>p')  -- Print date & time FIXME: How to do this w/ Lua?
+noremap(SL .. 't :sp\\|:te<cr>')          -- Open terminal
+noremap(SL .. 'rc :e ~/.config/nvim<cr>') -- Open config directory
+-- Print date & time
+noremap(SL .. 'd "= "' ..
+    vim.fn.strftime('%Y-%m-%d %T') ..
+    '"<cr>p')
 
 -- Spelling
 noremap(SL .. 'z b1z=e')                -- Correct previous word

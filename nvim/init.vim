@@ -1,6 +1,10 @@
 " NOTE: Plugins and mappings are in init.vim. Options are in vimrc
 source $HOME/.config/nvim/vimrc
 
+" TODO move to native LSP when 0.5 stabilises
+" CoC settings go here
+runtime coc.vim
+
 lua << EOF
 
     -- TODO put these in a readonly table
@@ -11,9 +15,6 @@ lua << EOF
     require('plugins')
 
 EOF
-
-" TODO move to native lsp
-runtime coc.vim "CoC settings go here
 
 "" LIGHTLINE
 let g:lightline = {
