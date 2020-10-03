@@ -15,7 +15,7 @@ cask "julia"
 
 #### TUI
 brew "neovim", args: ["HEAD"] # nvim 0.5
-brew "tmux"
+brew "austinjones/taps/tab"   # tab-rs
 brew "zsh-syntax-highlighting"
 cask "alacritty"
 

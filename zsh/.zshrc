@@ -80,6 +80,9 @@ alias gpl='git pull'
 alias gsh='git push'
 alias gst='git status'
 
+alias tabl='tab -l'
+alias tabc='tab -w'
+
 # PATH
 export PATH="$HOME/.cargo/bin:$HOME/.deno/bin:$PATH"
 
