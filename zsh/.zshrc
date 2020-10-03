@@ -68,7 +68,6 @@ alias rm='rm -v'
 alias arduino='arduino-cli'
 alias cc='clang'
 alias jl='julia' pluto="julia -e 'using Pluto; Pluto.run(8000)'"
-alias lua='luajit'
 alias py='python3' pip='pip3' pyvenv='python3 -m venv'
 alias serve='file_server'   # Deno file server
 
