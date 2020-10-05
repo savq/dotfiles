@@ -71,6 +71,9 @@ alias jl='julia' pluto="julia -e 'using Pluto; Pluto.run(8000)'"
 alias py='python3' pip='pip3' pyvenv='python3 -m venv'
 alias serve='file_server'   # Deno file server
 
+alias lmk="latexmk"
+alias lmkx="latexmk -xelatex"
+
 alias gcm='git commit --verbose'
 alias gdd='git add'
 alias gdf='git diff'
@@ -85,6 +88,9 @@ alias tabc='tab -w'
 # PATH
 export PATH="$HOME/.cargo/bin:$HOME/.deno/bin:$PATH"
 
+export TEXDIR="$HOME/.latex/"
+export PATH="$TEXDIR:$PATH"
+
 # LLVM (homebrew installed version)
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
@@ -94,7 +100,4 @@ export CPPFLAGS="-I/usr/local/opt/llvm/include"
 #if [ -d "$HOME/lineage_os/platform-tools" ] ; then
 # export PATH="$HOME/lineage_os/platform-tools:$PATH"
 #fi
-
-# TODO update this after redoing templates
-# export PATH="$HOME/.tex:$PATH" 
 
