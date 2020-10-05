@@ -2,18 +2,14 @@
 source $HOME/.config/nvim/vimrc
 
 " TODO move to native LSP when 0.5 stabilises
-" CoC settings go here
 runtime coc.vim
 
 lua << EOF
-
-    -- TODO put these in a readonly table
     SL = '<silent><leader>'
     function noremap(str) vim.cmd('noremap ' .. str) end
 
     require('mappings')
     require('plugins')
-
 EOF
 
 "" LIGHTLINE
