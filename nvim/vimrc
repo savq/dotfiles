@@ -44,23 +44,13 @@ set sidescrolloff=20
 """ VIM 8
 if !has('nvim')
   syntax on
-  colorscheme desert
   set ruler
+  "colorscheme desert
   set showcmd
   set autoread
   set wildmenu
   set hlsearch
   set incsearch
   set autoindent
-  """ status line
   set laststatus=2
-  set stl=%f          "relative path
-  set stl+=%m%r%h%w   "flags: modified, read-only, help, preview
-  set stl+=%=         "separator
-  set stl+=%y         "syntax
-  set stl+=%{&fenc}\| "encoding
-  set stl+=%{&ff}\|   "format
-  set stl+=\ %p%%     "percentage through file
-  set stl+=\ %3l:%3c  "current line and column
 endif
-
