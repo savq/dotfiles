@@ -1,12 +1,12 @@
-" NOTE: Plugins and mappings are in init.vim. Options are in vimrc
+" NOTE: Trivial mappings and options are in vimrc
+"       Plugins, non-trivial mappings and anything that uses Lua is in lua/config
 source $HOME/.config/nvim/vimrc
-
-" TODO move to native LSP when 0.5 stabilises
-runtime coc.vim
-
 lua << EOF
     require('config')
 EOF
+
+" TODO move to native LSP when 0.5 stabilises
+runtime coc.vim
 
 "" LIGHTLINE
 let g:lightline = {

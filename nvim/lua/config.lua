@@ -1,7 +1,7 @@
 -- Useful aliases
 local g = vim.g
 local cmd = vim.cmd
-function noremapsl(str) vim.cmd('noremap <silent><leader> ' .. str) end
+function noremapsl(str) vim.cmd('noremap <silent><leader>' .. str) end
 
 -- My WIP plugin manager
 cmd 'packadd paq-nvim'
