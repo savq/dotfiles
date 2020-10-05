@@ -1,15 +1,14 @@
 # Dotfiles
 
-They require `git` and `curl`. I use them for:
+Simple configurations for:
 
-- Homebrew
-- Alacritty
-- Neovim, with Vim-plug
-- Tmux
-- Zsh
+- Alacritty, with a slightly tweaked Ayu Mirage theme
+- [Neovim](https://github.com/neovim/neovim) nightly (mostly Lua)
+- Zsh, with my own custom prompt
 
-I use `install.sh` to install Homebrew and Vim-plug; to run `brew bundle`;
-to add symlinks; and to download some packages for various programming languages.
-After that, sourcing `init.vim` and running `:PlugInstall` should install all
-Vim plug-ins.
+
+
+## Requirements
+
+Just `curl`, homebrew takes care of the rest.
 
