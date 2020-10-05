@@ -5,8 +5,8 @@
   brew bundle || { echo 'brew failed' ; exit 1; }
 
 # Create symlinks
-ln -s ~/.config/julia      ~/.julia/config
-ln -s ~/.config/zshenv     ~/.zshenv
-ln -s ~/.config/nvim/vimrc ~/.vimrc
+ln -s ~/.config/julia        ~/.julia/config
+ln -s ~/.config/nvim/vimrc   ~/.vimrc
+ln -s ~/.config/zsh/.zshenv  ~/.zshenv
 echo 'Created symlinks'
 
