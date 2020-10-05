@@ -5,11 +5,7 @@ source $HOME/.config/nvim/vimrc
 runtime coc.vim
 
 lua << EOF
-    SL = '<silent><leader>'
-    function noremap(str) vim.cmd('noremap ' .. str) end
-
-    require('mappings')
-    require('plugins')
+    require('config')
 EOF
 
 "" LIGHTLINE

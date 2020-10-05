@@ -1,11 +1,14 @@
 -- Useful aliases
 local g = vim.g
 local cmd = vim.cmd
+function noremapsl(str) vim.cmd('noremap <silent><leader> ' .. str) end
 
--- My WIP package manager
+-- My WIP plugin manager
 cmd 'packadd paq-nvim'
 local Paq = require 'paq-nvim'
 local paq = Paq.paq
+
+-- PLUGINS
 
 paq{'savq/paq-nvim', opt=true}
 
@@ -25,11 +28,9 @@ paq{'norcalli/nvim-colorizer.lua', opt=true} --Highlight hex and rgb colors
 paq{'mechatroner/rainbow_csv',     opt=true}
 cmd 'au BufNewFile,BufRead *.csv packadd rainbow_csv' -- Only load for csv files
 
---Paq.install()
---Paq.update()
 
 -- LSP Client: coc.nvim
-noremap(SL ..'f :call CocAction("format")<cr>')
+noremapsl 'f :call CocAction("format")<cr>'
 
 
 -- Theme: Ayu mirage
@@ -42,8 +43,8 @@ cmd 'hi Comment gui=italic'
 -- Julia
 g.latex_to_unicode_tab = 0
 g.latex_to_unicode_auto = 1
-noremap'<expr> <F7> LaTeXtoUnicode#Toggle()'
-noremap(SL ..'j :!julia %<cr>')
+cmd 'noremap <expr> <F7> LaTeXtoUnicode#Toggle()'
+noremapsl 'j :!julia %<cr>'
 
 
 -- Vimtex
@@ -70,3 +71,28 @@ cmd 'au BufNewFile,BufRead *.md set nowrap'
 g.netrw_banner = 0     --no banner
 g.netrw_liststyle = 3  --tree style listing
 g.netrw_dirhistmax = 0 --no netrw history
+
+
+-- NON-TRIVIAL MAPPINGS
+
+noremapsl 't :sp\\|:te<cr>'           -- Open terminal
+noremapsl 'rc :e ~/.config/nvim<cr>'  -- Open config directory
+-- Print date & time
+noremapsl('d "= "' ..
+    vim.fn.strftime('%Y-%m-%d %T') ..
+    '"<cr>p')
+
+-- Spelling
+noremapsl 'z b1z=e'                -- Correct previous word
+noremapsl 'x 1z=1'                 -- Correct current word
+noremapsl 's :lua CycleLang()<cr>' -- Change spelling language
+
+do -- Lua version of this solution: stackoverflow.com/a/12006781
+    local spl = {i = 1, langs = {'', 'en', 'es', 'de'}}
+    function CycleLang()
+        spl.i = (spl.i % #spl.langs) + 1      --update index
+        vim.bo.spelllang = spl.langs[spl.i]   --change spelllang
+        vim.wo.spell = spl.langs[spl.i] ~= '' --if empty then nospell
+    end
+end
+

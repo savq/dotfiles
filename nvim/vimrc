@@ -1,3 +1,31 @@
+""" MAPPINGS
+
+let mapleader = " "
+noremap ; :
+" Help
+noremap <C-]> K
+" Copy to system clipboard
+noremap Y "+y
+
+" Better navigation
+noremap J }
+noremap K {
+noremap H ^
+noremap L $
+
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
+" Disable arrow keys
+noremap <Up>    <Nop>
+noremap <Down>  <Nop>
+noremap <Left>  <Nop>
+noremap <Right> <Nop>
+
+""" OPTIONS
+
 set mouse=a
 set number
 set relativenumber
