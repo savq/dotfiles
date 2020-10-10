@@ -2,13 +2,6 @@
 " and coc will install the missing extensions for you on server start.
 let g:coc_global_extensions = ["coc-json", "coc-vimtex", "coc-rls"]
 
-set nobackup " Some servers have issues with backup files, see #649.
-set nowritebackup
-set cmdheight=2 " Give more space for displaying messages.
-set updatetime=1000 " default is 4000 ms
-set shortmess+=c " Don't pass messages to |ins-completion-menu|.
-set signcolumn=yes " Always show the signcolumn
-
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -46,7 +39,7 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Show documentation in preview window.
-nnoremap <silent><c-h> :call <SID>show_documentation()<CR>
+nnoremap <silent><c-]> :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)

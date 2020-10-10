@@ -35,6 +35,12 @@ set confirm                "Ask to save stuff
 set hidden                 "Hides buffers instead of closing them
 set fileencoding=utf-8     "Encoding written to file
 
+set nobackup " Some servers have issues with backup files, see #649.
+set nowritebackup
+set cmdheight=2 " Give more space for displaying messages.
+set shortmess+=c " Don't pass messages to |ins-completion-menu|.
+set signcolumn=yes " Always show the signcolumn
+
 """ SPLIT WINDOWS
 set splitright
 set splitbelow
