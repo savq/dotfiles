@@ -48,7 +48,7 @@ noremapsl 'j :!julia %<cr>'
 
 
 -- Vimtex
-g.tex_flavor = 'xelatex'
+g.tex_flavor = 'lualatex' --'xelatex'
 g.vimtex_quickfix_mode = 2 -- Open _only_ if there are errors
 
 

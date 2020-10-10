@@ -73,6 +73,7 @@ alias serve='file_server'   # Deno file server
 
 alias lmk="latexmk"
 alias lmkx="latexmk -xelatex"
+alias lmkl="latexmk -lualatex"
 
 alias gcm='git commit --verbose'
 alias gdd='git add'
