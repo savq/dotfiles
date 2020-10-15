@@ -35,11 +35,12 @@ set confirm                "Ask to save stuff
 set hidden                 "Hides buffers instead of closing them
 set fileencoding=utf-8     "Encoding written to file
 
-set nobackup " Some servers have issues with backup files, see #649.
-set nowritebackup
-set cmdheight=2 " Give more space for displaying messages.
-set shortmess+=c " Don't pass messages to |ins-completion-menu|.
-set signcolumn=yes " Always show the signcolumn
+""" LSP-related
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+set updatetime=300
+set signcolumn=yes
+
 
 """ SPLIT WINDOWS
 set splitright
@@ -77,7 +78,7 @@ set sidescrolloff=20
 
 """ VIM 8
 if !has('nvim')
-  syntax on
+  syntax enable
   set ruler
   "colorscheme desert
   set showcmd

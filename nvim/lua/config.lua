@@ -3,18 +3,19 @@ local g = vim.g
 local cmd = vim.cmd
 function noremapsl(str) vim.cmd('noremap <silent><leader>' .. str) end
 
--- My WIP plugin manager
-cmd 'packadd paq-nvim'
-local Paq = require 'paq-nvim'
-local paq = Paq.paq
-
 -- PLUGINS
-
+cmd 'packadd paq-nvim'
+local paq = require'paq-nvim'.paq
 paq{'savq/paq-nvim', opt=true}
 
-paq{'neoclide/coc.nvim', branch='release'}
-paq 'JuliaEditorSupport/julia-vim'
+-- LSP
+paq 'neovim/nvim-lspconfig'
+paq 'nvim-lua/completion-nvim'
+paq 'nvim-lua/diagnostic-nvim'
+paq 'tjdevries/lsp_extensions.nvim'
 
+
+paq 'JuliaEditorSupport/julia-vim'
 paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
 paq 'vim-pandoc/vim-pandoc'
@@ -22,15 +23,8 @@ paq 'vim-pandoc/vim-pandoc-syntax'
 
 paq 'ayu-theme/ayu-vim'
 paq 'itchyny/lightline.vim'
-
 paq 'junegunn/vim-easy-align'
 paq{'norcalli/nvim-colorizer.lua', opt=true} --Highlight hex and rgb colors
-paq{'mechatroner/rainbow_csv',     opt=true}
-cmd 'au BufNewFile,BufRead *.csv packadd rainbow_csv' -- Only load for csv files
-
-
--- LSP Client: coc.nvim
-noremapsl 'f :call CocAction("format")<cr>'
 
 
 -- Theme: Ayu mirage
