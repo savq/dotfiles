@@ -1,23 +1,16 @@
 " NOTE: Trivial mappings and options are in vimrc
-"       Plugins, non-trivial mappings and anything that uses Lua is in lua/config
-source $HOME/.config/nvim/vimrc
-
-lua << EOF
-    require('config')
-EOF
-
+"       Plugins and non-trivial mappings are in lua/config
+runtime vimrc
 runtime lsp.vim
+lua require('config')
 
 "" LIGHTLINE
 let g:lightline = {
 \   'colorscheme': 'ayu_mirage',
 \   'active':{'left':  [['mode', 'paste'],
-\                       ['gitbranch', 'readonly', 'filename', 'modified'],
-\                       ['cocstatus', 'cocCurrentFun']],
+\                       ['gitbranch', 'readonly', 'filename', 'modified']],
 \             'right': [['percent', 'lineinfo'],
-\                       ['spell', 'filetype', 'fileencoding', 'fileformat']]},
-\   'component_function': {'cocstatus': 'coc#status',
-\                          'cocCurFun': 'CocCurrentFunction'}}
+\                       ['spell', 'filetype', 'fileencoding', 'fileformat']]}}
 
 " wiki.vim function
 function CreateLinkNames(text) abort
