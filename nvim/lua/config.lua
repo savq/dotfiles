@@ -3,17 +3,15 @@ local g = vim.g
 local cmd = vim.cmd
 function noremapsl(str) vim.cmd('noremap <silent><leader>' .. str) end
 
--- PLUGINS
+--- PLUGINS
 cmd 'packadd paq-nvim'
 local paq = require'paq-nvim'.paq
 paq{'savq/paq-nvim', opt=true}
 
--- LSP
 paq 'neovim/nvim-lspconfig'
 paq 'nvim-lua/completion-nvim'
 paq 'nvim-lua/diagnostic-nvim'
 paq 'tjdevries/lsp_extensions.nvim'
-
 
 paq 'JuliaEditorSupport/julia-vim'
 paq 'lervag/vimtex'
@@ -67,14 +65,12 @@ g.netrw_liststyle = 3  --tree style listing
 g.netrw_dirhistmax = 0 --no netrw history
 
 
--- NON-TRIVIAL MAPPINGS
+-- SL MAPPINGS
 
 noremapsl 't :sp\\|:te<cr>'           -- Open terminal
 noremapsl 'rc :e ~/.config/nvim<cr>'  -- Open config directory
 -- Print date & time
-noremapsl('d "= "' ..
-    vim.fn.strftime('%Y-%m-%d %T') ..
-    '"<cr>p')
+noremapsl('d "= "' .. vim.fn.strftime('%Y-%m-%d %T') .. '"<cr>p')
 
 -- Spelling
 noremapsl 'z b1z=e'                -- Correct previous word
