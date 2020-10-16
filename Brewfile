@@ -3,6 +3,7 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
+tap "austinjones/taps"
 
 brew "arduino-cli"
 brew "ccls"           # C language server
@@ -14,9 +15,9 @@ brew "rustup-init"    # Rust toolchain installer
 cask "julia"
 
 #### TUI
-brew "neovim", args: ["HEAD"] # nvim 0.5
-brew "austinjones/taps/tab"   # tab-rs
-brew "zsh-syntax-highlighting"
+brew "neovim", args: ["HEAD"]  # nvim 0.5
+brew "zsh-syntax-highlighting" 
+brew "austinjones/taps/tab"    # tab-rs
 cask "alacritty"
 
 #### Writing
@@ -25,6 +26,7 @@ cask "mactex-no-gui"
 
 #### GUI
 cask "balenaetcher"
+cask "discord"
 cask "firefox"
 cask "font-fira-code"
 cask "font-ibm-plex"
@@ -34,7 +36,7 @@ cask "iina"          # media player
 cask "itsycal"       # calendar in menu bar
 cask "protonvpn"
 cask "qbittorrent"
-cask "rectangle"     # like a tiling wm
+cask "rectangle"     # window manager
 cask "spotify"
 cask "spotmenu"      # spotify in menu bar
 cask "supercollider"
