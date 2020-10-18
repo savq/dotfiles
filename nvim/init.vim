@@ -1,5 +1,6 @@
-" NOTE: Trivial mappings and options are in vimrc
-"       Plugins and non-trivial mappings are in lua/config
-runtime vimrc
-runtime lsp.vim
-lua require('config')
+runtime vimrc " Options and trivial mappings. Also used with vim8 and vscode
+
+if !exists('g:vscode')
+    lua require('config') -- Plugin configurations and more verbose mappings
+    runtime lsp.vim " (WIP) LSP configuration
+endif
