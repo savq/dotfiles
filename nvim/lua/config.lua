@@ -1,7 +1,7 @@
 -- Useful aliases
 local g = vim.g
 local cmd = vim.cmd
-function map(str) vim.cmd('noremap <silent><leader>' .. str) end
+local function map(str) vim.cmd('noremap <silent><leader>' .. str) end
 
 --- PLUGINS
 cmd 'packadd paq-nvim'
@@ -35,15 +35,12 @@ g.wiki_root = '~/Documents/notes/'
 g.wiki_filetypes = {'md'}
 g.wiki_link_target_type = 'md'
 g.wiki_map_link_create = 'CreateLinkNames'
-
-function createlinks(text)
-    return os.date('%Y%m%dT%H%M-') .. text:lower():gsub('[%s.]+', '-')
+function createlinks(txt)
+    return os.date('%Y%m%dT%H%M-') .. txt:lower():gsub('[%s.]+', '-')
 end
-cmd [[
-    function CreateLinkNames(text) abort
-        return v:lua.createlinks(a:text)
-    endfunction
-]]
+cmd [[function CreateLinkNames(txt) abort
+        return v:lua.createlinks(a:txt)
+      endfunction]]
 
 
 -- Julia
@@ -70,8 +67,6 @@ vim.o.termguicolors = true
 g.lightline = {
     colorscheme = 'ayu_mirage',
     active = {
-        left = {{'mode', 'paste'},
-                {'readonly', 'filename', 'modified'}},
         right= {{'percent', 'lineinfo'},
                 {'spell', 'filetype', 'fileencoding', 'fileformat'}}
     }
@@ -85,24 +80,24 @@ g.netrw_dirhistmax = 0 --no netrw history
 
 
 
--- MAPPINGS
+--- OTHER MAPPINGS
 
 map 't :sp\\|:te<cr>'           -- Open terminal
 map 'rc :e ~/.config/nvim<cr>'  -- Open config directory
--- Print date & time
-map('d "= "' .. vim.fn.strftime('%Y-%m-%d %T') .. '"<cr>p')
+map('d "= "' .. os.date('%Y-%m-%d T %T') .. '"<cr>p') -- Print date & time
 
 -- Spelling
 map 'z b1z=e'                -- Correct previous word
 map 'x 1z=1'                 -- Correct current word
-map 's :lua CycleLang()<cr>' -- Change spelling language
+map 's :lua cyclelang()<cr>' -- Change spelling language
 
 do -- Lua version of this solution: stackoverflow.com/a/12006781
-    local spl = {i = 1, langs = {'', 'en', 'es', 'de'}}
-    function CycleLang()
-        spl.i = (spl.i % #spl.langs) + 1      --update index
-        vim.bo.spelllang = spl.langs[spl.i]   --change spelllang
-        vim.wo.spell = spl.langs[spl.i] ~= '' --if empty then nospell
+    local i = 1
+    local langs = {'', 'en', 'es', 'de'}
+    function cyclelang()
+        i = (i % #langs) + 1          -- update index
+        vim.bo.spelllang = langs[i]   -- change spelllang
+        vim.wo.spell = langs[i] ~= '' -- if empty then nospell
     end
 end
 
