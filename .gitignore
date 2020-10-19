@@ -1,9 +1,6 @@
-# Config dirs I don't track
-qbittorrent/
-# zsh generated files
-zsh/.zcompdump
-zsh/.zcompcache
-zsh/.zsh_history
-# symlink to plugins' directory
 nvim/paqs
-
+nvim/spell
+qbittorrent/
+zsh/.zcompcache
+zsh/.zcompdump
+zsh/.zsh_history
