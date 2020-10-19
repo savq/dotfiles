@@ -73,13 +73,6 @@ g.lightline = {
 }
 
 
--- Netrw
-g.netrw_banner = 0     --no banner
-g.netrw_liststyle = 3  --tree style listing
-g.netrw_dirhistmax = 0 --no netrw history
-
-
-
 --- OTHER MAPPINGS
 
 map 't :sp\\|:te<cr>'           -- Open terminal

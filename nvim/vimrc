@@ -2,17 +2,20 @@
 
 let mapleader = " "
 noremap ; :
+
 " Help
 noremap <C-]> K
+
 " Copy to system clipboard
 noremap Y "+y
 
-" Better navigation
+" Better buffer navigation
 noremap J }
 noremap K {
 noremap H ^
 noremap L $
 
+" Better window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
@@ -21,57 +24,56 @@ noremap <C-l> <C-w>l
 
 """ OPTIONS
 
+""" General
 set mouse=a
-set number
 set relativenumber
 set wildignorecase
 set noshowmode
-set confirm                "Ask to save stuff
-set hidden                 "Hides buffers instead of closing them
-set fileencoding=utf-8     "Encoding written to file
+set confirm            "Ask to save stuff
+set hidden             "Hides buffers instead of closing them
+set fileencoding=utf-8 "Encoding written to file
 
 """ LSP-related
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c
+set signcolumn=number
 set updatetime=300
-set signcolumn=yes
 
-
-""" SPLIT WINDOWS
-set splitright
+""" Split windows
 set splitbelow
+set splitright
 
-""" POSITION
-set cursorline
+""" Position
 set cursorcolumn
+set cursorline
 set colorcolumn=81
 
-""" SEARCH
+""" Search
 set ignorecase
 set smartcase
 
-""" WHITESPACE
+""" Whitespace
 set list
 set listchars=tab:\|-,trail:*,extends:>,precedes:<,nbsp:_ "eol:~
 set listchars+=space:· "not ASCII
 
-""" INDENTATION
+""" Indentation
+set expandtab     "<tab> inserts spaces
 set smartindent
-set expandtab    "<tab> inserts spaces
-set tabstop=4
 set shiftwidth=4
 set softtabstop=4
+set tabstop=4
 
-""" FOLDS
-set foldmethod=indent
+""" Folds
 set foldlevel=2
+set foldmethod=indent
 
-""" SCROLLING
+""" Scrolling
 set nowrap
 set scrolloff=20    "Keeps cursor centred
 set sidescrolloff=20
 
-""" VIM 8
+""" Vim 8
 if !has('nvim')
   syntax enable
   set ruler
@@ -84,3 +86,8 @@ if !has('nvim')
   set autoindent
   set laststatus=2
 endif
+
+" Netrw
+let g:netrw_banner = 0     " no banner
+let g:netrw_liststyle = 3  " tree style listing
+let g:netrw_dirhistmax = 0 " no netrw history
