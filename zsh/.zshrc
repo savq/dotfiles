@@ -30,13 +30,14 @@ alias lmkl="latexmk -lualatex"
 alias gcm='git commit --verbose'
 alias gdd='git add'
 alias gdf='git diff'
-alias glg='git log'
+alias glg='git log --oneline'
 alias gpl='git pull'
 alias gsh='git push'
-alias gst='git status'
+alias gst='git status --short --branch'
 
-alias tabl='tab -l'
-alias tabc='tab -w'
+alias tb='tab'
+alias tbc='tab --close'
+alias tbl='tab --list'
 
 # PATH
 export PATH="$HOME/.cargo/bin:$HOME/.deno/bin:$PATH"
