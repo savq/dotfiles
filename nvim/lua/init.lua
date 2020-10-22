@@ -75,6 +75,7 @@ g.lightline = {
 
 --- OTHER MAPPINGS
 
+map 'l :luafile %<cr>'          -- Source lua file
 map 't :sp\\|:te<cr>'           -- Open terminal
 map 'rc :e ~/.config/nvim<cr>'  -- Open config directory
 map('d "= "' .. os.date('%Y-%m-%d T %T') .. '"<cr>p') -- Print date & time

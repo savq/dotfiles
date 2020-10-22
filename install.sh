@@ -10,3 +10,7 @@ ln -s ~/.config/nvim/vimrc   ~/.vimrc
 ln -s ~/.config/zsh/.zshenv  ~/.zshenv
 echo 'Created symlinks'
 
+# Install Paq :)
+git clone https://github.com/savq/paq-nvim.git \
+    "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/pack/paqs/opt/paq-nvim
+
