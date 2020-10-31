@@ -19,6 +19,9 @@ paq 'vim-pandoc/vim-pandoc'
 paq 'vim-pandoc/vim-pandoc-syntax'
 
 paq 'JuliaEditorSupport/julia-vim'
+paq 'euclidianAce/BetterLua.vim'
+paq 'rust-lang/rust.vim'
+paq 'kylelaker/riscv.vim'
 
 paq 'ayu-theme/ayu-vim'
 paq 'itchyny/lightline.vim'
