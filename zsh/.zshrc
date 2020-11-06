@@ -19,13 +19,14 @@ alias rm='rm -v'
 
 alias arduino='arduino-cli'
 alias cc='clang'
-alias jl='julia' pluto="julia -e 'using Pluto; Pluto.run(8000)'"
+alias jl='julia'
+alias pluto="julia -e 'using Pluto; Pluto.run(port=8000)'"
 alias py='python3' pip='pip3' pyvenv='python3 -m venv'
-alias serve='file_server'   # Deno file server
+alias serve='file_server' # Deno file server
 
-alias lmk="latexmk"
-alias lmkx="latexmk -xelatex"
-alias lmkl="latexmk -lualatex"
+alias rsc='cargo check'
+alias rsr='cargo run'
+alias rst='cargo test'
 
 alias gcm='git commit --verbose'
 alias gdd='git add'
@@ -35,7 +36,11 @@ alias gpl='git pull'
 alias gsh='git push'
 alias gst='git status --short --branch'
 
-alias tb='tab'
+alias lmk="latexmk"
+alias lmkc="latexmk -c"
+alias lmkx="latexmk -xelatex"
+alias lmkl="latexmk -lualatex"
+
 alias tbc='tab --close'
 alias tbl='tab --list'
 
