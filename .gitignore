@@ -1,6 +1,7 @@
 nvim/paqs
 nvim/spell
 qbittorrent/
+configstore/
 zsh/.zcompcache
 zsh/.zcompdump
 zsh/.zsh_history
