@@ -29,6 +29,7 @@ alias rsr='cargo run'
 alias rst='cargo test'
 
 alias gcm='git commit --verbose'
+alias gco='git checkout'
 alias gdd='git add'
 alias gdf='git diff'
 alias glg='git log --oneline'
