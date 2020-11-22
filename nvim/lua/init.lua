@@ -3,15 +3,13 @@ local g, o, wo, bo = vim.g, vim.o, vim.wo, vim.bo
 local cmd = vim.cmd
 local function map(str) vim.cmd('noremap <silent><leader>' .. str) end
 
---- PLUGINS
 cmd 'packadd paq-nvim'
 local paq = require'paq-nvim'.paq
 paq{'savq/paq-nvim', opt=true}
 
 paq 'neovim/nvim-lspconfig'
 paq 'nvim-lua/completion-nvim'
-paq 'nvim-lua/diagnostic-nvim'
-paq 'tjdevries/lsp_extensions.nvim'
+paq 'nvim-lua/lsp_extensions.nvim'
 
 paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
@@ -25,9 +23,9 @@ paq 'kylelaker/riscv.vim'
 
 paq 'ayu-theme/ayu-vim'
 paq 'itchyny/lightline.vim'
-paq 'junegunn/vim-easy-align'
 paq{'norcalli/nvim-colorizer.lua', opt=true} --Highlight hex and rgb colors
-
+paq 'junegunn/vim-easy-align'
+paq 'mechatroner/rainbow_csv'
 
 -- Vimtex
 g.tex_flavor = 'lualatex'
@@ -108,4 +106,3 @@ map 'l :luafile %<cr>'          -- Source lua file
 map 't :sp\\|:te<cr>'           -- Open terminal
 map 'rc :e ~/.config/nvim<cr>'  -- Open config directory
 map('d "= "' .. os.date('%Y-%m-%d T %T') .. '"<cr>p') -- Print date & time
-

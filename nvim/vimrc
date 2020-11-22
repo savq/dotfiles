@@ -1,6 +1,6 @@
 """ MAPPINGS
 
-let mapleader = " "
+let mapleader = ' '
 noremap ; :
 
 " Help
@@ -26,6 +26,7 @@ noremap <C-l> <C-w>l
 
 """ General
 set mouse=a
+set number
 set relativenumber
 set wildignorecase
 set noshowmode

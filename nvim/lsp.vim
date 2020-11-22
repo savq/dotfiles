@@ -1,49 +1,27 @@
-" Based on <sharksforarms.dev/posts/neovim-rust/>
-
-packadd nvim-lspconfig
-packadd completion-nvim
-packadd diagnostic-nvim
-
 lua << EOF
-    local lsp_conf = require'nvim_lsp'
+    local lsp_conf = require'lspconfig'
     local lsp_cmpl = require'completion'
-    local lsp_diag = require'diagnostic'
-
-    -- function to attach completion and diagnostics when setting up lsp
-    local function on_attach(client)
-        lsp_cmpl.on_attach(client)
-        lsp_diag.on_attach(client)
-    end
-
-    lsp_conf.rls.setup{on_attach=on_attach} --NOTE: Wait for rust-analyzer to become default
+    lsp_conf.rls.setup{on_attach = lsp_cmpl.on_attach}
+    lsp_conf.texlab.setup{on_attach = lsp_cmpl.on_attach}
 EOF
 
-" Code navigation shortcuts
-"nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+"autocmd BufEnter * lua require'completion'.on_attach()
 
 " Complete with tab
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Show diagnostic popup on cursor hold
-autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gs    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 
-" Goto previous/next diagnostic warning/error
-nnoremap <silent> g[ <cmd>PrevDiagnosticCycle<cr>
-nnoremap <silent> g] <cmd>NextDiagnosticCycle<cr>
+" Navigate diagnostics
+nnoremap <silent>d, <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent>d; <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 
 " Enable type inlay hints
-autocmd CursorMoved,InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *
-\ lua require'lsp_extensions'.inlay_hints{ prefix = '', highlight = "Comment" }
+autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{}
 
 " Auto-format *.rs files prior to saving them
 autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil)
-
