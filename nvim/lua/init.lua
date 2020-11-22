@@ -1,7 +1,9 @@
 -- Useful aliases
 local g, o, wo, bo = vim.g, vim.o, vim.wo, vim.bo
 local cmd = vim.cmd
-local function map(str) vim.cmd('noremap <silent><leader>' .. str) end
+local function map(lhs, rhs)
+    vim.api.nvim_set_keymap('n', '<leader>' .. lhs, rhs, {noremap=true, silent=true})
+end
 
 cmd 'packadd paq-nvim'
 local paq = require'paq-nvim'.paq
@@ -30,7 +32,6 @@ paq 'mechatroner/rainbow_csv'
 -- Vimtex
 g.tex_flavor = 'lualatex'
 
-
 -- Wiki.vim
 g.wiki_root = '~/Documents/wiki/'
 g.wiki_filetypes = {'md'}
@@ -43,13 +44,11 @@ cmd [[function! CreateLinkNames(txt) abort
         return v:lua.createlinks(a:txt)
       endfunction]]
 
-
 -- Julia
 g.latex_to_unicode_tab = 0
 g.latex_to_unicode_auto = 1
 g.latex_to_unicode_file_types = {'julia', 'lisp', 'pandoc'}
-map 'j :!julia %<cr>'
-
+map('j', ':!julia %<cr>')
 
 -- Pandoc markdown
 g['pandoc#spell#enabled'] = 0
@@ -58,13 +57,11 @@ g['pandoc#syntax#conceal#urls'] = 1
 g['pandoc#folding#fdc'] = 0
 cmd 'au BufNewFile,BufRead *.md set nowrap'
 
-
 -- Theme: Ayu mirage
 cmd 'colorscheme ayu'
 cmd 'autocmd ColorScheme * hi Comment gui=italic'
 g.ayucolor = 'mirage'
 o.termguicolors = true
-
 
 -- Lightline
 g.lightline = {
@@ -75,12 +72,11 @@ g.lightline = {
     }
 }
 
-
 -- Spelling
-map 'x b1z=e'                -- Correct previous word
-map 'c 1z=1'                 -- Correct current word
-map 's :lua cyclelang()<cr>' -- Change spelling language
-do -- Lua version of this solution: stackoverflow.com/a/12006781
+map('x', 'b1z=e')                -- Correct previous word
+map('c', '1z=1')                 -- Correct current word
+map('s', ':lua cyclelang()<cr>') -- Change spelling language
+do
     local i = 1
     local langs = {'', 'en', 'es', 'de'}
     function cyclelang()
@@ -90,19 +86,17 @@ do -- Lua version of this solution: stackoverflow.com/a/12006781
     end
 end
 
-
 -- Poor man's Zen mode
-map 'z :lua togglezen()<cr>'
+map('z', ':lua togglezen()<cr>')
 function togglezen()
     o.laststatus      = o.laststatus == 2 and 0 or 2
     o.ruler           = not o.ruler
+    wo.list           = not wo.list
     wo.number         = not wo.number
     wo.relativenumber = not wo.relativenumber
 end
 
-
 --- Other mappings
-map 'l :luafile %<cr>'          -- Source lua file
-map 't :sp\\|:te<cr>'           -- Open terminal
-map 'rc :e ~/.config/nvim<cr>'  -- Open config directory
-map('d "= "' .. os.date('%Y-%m-%d T %T') .. '"<cr>p') -- Print date & time
+map('l', ':luafile %<cr>')         -- Source lua file
+map('t', ':sp\\|:te<cr>')          -- Open terminal
+map('rc', ':e ~/.config/nvim<cr>') -- Open config directory
