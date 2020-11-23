@@ -13,21 +13,29 @@ paq 'neovim/nvim-lspconfig'
 paq 'nvim-lua/completion-nvim'
 paq 'nvim-lua/lsp_extensions.nvim'
 
+paq 'nvim-treesitter/nvim-treesitter'
+
+paq 'rust-lang/rust.vim'
+paq 'kylelaker/riscv.vim'
+paq 'JuliaEditorSupport/julia-vim'
+
 paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
 paq 'vim-pandoc/vim-pandoc'
 paq 'vim-pandoc/vim-pandoc-syntax'
-
-paq 'JuliaEditorSupport/julia-vim'
-paq 'euclidianAce/BetterLua.vim'
-paq 'rust-lang/rust.vim'
-paq 'kylelaker/riscv.vim'
 
 paq 'ayu-theme/ayu-vim'
 paq 'itchyny/lightline.vim'
 paq{'norcalli/nvim-colorizer.lua', opt=true} --Highlight hex and rgb colors
 paq 'junegunn/vim-easy-align'
 paq 'mechatroner/rainbow_csv'
+
+-- Treesitter
+local treesitter = require'nvim-treesitter.configs'
+treesitter.setup {
+    ensure_installed = {'rust', 'c', 'lua'},
+    highlight = {enable = true},
+}
 
 -- Vimtex
 g.tex_flavor = 'lualatex'
@@ -52,9 +60,10 @@ map('j', ':!julia %<cr>')
 
 -- Pandoc markdown
 g['pandoc#spell#enabled'] = 0
-g['pandoc#syntax#conceal#use'] = 1
-g['pandoc#syntax#conceal#urls'] = 1
+--g['pandoc#syntax#conceal#use'] = 0
+--g['pandoc#syntax#conceal#urls'] = 0
 g['pandoc#folding#fdc'] = 0
+g['pandoc#syntax#codeblocks#embeds#langs'] = {'c', 'sh', 'lua'}
 cmd 'au BufNewFile,BufRead *.md set nowrap'
 
 -- Theme: Ayu mirage
