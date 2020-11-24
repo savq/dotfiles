@@ -1,6 +1,5 @@
 -- Useful aliases
-local g, o, wo, bo = vim.g, vim.o, vim.wo, vim.bo
-local cmd = vim.cmd
+local cmd, g, o, w, b = vim.cmd, vim.g, vim.o, vim.wo, vim.bo
 local function map(lhs, rhs)
     vim.api.nvim_set_keymap('n', '<leader>' .. lhs, rhs, {noremap=true, silent=true})
 end
@@ -38,7 +37,7 @@ treesitter.setup {
 }
 
 -- Vimtex
-g.tex_flavor = 'lualatex'
+g.tex_flavor = 'xelatex'
 
 -- Wiki.vim
 g.wiki_root = '~/Documents/wiki/'
@@ -52,19 +51,18 @@ cmd [[function! CreateLinkNames(txt) abort
         return v:lua.createlinks(a:txt)
       endfunction]]
 
--- Julia
-g.latex_to_unicode_tab = 0
-g.latex_to_unicode_auto = 1
-g.latex_to_unicode_file_types = {'julia', 'lisp', 'pandoc'}
-map('j', ':!julia %<cr>')
-
 -- Pandoc markdown
 g['pandoc#spell#enabled'] = 0
 --g['pandoc#syntax#conceal#use'] = 0
 --g['pandoc#syntax#conceal#urls'] = 0
-g['pandoc#folding#fdc'] = 0
 g['pandoc#syntax#codeblocks#embeds#langs'] = {'c', 'sh', 'lua'}
 cmd 'au BufNewFile,BufRead *.md set nowrap'
+
+-- Julia
+g.latex_to_unicode_tab = 0
+g.latex_to_unicode_auto = 1
+g.latex_to_unicode_file_types = {'julia', 'lisp', 'pandoc'}
+map('j', ':!julia %<cr>') -- Execute julia file. TODO: How not to recompile everything?
 
 -- Theme: Ayu mirage
 cmd 'colorscheme ayu'
@@ -76,8 +74,10 @@ o.termguicolors = true
 g.lightline = {
     colorscheme = 'ayu_mirage',
     active = {
-        right= {{'percent', 'lineinfo'},
-                {'spell', 'filetype', 'fileencoding', 'fileformat'}}
+        right = {
+            {'percent', 'lineinfo'},
+            {'spell', 'filetype', 'fileencoding', 'fileformat'}
+        }
     }
 }
 
@@ -89,20 +89,20 @@ do
     local i = 1
     local langs = {'', 'en', 'es', 'de'}
     function cyclelang()
-        i = (i % #langs) + 1          -- update index
-        bo.spelllang = langs[i]   -- change spelllang
-        wo.spell = langs[i] ~= '' -- if empty then nospell
+        i = (i % #langs) + 1     -- update index
+        b.spelllang = langs[i]   -- change spelllang
+        w.spell = langs[i] ~= '' -- if empty then nospell
     end
 end
 
 -- Poor man's Zen mode
 map('z', ':lua togglezen()<cr>')
 function togglezen()
-    o.laststatus      = o.laststatus == 2 and 0 or 2
-    o.ruler           = not o.ruler
-    wo.list           = not wo.list
-    wo.number         = not wo.number
-    wo.relativenumber = not wo.relativenumber
+    o.laststatus     = o.laststatus == 2 and 0 or 2
+    o.ruler          = not o.ruler
+    w.list           = not w.list
+    w.number         = not w.number
+    w.relativenumber = not w.relativenumber
 end
 
 --- Other mappings
