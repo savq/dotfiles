@@ -20,7 +20,7 @@ paq 'JuliaEditorSupport/julia-vim'
 
 paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
-paq 'vim-pandoc/vim-pandoc'
+--paq 'vim-pandoc/vim-pandoc'
 paq 'vim-pandoc/vim-pandoc-syntax'
 
 paq 'ayu-theme/ayu-vim'
@@ -53,10 +53,11 @@ cmd [[function! CreateLinkNames(txt) abort
 
 -- Pandoc markdown
 g['pandoc#spell#enabled'] = 0
---g['pandoc#syntax#conceal#use'] = 0
---g['pandoc#syntax#conceal#urls'] = 0
 g['pandoc#syntax#codeblocks#embeds#langs'] = {'c', 'sh', 'lua'}
-cmd 'au BufNewFile,BufRead *.md set nowrap'
+--g['pandoc#syntax#conceal#use'] = 0
+cmd[[augroup pandoc_syntax
+        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+    augroup END]]
 
 -- Julia
 g.latex_to_unicode_tab = 0
