@@ -14,14 +14,18 @@ brew "python"         # >= 3.8
 brew "rustup-init"    # Rust toolchain installer
 cask "julia"
 
+brew "wabt"      # wasm binary toolkit
+brew "wasm-pack" # rust + wasm
+
 #### TUI
 brew "neovim", args: ["HEAD"]  # nvim 0.5
-brew "zsh-syntax-highlighting" 
-brew "austinjones/taps/tab"    # tab-rs
+brew "zsh-syntax-highlighting"
+brew "austinjones/taps/tab"    # tab-rs term-multiplexer
 cask "alacritty"
 
 #### Writing
 brew "pandoc"
+brew "texlab"        # TeX language server
 cask "mactex-no-gui"
 
 #### GUI
