@@ -48,8 +48,8 @@ alias tbl='tab --list'
 # PATH
 export PATH="$HOME/.cargo/bin:$HOME/.deno/bin:$PATH"
 
-export TEXDIR="$HOME/.latex/"
-export PATH="$TEXDIR:$PATH"
+export TEXDIR="$HOME/.latex"
+export PATH="$TEXDIR/bin:$PATH"
 
 # LLVM (homebrew installed version)
 export PATH="/usr/local/opt/llvm/bin:$PATH"
@@ -114,3 +114,6 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # man zshcompsys
 # User's guide Ch. 6: <http://zsh.sourceforge.net/Guide/zshguide06.html#l144>
 
+# tab multiplexer configuration: https://github.com/austinjones/tab-rs/
+source "/Users/savq/Library/Application Support/tab/completion/zsh-history.zsh"
+# end tab configuration
