@@ -55,7 +55,7 @@ set smartcase
 
 """ Whitespace
 set list
-set listchars=tab:\|-,trail:*,extends:>,precedes:<,nbsp:_ "eol:~
+set listchars=tab:\|-,trail:*,extends:>,precedes:<,nbsp:_,eol:~
 set listchars+=space:· "not ASCII
 
 """ Indentation

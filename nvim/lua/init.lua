@@ -26,6 +26,9 @@ paq 'vim-pandoc/vim-pandoc-syntax'
 paq 'ayu-theme/ayu-vim'
 paq 'itchyny/lightline.vim'
 paq{'norcalli/nvim-colorizer.lua', opt=true} --Highlight hex and rgb colors
+paq 'rktjmp/lush.nvim'
+paq 'savq/lush-template' --Prevent template from being deleted
+
 paq 'junegunn/vim-easy-align'
 paq 'mechatroner/rainbow_csv'
 
@@ -99,14 +102,17 @@ end
 -- Poor man's Zen mode
 map('z', ':lua togglezen()<cr>')
 function togglezen()
-    o.laststatus     = o.laststatus == 2 and 0 or 2
-    o.ruler          = not o.ruler
-    w.list           = not w.list
+    w.list           = not w.list            --(hidden chars)
     w.number         = not w.number
     w.relativenumber = not w.relativenumber
+    w.cursorline     = not w.cursorline
+    w.cursorcolumn   = not w.cursorcolumn
+    w.colorcolumn    = w.colorcolumn == '0' and '80' or '0'
+    o.laststatus     = o.laststatus == 2 and 0 or 2
+    o.ruler          = not o.ruler
 end
 
 --- Other mappings
-map('l', ':luafile %<cr>')         -- Source lua file
-map('t', ':sp\\|:te<cr>')          -- Open terminal
-map('rc', ':e ~/.config/nvim<cr>') -- Open config directory
+map('l',  '<cmd>luafile %<cr>')  -- Source lua file
+map('t',  '<cmd> sp<cr>|<cmd>te   <cr>i') -- Open terminal
+map('rc', '<cmd> e ~/.config/nvim <cr>')  -- Open config directory
