@@ -1,3 +1,7 @@
+vim.cmd 'runtime vimrc'
+vim.cmd 'runtime lsp.vim' -- TODO: transcribe to lua
+
+
 -- Useful aliases
 local cmd, g, o, w, b = vim.cmd, vim.g, vim.o, vim.wo, vim.bo
 local function map(lhs, rhs)
@@ -11,7 +15,6 @@ paq{'savq/paq-nvim', opt=true}
 paq 'neovim/nvim-lspconfig'
 paq 'nvim-lua/completion-nvim'
 paq 'nvim-lua/lsp_extensions.nvim'
-
 paq 'nvim-treesitter/nvim-treesitter'
 
 paq 'rust-lang/rust.vim'
@@ -24,7 +27,7 @@ paq 'lervag/wiki.vim'
 paq 'vim-pandoc/vim-pandoc-syntax'
 
 paq 'ayu-theme/ayu-vim'
-paq 'itchyny/lightline.vim'
+--paq 'itchyny/lightline.vim'
 paq{'norcalli/nvim-colorizer.lua', opt=true} --Highlight hex and rgb colors
 paq 'rktjmp/lush.nvim'
 paq 'savq/lush-template' --Prevent template from being deleted
@@ -36,7 +39,7 @@ paq 'mechatroner/rainbow_csv'
 local treesitter = require'nvim-treesitter.configs'
 treesitter.setup {
     ensure_installed = {'rust', 'c', 'lua'},
-    highlight = {enable = true},
+    highlight = {enable = false},
 }
 
 -- Vimtex
@@ -68,22 +71,22 @@ g.latex_to_unicode_auto = 1
 g.latex_to_unicode_file_types = {'julia', 'lisp', 'pandoc'}
 map('j', ':!julia %<cr>') -- Execute julia file. TODO: How not to recompile everything?
 
--- Theme: Ayu mirage
-cmd 'colorscheme ayu'
-cmd 'autocmd ColorScheme * hi Comment gui=italic'
+-- Colorscheme
+cmd 'colorscheme lush_template'
+--cmd 'autocmd ColorScheme * hi Comment gui=italic'
 g.ayucolor = 'mirage'
 o.termguicolors = true
 
 -- Lightline
-g.lightline = {
-    colorscheme = 'ayu_mirage',
-    active = {
-        right = {
-            {'percent', 'lineinfo'},
-            {'spell', 'filetype', 'fileencoding', 'fileformat'}
-        }
-    }
-}
+--g.lightline = {
+--    colorscheme = 'ayu_mirage',
+--    active = {
+--        right = {
+--            {'percent', 'lineinfo'},
+--            {'spell', 'filetype', 'fileencoding', 'fileformat'}
+--        }
+--    }
+--}
 
 -- Spelling
 map('x', 'b1z=e')                -- Correct previous word
