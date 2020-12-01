@@ -1,46 +1,31 @@
-vim.cmd 'runtime vimrc'
-vim.cmd 'runtime lsp.vim' -- TODO: transcribe to lua
-
-
 -- Useful aliases
 local cmd, g, o, w, b = vim.cmd, vim.g, vim.o, vim.wo, vim.bo
 local function map(lhs, rhs)
     vim.api.nvim_set_keymap('n', '<leader>' .. lhs, rhs, {noremap=true, silent=true})
 end
 
-cmd 'packadd paq-nvim'
-local paq = require'paq-nvim'.paq
-paq{'savq/paq-nvim', opt=true}
+require 'lsp'
+cmd 'runtime vimrc'
 
-paq 'neovim/nvim-lspconfig'
-paq 'nvim-lua/completion-nvim'
-paq 'nvim-lua/lsp_extensions.nvim'
-paq 'nvim-treesitter/nvim-treesitter'
+---- Treesitter
+o.termguicolors = true
+cmd 'colorscheme lush_template'
+--local treesitter = require'vim-treesitter.configs'
+--treesitter.setup {
+--    ensure_installed = {'rust', 'c', 'lua'},
+--    highlight = {enable = false},
+--}
 
-paq 'rust-lang/rust.vim'
-paq 'kylelaker/riscv.vim'
-paq 'JuliaEditorSupport/julia-vim'
-
-paq 'lervag/vimtex'
-paq 'lervag/wiki.vim'
---paq 'vim-pandoc/vim-pandoc'
-paq 'vim-pandoc/vim-pandoc-syntax'
-
-paq 'ayu-theme/ayu-vim'
---paq 'itchyny/lightline.vim'
-paq{'norcalli/nvim-colorizer.lua', opt=true} --Highlight hex and rgb colors
-paq 'rktjmp/lush.nvim'
-paq 'savq/lush-template' --Prevent template from being deleted
-
-paq 'junegunn/vim-easy-align'
-paq 'mechatroner/rainbow_csv'
-
--- Treesitter
-local treesitter = require'nvim-treesitter.configs'
-treesitter.setup {
-    ensure_installed = {'rust', 'c', 'lua'},
-    highlight = {enable = false},
-}
+---- Lightline
+--g.lightline = {
+--    colorscheme = 'ayu_mirage',
+--    active = {
+--        right = {
+--            {'percent', 'lineinfo'},
+--            {'spell', 'filetype', 'fileencoding', 'fileformat'}
+--        }
+--    }
+--}
 
 -- Vimtex
 g.tex_flavor = 'xelatex'
@@ -60,7 +45,7 @@ cmd [[function! CreateLinkNames(txt) abort
 -- Pandoc markdown
 g['pandoc#spell#enabled'] = 0
 g['pandoc#syntax#codeblocks#embeds#langs'] = {'c', 'sh', 'lua'}
---g['pandoc#syntax#conceal#use'] = 0
+g['pandoc#syntax#conceal#use'] = 0
 cmd[[augroup pandoc_syntax
         au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
     augroup END]]
@@ -70,23 +55,6 @@ g.latex_to_unicode_tab = 0
 g.latex_to_unicode_auto = 1
 g.latex_to_unicode_file_types = {'julia', 'lisp', 'pandoc'}
 map('j', ':!julia %<cr>') -- Execute julia file. TODO: How not to recompile everything?
-
--- Colorscheme
-cmd 'colorscheme lush_template'
---cmd 'autocmd ColorScheme * hi Comment gui=italic'
-g.ayucolor = 'mirage'
-o.termguicolors = true
-
--- Lightline
---g.lightline = {
---    colorscheme = 'ayu_mirage',
---    active = {
---        right = {
---            {'percent', 'lineinfo'},
---            {'spell', 'filetype', 'fileencoding', 'fileformat'}
---        }
---    }
---}
 
 -- Spelling
 map('x', 'b1z=e')                -- Correct previous word
@@ -115,7 +83,7 @@ function togglezen()
     o.ruler          = not o.ruler
 end
 
---- Other mappings
-map('l',  '<cmd>luafile %<cr>')  -- Source lua file
-map('t',  '<cmd> sp<cr>|<cmd>te   <cr>i') -- Open terminal
-map('rc', '<cmd> e ~/.config/nvim <cr>')  -- Open config directory
+-- Other mappings
+map('l',  '<cmd>luafile %<cr>')           -- source lua file
+map('t',  '<cmd> sp<cr>|<cmd>te   <cr>i') -- open terminal
+map('rc', '<cmd> e ~/.config/nvim <cr>')  -- open config directory
