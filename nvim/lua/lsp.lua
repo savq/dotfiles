@@ -6,18 +6,22 @@ lsp_conf.texlab.setup{on_attach = lsp_cmpl.on_attach}
 
 --autocmd BufEnter * lua require'completion'.on_attach()
 
--- Complete with tab
-cmd [[inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"]]
-cmd [[inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"]]
+local function lspmap(lhs, rhs, mode)
+    vim.api.nvim_set_keymap(mode or 'n', '<silent>' .. lhs, '<cmd>lua '..rhs..'<cr>', {noremap=true, silent=true})
+end
 
-cmd[[nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>]]
-cmd[[nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>]]
-cmd[[nnoremap <silent> gs    <cmd>lua vim.lsp.buf.document_symbol()<CR>]]
-cmd[[nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>]]
+lspmap('gd', 'vim.lsp.buf.definition()')
+lspmap('gr', 'vim.lsp.buf.references()')
+lspmap('gs', 'vim.lsp.buf.document_symbol()')
+lspmap('ga', 'vim.lsp.buf.code_action()')
 
 -- Navigate diagnostics
-cmd[[nnoremap <silent>d, <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>]]
-cmd[[nnoremap <silent>d; <cmd>lua vim.lsp.diagnostic.goto_next()<CR>]]
+lspmap('d,', 'vim.lsp.diagnostic.goto_prev()')
+lspmap('d;', 'vim.lsp.diagnostic.goto_next()')
+
+-- Complete with tab
+cmd[[inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"]]
+cmd[[inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"]]
 
 -- Enable type inlay hints
 cmd[[autocmd CursorHold,CursorHoldI *.rs :lua require'lsp_extensions'.inlay_hints{}]]
