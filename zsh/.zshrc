@@ -16,6 +16,7 @@ fi
 alias l='ls -1A'
 alias ll='ls -AlF'
 alias rm='rm -v'
+alias sym='ln -s'
 
 alias arduino='arduino-cli'
 alias cc='clang'
