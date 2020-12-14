@@ -5,27 +5,28 @@ local function map(lhs, rhs)
 end
 
 require 'lsp'
-cmd 'runtime vimrc'
+cmd'runtime vimrc'
 
 ---- Treesitter
 o.termguicolors = true
-cmd 'colorscheme lush_template'
---local treesitter = require'vim-treesitter.configs'
---treesitter.setup {
---    ensure_installed = {'rust', 'c', 'lua'},
---    highlight = {enable = false},
---}
+cmd 'colorscheme ayu'
+g.ayucolor = 'mirage'
+local treesitter = require'nvim-treesitter.configs'
+treesitter.setup {
+    ensure_installed = {'rust', 'c', 'lua'},
+    highlight = {enable = true},
+}
 
 ---- Lightline
---g.lightline = {
---    colorscheme = 'ayu_mirage',
---    active = {
---        right = {
---            {'percent', 'lineinfo'},
---            {'spell', 'filetype', 'fileencoding', 'fileformat'}
---        }
---    }
---}
+g.lightline = {
+    colorscheme = 'ayu_mirage',
+    active = {
+        right = {
+            {'percent', 'lineinfo'},
+            {'spell', 'filetype', 'fileencoding', 'fileformat'}
+        }
+    }
+}
 
 -- Vimtex
 g.tex_flavor = 'xelatex'
