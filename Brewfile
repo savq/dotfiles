@@ -9,7 +9,7 @@ brew "arduino-cli"
 brew "ccls"           # C language server
 brew "deno"
 brew "node"
-brew "minimal-racket" # SICP
+#brew "minimal-racket" # try a smaller scheme
 brew "python"         # >= 3.8
 brew "rustup-init"    # Rust toolchain installer
 cask "julia"
@@ -26,10 +26,9 @@ cask "alacritty"
 #### Writing
 brew "pandoc"
 brew "texlab"        # TeX language server
-cask "mactex-no-gui"
+#cask "mactex-no-gui" #try tectonic?
 
 #### GUI
-cask "balenaetcher"
 cask "discord"
 cask "firefox"
 cask "font-fira-code"
