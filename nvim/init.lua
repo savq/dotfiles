@@ -7,12 +7,13 @@ end
 require 'lsp'
 cmd'runtime vimrc'
 
----- Treesitter
-o.termguicolors = true
+---- Colorscheme
 cmd 'colorscheme ayu'
 g.ayucolor = 'mirage'
-local treesitter = require'nvim-treesitter.configs'
-treesitter.setup {
+o.termguicolors = true
+
+---- Treesitter
+require('nvim-treesitter.configs').setup {
     ensure_installed = {'rust', 'c', 'lua'},
     highlight = {enable = true},
 }
@@ -45,8 +46,8 @@ cmd [[function! CreateLinkNames(txt) abort
 
 -- Pandoc markdown
 g['pandoc#spell#enabled'] = 0
-g['pandoc#syntax#codeblocks#embeds#langs'] = {'c', 'sh', 'lua'}
 g['pandoc#syntax#conceal#use'] = 0
+g['pandoc#syntax#codeblocks#embeds#langs'] = {'c', 'sh', 'lua'}
 cmd[[augroup pandoc_syntax
         au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
     augroup END]]
@@ -55,7 +56,7 @@ cmd[[augroup pandoc_syntax
 g.latex_to_unicode_tab = 0
 g.latex_to_unicode_auto = 1
 g.latex_to_unicode_file_types = {'julia', 'lisp', 'pandoc'}
-map('j', ':!julia %<cr>') -- Execute julia file. TODO: How not to recompile everything?
+map('j', ':!julia %<cr>') -- Execute julia file
 
 -- Spelling
 map('x', 'b1z=e')                -- Correct previous word
