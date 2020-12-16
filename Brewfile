@@ -9,7 +9,7 @@ brew "arduino-cli"
 brew "ccls"           # C language server
 brew "deno"
 brew "node"
-#brew "minimal-racket" # try a smaller scheme
+brew "minimal-racket" # try a smaller scheme
 brew "python"         # >= 3.8
 brew "rustup-init"    # Rust toolchain installer
 cask "julia"
@@ -26,7 +26,7 @@ cask "alacritty"
 #### Writing
 brew "pandoc"
 brew "texlab"        # TeX language server
-#cask "mactex-no-gui" #try tectonic?
+cask "mactex-no-gui"
 
 #### GUI
 cask "discord"
@@ -35,13 +35,12 @@ cask "font-fira-code"
 cask "font-ibm-plex"
 #cask "ghdl"
 #cask "gtkwave"
-cask "iina"          # media player
-cask "itsycal"       # calendar in menu bar
+cask "iina"         # media player
+cask "itsycal"      # menu bar calendar (not good on Big Sur) Y-M-d EEEEE HH:mm
 cask "protonvpn"
 cask "qbittorrent"
-cask "rectangle"     # window manager
+cask "rectangle"    # window manager
 cask "spotify"
-cask "spotmenu"      # spotify in menu bar
 cask "supercollider"
 cask "zotero"
 #cask "android-file-transfer"
