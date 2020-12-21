@@ -71,8 +71,8 @@ set foldmethod=indent
 
 """ Scrolling
 set nowrap
-set scrolloff=20    "Keeps cursor centred
-set sidescrolloff=20
+set scrolloff=5
+set sidescrolloff=5
 
 """ Vim 8
 if !has('nvim')
