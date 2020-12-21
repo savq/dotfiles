@@ -1,4 +1,3 @@
-# TODO: Show Vi-mode
 autoload -Uz vcs_info # automatically retrieve version control information
 
 # Git support
@@ -12,15 +11,14 @@ zstyle ':vcs_info:*' formats "[%b%c%u] "
 precmd () { vcs_info }
 
 # Prompt
-PS1='%F{blue}$TAB%f '                 # Tab-rs: blue
-PS1+='%F{cyan}%1~%f '                 # Current directory: cyan
-PS1+='%F{yellow}${vcs_info_msg_0_}%f' # Git info: yellow
+PS1='%F{magenta}$TAB%f '              # Tab-rs
+PS1+='%F{blue}%1~%f '                 # Current directory
+PS1+='%F{yellow}${vcs_info_msg_0_}%f' # Git info
 PS1+=$'\n'
-PS1+='%(?.%F{cyan}.%F{red})%#%f '     # Exit code: green (0) or red (not 0)
+PS1+=' %(?.%F{green}.%F{red})%#%f '   # Exit code: green (0) or red (not 0)
 
 # Docs on Git support and prompt themes:
 # % man zshcontrib
 # or online: <zsh.sourceforge.net/Doc/Release/User-Contributions.html>
 # 26.5 Gathering information from version control systems
 # 26.6 Prompt Themes
-
