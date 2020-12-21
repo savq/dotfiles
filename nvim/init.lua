@@ -36,13 +36,10 @@ g.tex_flavor = 'xelatex'
 g.wiki_root = '~/Documents/wiki/'
 g.wiki_filetypes = {'md'}
 g.wiki_link_target_type = 'md'
-g.wiki_map_link_create = 'CreateLinkNames'
-function createlinks(txt)
-    return os.date('%Y%m%dT%H%M-') .. txt:lower():gsub('[%s.]+', '-')
-end
-cmd [[function! CreateLinkNames(txt) abort
-        return v:lua.createlinks(a:txt)
-      endfunction]]
+g.wiki_map_link_create = 'CreateLinks'
+cmd [[function CreateLinks(text) abort
+  return substitute(tolower(a:text), '\s\+', '-', 'g')
+endfunction]]
 
 -- Pandoc markdown
 g['pandoc#spell#enabled'] = 0
