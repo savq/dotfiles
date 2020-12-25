@@ -86,3 +86,6 @@ end
 map('l',  '<cmd>luafile %<cr>')           -- source lua file
 map('t',  '<cmd> sp<cr>|<cmd>te   <cr>i') -- open terminal
 map('rc', '<cmd> e ~/.config/nvim <cr>')  -- open config directory
+
+-- Other autocommands
+cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'

@@ -30,9 +30,10 @@ set number
 set relativenumber
 set wildignorecase
 set noshowmode
-set confirm            "Ask to save stuff
-set hidden             "Hides buffers instead of closing them
-set fileencoding=utf-8 "Encoding written to file
+set confirm            " ask to save stuff
+set hidden             " hides buffers instead of closing them
+set fileencoding=utf-8 " encoding written to file
+set inccommand=nosplit " live substitution
 
 """ LSP-related
 set completeopt=menuone,noinsert,noselect
