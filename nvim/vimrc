@@ -1,6 +1,7 @@
 """ MAPPINGS
 
 let mapleader = ' '
+let maplocalleader = ','
 noremap ; :
 
 " Help
@@ -9,13 +10,13 @@ noremap <C-]> K
 " Copy to system clipboard
 noremap Y "+y
 
-" Better buffer navigation
+" Buffer navigation
 noremap J }
 noremap K {
 noremap H ^
 noremap L $
 
-" Better window navigation
+" Window navigation
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
@@ -33,7 +34,7 @@ set noshowmode
 set confirm            " ask to save stuff
 set hidden             " hides buffers instead of closing them
 set fileencoding=utf-8 " encoding written to file
-set inccommand=nosplit " live substitution
+set spelllang=
 
 """ LSP-related
 set completeopt=menuone,noinsert,noselect
@@ -77,16 +78,15 @@ set sidescrolloff=5
 
 """ Vim 8
 if !has('nvim')
-  syntax enable
-  set ruler
-  "colorscheme desert
-  set showcmd
-  set autoread
-  set wildmenu
-  set hlsearch
-  set incsearch
-  set autoindent
-  set laststatus=2
+    syntax enable
+    set ruler
+    set showcmd
+    set autoread
+    set wildmenu
+    set hlsearch
+    set incsearch
+    set autoindent
+    set laststatus=2
 endif
 
 " Netrw
