@@ -3,4 +3,4 @@
     name = Sergio Alejandro Vargas
     email = savargasqu+git@unal.edu.co
 [credential]
-	helper = osxkeychain
+    helper = osxkeychain

@@ -5,3 +5,4 @@ configstore/
 zsh/.zcompcache
 zsh/.zcompdump
 zsh/.zsh_history
+zsh/.zsh_sessions
