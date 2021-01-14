@@ -18,14 +18,17 @@ alias ll='ls -AlF'
 alias rm='rm -v'
 alias sym='ln -s'
 
-alias arduino='arduino-cli'
+alias ino='arduino-cli'
 alias cc='clang'
 alias jl='julia'
 alias pluto="julia -e 'using Pluto; Pluto.run(port=8000)'"
-alias py='python3' pip='pip3' pyvenv='python3 -m venv'
-alias serve='file_server' # Deno file server
+alias py='python3' pip='pip3'
+alias pyvenv='python3 -m venv'
+alias serve='python3 -m http.server'
 
+alias rsb='cargo build'
 alias rsc='cargo check'
+alias rsd='cargo doc --open'
 alias rsr='cargo run'
 alias rst='cargo test'
 
@@ -46,13 +49,14 @@ alias lmkl="latexmk -lualatex"
 alias tbc='tab --close'
 alias tbl='tab --list'
 
-# PATH
-export PATH="$HOME/.cargo/bin:$HOME/.deno/bin:$PATH"
-
+# My TeX config
 export TEXDIR="$HOME/.latex"
-export PATH="$TEXDIR/bin:$PATH"
+PATH="$PATH:$TEXDIR/bin"
 
-# LLVM (homebrew installed version)
+# Cargo
+PATH="$PATH:$HOME/.cargo/bin"
+
+## LLVM
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
@@ -62,15 +66,9 @@ export CPPFLAGS="-I/usr/local/opt/llvm/include"
 # export PATH="$HOME/lineage_os/platform-tools:$PATH"
 #fi
 
-
 # Check if syntax highlighting is installed
 #[[ -a "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] &&
 source "/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-#
-# tab multiplexer configuration: https://github.com/austinjones/tab-rs/
-source "/Users/savq/Library/Application Support/tab/completion/zsh-history.zsh"
-# end tab configuration
-
 
 # LOCALE
 export LANG="en_US.UTF-8" LC_ALL="en_US.UTF-8"
@@ -90,7 +88,6 @@ setopt hist_reduce_blanks   # Remove blanks from history items
 setopt share_history        # Same history for all open terminals
 bindkey "^[[B" history-beginning-search-forward
 bindkey "^[[A" history-beginning-search-backward 
-
 
 # COMPLETION
 zstyle ':completion:*' auto-description 'specify: %d'

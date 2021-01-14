@@ -6,16 +6,14 @@ tap "homebrew/core"
 tap "austinjones/taps"
 
 brew "arduino-cli"
-brew "ccls"           # C language server
-brew "deno"
-brew "node"
+brew "ccls"
 brew "minimal-racket"
-brew "python"         # >= 3.8
-brew "rustup-init"    # Rust toolchain installer
+brew "python"
+brew "rustup-init"
 cask "julia"
 
-brew "wabt"           # wasm binary toolkit
-brew "wasm-pack"      # rust + wasm
+brew "wabt"      # wasm binary toolkit
+brew "wasm-pack" # rust + wasm
 
 #### TUI
 brew "neovim", args: ["HEAD"]  # nvim 0.5
@@ -25,8 +23,8 @@ cask "alacritty"
 
 #### Writing
 brew "pandoc"
-brew "texlab"         # TeX language server
-brew "zola"           # ssg
+brew "texlab"        # TeX language server
+brew "zola"          # SSG
 cask "mactex-no-gui"
 
 #### GUI
@@ -36,11 +34,11 @@ cask "font-fira-code"
 cask "font-ibm-plex"
 #cask "ghdl"
 #cask "gtkwave"
-cask "iina"           # media player
-cask "itsycal"        # menu bar calendar. Y-M-d EEEEE HH:mm
+cask "iina"          # media player
+cask "itsycal"       # menu bar calendar. Y-M-d EEEEE HH:mm
 cask "protonvpn"
 cask "qbittorrent"
-cask "rectangle"      # window manager
+cask "rectangle"     # window manager
 cask "spotify"
 cask "supercollider"
 cask "zotero"
