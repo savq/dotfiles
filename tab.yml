@@ -1,0 +1,12 @@
+workspace:
+  - tab: dots
+    doc: "my dotfiles"
+    dir: .config
+
+  - tab: tex
+    doc: "LaTeX config"
+    dir: .latex
+
+  - tab: paq
+    doc: "Paq-nvim package manager"
+    dir: paq-nvim
