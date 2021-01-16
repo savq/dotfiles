@@ -41,21 +41,40 @@ require('nvim-treesitter.configs').setup {
     highlight = {enable = true},
 }
 
+---- Telescope
+require('telescope').setup {
+    defaults = {
+        file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+    }
+}
+map('ff', "Telescope find_files")
+map('fg', "Telescope live_grep")
+map('fb', "Telescope buffers")
+map('fh', "Telescope help_tags")
+
 -- Vimtex
 g.tex_flavor = 'xelatex'
 
 -- Wiki.vim
-g.wiki_root = '~/Documents/wiki/'
+g.wiki_root = 'WikiRoot'
 g.wiki_filetypes = {'md'}
 g.wiki_link_target_type = 'md'
 g.wiki_map_link_create = 'CreateLinks'
-cmd [[function! CreateLinks(text) abort
-          return substitute(tolower(a:text), '\s\+', '-', 'g')
-      endfunction]]
+-- wiki.vim cannot use anonymous functions
+cmd [[
+function! WikiRoot() abort
+    return luaeval("vim.env.WIKI or '~/Documents/wiki/'")
+endfunction
+
+function! CreateLinks(text) abort
+    return substitute(tolower(a:text), '\s\+', '-', 'g')
+endfunction
+]]
 
 -- Pandoc markdown
 g['pandoc#spell#enabled'] = 0
-g['pandoc#syntax#conceal#use'] = 0
+g['pandoc#syntax#conceal#use'] = 1
+g['pandoc#syntax#conceal#urls'] = 1
 g['pandoc#syntax#codeblocks#embeds#langs'] = {'c', 'sh', 'lua', 'rust', 'julia'}
 cmd[[augroup pandoc_syntax
         au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
