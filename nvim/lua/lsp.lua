@@ -1,6 +1,6 @@
 local cmd  = vim.cmd
-local conf = require 'lspconfig'
-local cmpl = require 'completion'
+local conf = require('lspconfig')
+local cmpl = {on_attach = require('completion').on_attach}
 
 local function lspmap(lhs, rhs, mode)
     vim.api.nvim_set_keymap(
@@ -10,8 +10,9 @@ local function lspmap(lhs, rhs, mode)
         {noremap=true, silent=true})
 end
 
-conf.rls.setup    {on_attach = cmpl.on_attach}
-conf.texlab.setup {on_attach = cmpl.on_attach}
+conf.rls.setup(cmpl)
+conf.clangd.setup(cmpl)
+conf.texlab.setup(cmpl)
 conf.julials.setup{} -- Completion doesn't work
 
 lspmap('gd', 'vim.lsp.buf.definition()')
