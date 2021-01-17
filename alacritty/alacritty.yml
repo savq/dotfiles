@@ -35,16 +35,16 @@ scrolling:
 font:
   normal:
     family: IBM Plex Mono
-    style: Regular
+    style: Light
 
   bold:
-    style: Bold
+    style: Regular
 
   italic:
-    style: Italic
+    style: Light Italic
 
   bold_italic:
-    style: Bold Italic
+    style: Italic
 
   size: 17.0 # point size
 

@@ -31,9 +31,10 @@ o.statusline = table.concat({
 })
 
 ---- Colorscheme
-cmd 'colorscheme ayu'
-g.ayucolor = 'mirage'
 o.termguicolors = true
+g.ayucolor = 'mirage'
+cmd 'colorscheme ayu'
+cmd 'au ColorScheme * hi Comment gui=italic'
 
 ---- Treesitter
 require('nvim-treesitter.configs').setup {
@@ -88,7 +89,7 @@ map('j', '!julia %') -- Execute julia file
 
 -- Spelling
 map('s', 'lua cyclelang()') -- change spelling language
-map('w', '1z=1', 1)         -- fix current word
+map('c', '1z=1', 1)         -- fix current word
 do
     local i = 1
     local langs = {'', 'en', 'es', 'de'}
