@@ -1,11 +1,12 @@
 --NOTE: packages are in the runtimepath, this file is only loaded for updates.
 
-vim.cmd 'packadd paq-nvim'
-local Paq = require 'paq-nvim'
-local paq = Paq.paq
+vim.cmd 'packadd paq-nvim' -- Only needed once
 
 -- Refresh list of packages every time this file is loaded
 require('plenary.reload').reload_module('paq-nvim')
+
+local Paq = require 'paq-nvim'
+local paq = Paq.paq
 
 paq{'savq/paq-nvim', opt=true}
 
