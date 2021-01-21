@@ -13,7 +13,6 @@ end
 conf.rls.setup(cmpl)
 conf.clangd.setup(cmpl)
 conf.texlab.setup(cmpl)
-conf.julials.setup{} -- Completion doesn't work
 
 lspmap('gd', 'vim.lsp.buf.definition()')
 lspmap('gr', 'vim.lsp.buf.references()')
@@ -29,5 +28,7 @@ cmd[[inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"]]
 cmd[[inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"]]
 
 -- Auto commands
-cmd[[autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync(nil)]]
+cmd[[autocmd BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync(nil)]]
+cmd[[autocmd Filetype c set shiftwidth=2]] -- move this elsewhere???
+
 cmd[[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
