@@ -41,10 +41,10 @@ alias gpl='git pull'
 alias gsh='git push'
 alias gst='git status --short --branch'
 
-alias lmk="latexmk"
-alias lmkc="latexmk -c"
-alias lmkx="latexmk -xelatex"
-alias lmkl="latexmk -lualatex"
+alias lmk= 'latexmk'
+alias lmkc='latexmk -c'
+alias lmkx='latexmk -xelatex'
+alias lmkl='latexmk -lualatex'
 
 alias tbc='tab --close'
 alias tbl='tab --list'
