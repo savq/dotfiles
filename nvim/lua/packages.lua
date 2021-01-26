@@ -20,12 +20,12 @@ paq 'nvim-lua/plenary.nvim'
 paq 'nvim-telescope/telescope.nvim'
 
 paq 'rust-lang/rust.vim'
-paq 'kylelaker/riscv.vim'
 paq 'JuliaEditorSupport/julia-vim'
+--paq 'kylelaker/riscv.vim'
 
 paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
-paq 'vim-pandoc/vim-pandoc-syntax'
+paq 'gabrielelana/vim-markdown'
 
 paq 'ayu-theme/ayu-vim'
 paq 'rktjmp/lush.nvim'

@@ -35,59 +35,45 @@ o.termguicolors = true
 g.ayucolor = 'mirage'
 cmd 'colorscheme ayu'
 cmd 'au ColorScheme * hi Comment gui=italic'
+cmd 'au ColorScheme * hi link TSParameter Normal'
 
 ---- Treesitter
 require('nvim-treesitter.configs').setup {
-    ensure_installed = {'rust', 'c', 'lua'},
+    ensure_installed = {'c', 'julia', 'lua', 'rust'},
     highlight = {enable = true},
 }
 
 ---- Telescope
-require('telescope').setup {
-    defaults = {
-        file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-    }
-}
+-- TODO: better telescope defaults
+require('telescope')
 map('ff', "Telescope find_files")
 map('fg', "Telescope live_grep")
 map('fb', "Telescope buffers")
 map('fh', "Telescope help_tags")
 
--- Vimtex
-g.tex_flavor = 'xelatex'
+---- Julia
+g.latex_to_unicode_tab = 0
+g.latex_to_unicode_auto = 1
+g.latex_to_unicode_file_types = {'julia', 'markdown'}
+map('j', '!julia %')
 
--- Wiki.vim
+
+---- Prose
+g.tex_flavor = 'xelatex'
+g.markdown_enable_conceal = 1
+
+---- Wiki.vim
 g.wiki_root = 'WikiRoot'
 g.wiki_filetypes = {'md'}
 g.wiki_link_target_type = 'md'
-g.wiki_map_link_create = 'CreateLinks'
--- wiki.vim cannot use anonymous functions
+g.wiki_map_link_create = 'CreateLinks' -- cannot use anonymous functions
 cmd [[
-function! WikiRoot() abort
-    return luaeval("vim.env.WIKI or '~/Documents/wiki/'")
-endfunction
-
 function! CreateLinks(text) abort
     return substitute(tolower(a:text), '\s\+', '-', 'g')
 endfunction
 ]]
 
--- Pandoc markdown
-g['pandoc#spell#enabled'] = 0
-g['pandoc#syntax#conceal#use'] = 1
-g['pandoc#syntax#conceal#urls'] = 1
-g['pandoc#syntax#codeblocks#embeds#langs'] = {'c', 'sh', 'lua', 'rust', 'julia'}
-cmd[[augroup pandoc_syntax
-        au! BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-    augroup END]]
-
--- Julia
-g.latex_to_unicode_tab = 0
-g.latex_to_unicode_auto = 1
-g.latex_to_unicode_file_types = {'julia', 'lisp', 'pandoc'}
-map('j', '!julia %') -- Execute julia file
-
--- Spelling
+---- Spelling
 map('s', 'lua cyclelang()') -- change spelling language
 map('c', '1z=1', 1)         -- fix current word
 do
@@ -100,6 +86,7 @@ do
     end
 end
 
+---- Zen mode
 map('z', 'lua togglezen()')
 function togglezen()
     w.list           = not w.list
