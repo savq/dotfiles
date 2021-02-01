@@ -27,12 +27,15 @@ brew "zola"          # SSG
 cask "mactex-no-gui"
 
 #### GUI
+cask "android-file-transfer"
+cask "android-platform-tools"
 cask "discord"
 cask "firefox"
 cask "font-fira-code"
 cask "font-ibm-plex"
-#cask "ghdl"
-#cask "gtkwave"
+cask "google-backup-and-sync"
+cask "ghdl"
+cask "gtkwave"
 cask "iina"          # media player
 cask "itsycal"       # menu bar calendar. Y-M-d EEEEE HH:mm
 cask "protonvpn"
@@ -41,5 +44,3 @@ cask "rectangle"     # window manager
 cask "spotify"
 cask "supercollider"
 cask "zotero"
-#cask "android-file-transfer"
-#cask "google-backup-and-sync"
