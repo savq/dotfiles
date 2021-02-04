@@ -1,8 +1,15 @@
--- Useful aliases
-local cmd, g, o, w, b = vim.cmd, vim.g, vim.o, vim.wo, vim.bo -- wait for vim.opt
-local function map(lhs, rhs, txtcmd)
-    local c = not txtcmd and '<cmd>' .. rhs .. '<cr>' or rhs
-    vim.api.nvim_set_keymap('n', '<leader>' .. lhs, c, {noremap=true, silent=true})
+local cmd = vim.cmd
+
+-- wait for vim.opt (nvim PR #13479)
+local g, o, w, b = vim.g, vim.o, vim.wo, vim.bo
+
+-- wait for lua keymaps (nvim PR #13823)
+local function map(lhs, rhs)
+    vim.api.nvim_set_keymap('n',
+                            '<leader>' .. lhs,
+                            '<cmd>' .. rhs .. '<cr>',
+                            {noremap=true, silent=true}
+                            )
 end
 
 require 'lsp'       -- LSP configuration
@@ -46,10 +53,10 @@ require('nvim-treesitter.configs').setup {
 ---- Telescope
 -- TODO: better telescope defaults
 require('telescope')
-map('ff', "Telescope find_files")
-map('fg', "Telescope live_grep")
-map('fb', "Telescope buffers")
-map('fh', "Telescope help_tags")
+map('ff', 'Telescope find_files')
+map('fg', 'Telescope live_grep')
+map('fb', 'Telescope buffers')
+map('fh', 'Telescope help_tags')
 
 ---- Julia
 g.latex_to_unicode_tab = 0
@@ -58,12 +65,11 @@ g.latex_to_unicode_file_types = {'julia', 'markdown'}
 map('j', '!julia %')
 
 
----- Prose
-g.tex_flavor = 'xelatex'
+---- Vim-markdown
 g.markdown_enable_conceal = 1
 
 ---- Wiki.vim
-g.wiki_root = 'WikiRoot'
+g.wiki_root = '~/Documents/wiki'
 g.wiki_filetypes = {'md'}
 g.wiki_link_target_type = 'md'
 g.wiki_map_link_create = 'CreateLinks' -- cannot use anonymous functions
@@ -74,8 +80,8 @@ endfunction
 ]]
 
 ---- Spelling
+cmd 'nnoremap c 1z=1'       -- fix current word
 map('s', 'lua cyclelang()') -- change spelling language
-map('c', '1z=1', 1)         -- fix current word
 do
     local i = 1
     local langs = {'', 'en', 'es', 'de'}
