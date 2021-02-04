@@ -25,6 +25,7 @@ paq 'JuliaEditorSupport/julia-vim'
 
 paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
+paq 'lervag/wiki-ft.vim'
 paq 'gabrielelana/vim-markdown'
 
 paq 'ayu-theme/ayu-vim'

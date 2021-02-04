@@ -41,8 +41,13 @@ o.statusline = table.concat({
 o.termguicolors = true
 g.ayucolor = 'mirage'
 cmd 'colorscheme ayu'
-cmd 'au ColorScheme * hi Comment gui=italic'
-cmd 'au ColorScheme * hi link TSParameter Normal'
+-- Remove this after finishing colorscheme
+cmd[[augroup colors_tweaks
+        autocmd ColorScheme * hi Comment gui=italic
+        autocmd ColorScheme * hi link Conceal Normal
+        autocmd ColorScheme * hi link TSParameter Normal
+    augroup END
+]]
 
 ---- Treesitter
 require('nvim-treesitter.configs').setup {
@@ -65,12 +70,10 @@ g.latex_to_unicode_file_types = {'julia', 'markdown'}
 map('j', '!julia %')
 
 
----- Vim-markdown
+---- Markdown and Wiki
 g.markdown_enable_conceal = 1
-
----- Wiki.vim
 g.wiki_root = '~/Documents/wiki'
-g.wiki_filetypes = {'md'}
+g.wiki_filetypes = {'wiki', 'md'}
 g.wiki_link_target_type = 'md'
 g.wiki_map_link_create = 'CreateLinks' -- cannot use anonymous functions
 cmd [[
@@ -80,8 +83,8 @@ endfunction
 ]]
 
 ---- Spelling
-cmd 'nnoremap c 1z=1'       -- fix current word
-map('s', 'lua cyclelang()') -- change spelling language
+cmd 'nnoremap <leader>c 1z=1' -- fix current word
+map('s', 'lua cyclelang()')   -- change spelling language
 do
     local i = 1
     local langs = {'', 'en', 'es', 'de'}
