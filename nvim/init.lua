@@ -13,6 +13,7 @@ local function map(lhs, rhs)
 end
 
 require 'lsp'       -- LSP configuration
+require 'utils'
 cmd 'runtime vimrc' -- general options
 
 ---- nice neovim stuff
@@ -73,7 +74,7 @@ map('j', '!julia %')
 ---- Markdown and Wiki
 g.markdown_enable_conceal = 1
 g.wiki_root = '~/Documents/wiki'
-g.wiki_filetypes = {'wiki', 'md'}
+g.wiki_filetypes = {'md'}
 g.wiki_link_target_type = 'md'
 g.wiki_map_link_create = 'CreateLinks' -- cannot use anonymous functions
 cmd [[

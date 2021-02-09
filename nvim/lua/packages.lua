@@ -2,11 +2,10 @@
 
 vim.cmd 'packadd paq-nvim' -- Only needed once
 
--- Refresh list of packages every time this file is loaded
-require('plenary.reload').reload_module('paq-nvim')
+require('plenary.reload').reload_module('paq-nvim') -- Refresh list on file reload
 
-local Paq = require 'paq-nvim'
-local paq = Paq.paq
+local Pq = require 'paq-nvim'
+local paq = Pq.paq
 
 paq{'savq/paq-nvim', opt=true}
 
@@ -25,8 +24,6 @@ paq 'JuliaEditorSupport/julia-vim'
 
 paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
-paq 'lervag/wiki-ft.vim'
-paq 'gabrielelana/vim-markdown'
 
 paq 'ayu-theme/ayu-vim'
 paq 'rktjmp/lush.nvim'
@@ -35,6 +32,6 @@ paq{'norcalli/nvim-colorizer.lua', opt=true}
 paq 'junegunn/vim-easy-align'
 paq 'mechatroner/rainbow_csv'
 
---Paq.install()
-Paq.update()
---Paq.clean()
+Pq.install()
+Pq.update()
+Pq.clean()

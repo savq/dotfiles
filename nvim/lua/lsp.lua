@@ -20,7 +20,7 @@ lspmap('gs', 'vim.lsp.buf.document_symbol()')
 lspmap('ga', 'vim.lsp.buf.code_action()')
 
 -- Navigate diagnostics
-lspmap('d,', 'vim.lsp.diagnostic.goto_prev()')
+lspmap('d,', 'vim.lsp.diagnostic.goto_prev()') -- FIXME: Use other mappings for this
 lspmap('d;', 'vim.lsp.diagnostic.goto_next()')
 
 -- Complete with tab
