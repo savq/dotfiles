@@ -2,5 +2,16 @@
 [user]
     name = Sergio Alejandro Vargas
     email = savargasqu+git@unal.edu.co
+
 [credential]
     helper = osxkeychain
+
+[diff]
+    tool = nvimdiff2
+[difftool "nvimdiff2"]
+    cmd = nvim -d $LOCAL $REMOTE
+
+[merge]
+    tool = nvimdiff4
+[mergetool "nvimdiff4"]
+    cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
