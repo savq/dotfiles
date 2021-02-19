@@ -12,7 +12,7 @@ precmd () { vcs_info }
 
 # Prompt
 PS1='%F{magenta}$TAB%f '              # Tab-rs
-PS1+='%F{blue}%1~%f '                 # Current directory
+PS1+='%F{cyan}%1~%f '                 # Current directory
 PS1+='%F{yellow}${vcs_info_msg_0_}%f' # Git info
 PS1+=$'\n'
 PS1+=' %(?.%F{green}.%F{red})%#%f '   # Exit code: green (0) or red (not 0)

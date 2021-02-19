@@ -13,14 +13,10 @@ window:
   #  y: 0
 
   padding: # Blank space added around the window in pixels.
-    x: 4
+    x: 10
     y: 2
 
   decorations: full
-
-  #startup_mode: Windowed
-
-  #title: Alacritty
 
 scrolling:
   history: 10000 # Maximum number of lines in the scrollback buffer.
@@ -46,11 +42,11 @@ font:
   bold_italic:
     style: Italic
 
-  size: 17.0 # point size
+  size: 16.0 # point size
 
   offset: # Offset is the extra space around each character.
     x: 0  # modifies the letter spacing.
-    y: 6  # modifies the line spacing.
+    y: 8  # modifies the line spacing.
 
   # Glyph offset determines the locations of the glyphs within their cells with
   # the default being at the bottom.
@@ -88,7 +84,30 @@ schemes:
       cyan:       '#5CCFE6'
       white:      '#FAFAFA'
 
-colors: *ayu_mirage
+  colorsmk: &colorsmk
+    primary:
+      foreground: '#D6D6D6'
+      background: '#262626'
+    normal:
+      white:   '#D6D6D6'
+      black:   '#262626'
+      red:     '#CC6677'
+      yellow:  '#FFCC66'
+      green:   '#88CC66'
+      cyan:    '#59A6A6'
+      blue:    '#667FCC'
+      magenta: '#D194C7'
+    bright:
+      white:   '#F7F7F7'
+      black:   '#595959'
+      red:     '#CC6677'
+      yellow:  '#CC8033'
+      green:   '#88CC66'
+      cyan:    '#9CC9B3'
+      blue:    '#667FCC'
+      magenta: '#9966CC'
+
+colors: *colorsmk
 
   # Indexed Colors
   #
@@ -117,9 +136,7 @@ colors: *ayu_mirage
 #dynamic_title: true
 
 cursor:
-  # Cursor style
-  #
-  # Values for `style`:
+  # Values for cursor `style`:
   #   - ▇ Block
   #   - _ Underline
   #   - | Beam
