@@ -1,6 +1,20 @@
 #### macOS
 .DS_Store
 
+#### TeX
+*.aux
+*.dvi
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.xdv
+
+*.nav
+*.pre
+*.snm
+*.vrb
+
 #### Nvim
 tags
 [._]*.un~
