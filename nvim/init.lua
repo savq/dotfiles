@@ -1,7 +1,11 @@
 local cmd = vim.cmd
 
+require 'lsp'       -- LSP configuration
+require 'utils'
+cmd 'runtime vimrc' -- general options
+
 -- wait for vim.opt (nvim PR #13479)
-local g, o, w, b = vim.g, vim.o, vim.wo, vim.bo
+local g, opt, win = vim.g, vim.o, vim.wo
 
 -- wait for lua keymaps (nvim PR #13823)
 local function map(lhs, rhs)
@@ -12,22 +16,30 @@ local function map(lhs, rhs)
                             )
 end
 
-require 'lsp'       -- LSP configuration
-require 'utils'
-cmd 'runtime vimrc' -- general options
-
 ---- nice neovim stuff
-o.inccommand = 'nosplit' -- live substitution
+opt.inccommand = 'nosplit' -- live substitution
 cmd 'au TextYankPost * lua vim.highlight.on_yank()'
 
 ---- some mappings
-map('pq', "lua require 'packages'") -- update packages
-map('l',  'luafile %')              -- source lua file
-map('t',  'sp<cr> | <cmd>te')       -- open terminal
-map('rc', 'e ~/.config/nvim')       -- open config directory
+map('pq', "lua require('packages')") -- update packages
+map('l',  'luafile %')               -- source lua file
+map('t',  'sp<cr> | <cmd>te')        -- open terminal
+map('rc', 'e ~/.config/nvim')        -- open config directory
+
+
+---- Colorscheme
+opt.termguicolors = true
+cmd 'colorscheme jinora_dev' --WIP colorscheme
+
+---- Treesitter
+require('nvim-treesitter.configs').setup {
+    ensure_installed = {'c', 'julia', 'lua', 'rust'},
+    highlight = {enable = true},
+}
+
 
 ---- Statusline
-o.statusline = table.concat({
+opt.statusline = table.concat({
     '%2{mode()} | ',
     '%f ',        -- relative path
     '%m ',        -- modified flag
@@ -38,37 +50,20 @@ o.statusline = table.concat({
     '%6p%%',      -- file percentage
 })
 
----- Colorscheme
-o.termguicolors = true
-g.ayucolor = 'mirage'
-cmd 'colorscheme ayu'
--- Remove this after finishing colorscheme
-cmd[[augroup colors_tweaks
-        autocmd ColorScheme * hi Comment gui=italic
-        autocmd ColorScheme * hi link Conceal Normal
-        autocmd ColorScheme * hi link TSParameter Normal
-    augroup END
-]]
-
----- Treesitter
-require('nvim-treesitter.configs').setup {
-    ensure_installed = {'c', 'julia', 'lua', 'rust'},
-    highlight = {enable = true},
-}
-
 ---- Telescope
--- TODO: better telescope defaults
-require('telescope')
+require('telescope').setup {
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+}
 map('ff', 'Telescope find_files')
 map('fg', 'Telescope live_grep')
 map('fb', 'Telescope buffers')
 map('fh', 'Telescope help_tags')
 
+
 ---- Julia
 g.latex_to_unicode_tab = 0
 g.latex_to_unicode_auto = 1
 g.latex_to_unicode_file_types = {'julia', 'markdown'}
-map('j', '!julia %')
 
 
 ---- Markdown and Wiki
@@ -91,20 +86,20 @@ do
     local langs = {'', 'en', 'es', 'de'}
     function cyclelang()
         i = (i % #langs) + 1
-        b.spelllang = langs[i]
-        w.spell = (langs[i] ~= '')
+        vim.bo.spelllang = langs[i]
+        win.spell = (langs[i] ~= '')
     end
 end
 
 ---- Zen mode
 map('z', 'lua togglezen()')
 function togglezen()
-    w.list           = not w.list
-    w.number         = not w.number
-    w.relativenumber = not w.relativenumber
-    w.cursorline     = not w.cursorline
-    w.cursorcolumn   = not w.cursorcolumn
-    w.colorcolumn    = w.colorcolumn == '0' and '80' or '0'
-    o.laststatus     = o.laststatus == 2 and 0 or 2
-    o.ruler          = not o.ruler
+    win.list           = not win.list
+    win.number         = not win.number
+    win.relativenumber = not win.relativenumber
+    win.cursorline     = not win.cursorline
+    win.cursorcolumn   = not win.cursorcolumn
+    win.colorcolumn    = win.colorcolumn == '0' and '80' or '0'
+    opt.laststatus     = opt.laststatus == 2 and 0 or 2
+    opt.ruler          = not opt.ruler
 end

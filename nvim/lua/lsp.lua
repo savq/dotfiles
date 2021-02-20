@@ -5,7 +5,7 @@ local cmpl = {on_attach = require('completion').on_attach}
 local function lspmap(lhs, rhs, mode)
     vim.api.nvim_set_keymap(
         mode or 'n',
-        '<silent>' .. lhs,
+        lhs,
         '<cmd>lua ' .. rhs .. '<cr>',
         {noremap=true, silent=true})
 end

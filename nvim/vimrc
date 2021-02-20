@@ -3,6 +3,7 @@
 let mapleader = ' '
 let maplocalleader = ','
 noremap ; :
+noremap \| ;
 
 " Help
 noremap <C-]> K
@@ -35,11 +36,12 @@ set confirm            " ask to save stuff
 set hidden             " hides buffers instead of closing them
 set fileencoding=utf-8 " encoding written to file
 set spelllang=
+set conceallevel=2
 
 """ Persistent undo
 set undofile
-set undolevels=1000  " How many undos
-set undoreload=10000 " number of lines to save for undo
+set undolevels=100  " How many undos
+set undoreload=1000 " number of lines to save for undo
 
 """ LSP-related
 set completeopt=menuone,noinsert,noselect

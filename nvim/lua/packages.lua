@@ -1,10 +1,8 @@
---NOTE: packages are in the runtimepath, this file is only loaded for updates.
+--NOTE: Packages are in the runtimepath, this file is only loaded for updates.
 
-vim.cmd 'packadd paq-nvim' -- Only needed once
-
-require('plenary.reload').reload_module('paq-nvim') -- Refresh list on file reload
-
-local Pq = require 'paq-nvim'
+vim.cmd 'packadd paq-nvim'       -- Only needed once
+package.loaded['paq-nvim'] = nil -- refresh package list
+local Pq = require('paq-nvim')
 local paq = Pq.paq
 
 paq{'savq/paq-nvim', opt=true}
@@ -24,8 +22,8 @@ paq 'JuliaEditorSupport/julia-vim'
 
 paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
+paq 'gabrielelana/vim-markdown'
 
-paq 'ayu-theme/ayu-vim'
 paq 'rktjmp/lush.nvim'
 paq{'norcalli/nvim-colorizer.lua', opt=true}
 
