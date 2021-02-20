@@ -10,9 +10,8 @@ brew "llvm"
 brew "python"
 brew "rustup-init"
 cask "julia"
-
-brew "wabt"      # wasm binary toolkit
-brew "wasm-pack" # rust + wasm
+#brew "elixir"
+#brew "minimal-racket"
 
 #### TUI
 brew "neovim", args: ["HEAD"]  # nvim 0.5
@@ -20,22 +19,30 @@ brew "austinjones/taps/tab"    # tab-rs term-multiplexer
 brew "zsh-syntax-highlighting"
 cask "alacritty"
 
+#### utils
+brew "ripgrep"
+brew "tokei"
+brew "wabt"
+
 #### Writing
 brew "pandoc"
 brew "texlab"        # TeX language server
 brew "zola"          # SSG
 cask "mactex-no-gui"
 
-#### GUI
+#### GUI & Other Casks
 cask "android-file-transfer"
 cask "android-platform-tools"
 cask "discord"
 cask "firefox"
 cask "font-fira-code"
+cask "font-fira-mono"
+cask "font-fira-sans"
 cask "font-ibm-plex"
+cask "font-juliamono"
 cask "google-backup-and-sync"
-cask "ghdl"
-cask "gtkwave"
+#cask "ghdl"
+#cask "gtkwave"
 cask "iina"          # media player
 cask "itsycal"       # menu bar calendar. Y-M-d EEEEE HH:mm
 cask "protonvpn"
