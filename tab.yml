@@ -9,4 +9,8 @@ workspace:
 
   - tab: paq
     doc: "Paq-nvim package manager"
-    dir: paq-nvim
+    dir: ".local/share/nvim/site/pack/local/start/paq-nvim"
+
+  - tab: colors
+    doc: "WIP color scheme"
+    dir: ".local/share/nvim/site/pack/local/start/jinora"
