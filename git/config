@@ -8,6 +8,8 @@
 
 [diff]
     tool = nvimdiff2
+[difftool]
+    prompt = false
 [difftool "nvimdiff2"]
     cmd = nvim -d $LOCAL $REMOTE
 
