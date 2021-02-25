@@ -61,53 +61,30 @@ font:
 draw_bold_text_with_bright_colors: true
 
 schemes:
-  ayu_mirage: &ayu_mirage
+  melange: &melange
     primary:
-      background: '#1F2430'
-      foreground: '#CBCCC6'
-    normal:
-      black:      '#0A0E14'
-      red:        '#F27983' #F28779'
-      green:      '#A6CC70'
-      yellow:     '#FFCC66'
-      blue:       '#77A8D9'
-      magenta:    '#A37ACC'
-      cyan:       '#95E6CB'
-      white:      '#F0F0F0'
-    bright:
-      black:      '#3D424D'
-      red:        '#FF3333'
-      green:      '#BAE67E'
-      yellow:     '#FFAE57' #FFA759'
-      blue:       '#73D0FF'
-      magenta:    '#D4BFFF'
-      cyan:       '#5CCFE6'
-      white:      '#FAFAFA'
-
-  colorsmk: &colorsmk
-    primary:
-      foreground: '#D6D6D6'
+      foreground: '#C4C4C4'
       background: '#262626'
     normal:
-      white:   '#D6D6D6'
+      white:   '#C4C4C4'
       black:   '#262626'
-      red:     '#CC6677'
+      red:     '#D65C70'
       yellow:  '#FFCC66'
-      green:   '#88CC66'
-      cyan:    '#59A6A6'
-      blue:    '#667FCC'
-      magenta: '#D194C7'
+      green:   '#4DB380'
+      cyan:    '#7AB8B8'
+      blue:    '#8C9FD9'
+      magenta: '#997AB8'
     bright:
-      white:   '#F7F7F7'
-      black:   '#595959'
-      red:     '#CC6677'
+      white:   '#262626'
+      black:   '#7A7A7A'
+      red:     '#F07F75'
       yellow:  '#CC8033'
       green:   '#88CC66'
-      cyan:    '#9CC9B3'
-      blue:    '#667FCC'
-      magenta: '#9966CC'
+      cyan:    '#7AB8B8'
+      blue:    '#8C9FD9'
+      magenta: '#EBADE0'
 
-colors: *colorsmk
+colors: *melange
 
   # Indexed Colors
   #

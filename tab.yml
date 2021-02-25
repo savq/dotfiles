@@ -13,4 +13,4 @@ workspace:
 
   - tab: colors
     doc: "WIP color scheme"
-    dir: ".local/share/nvim/site/pack/local/start/jinora"
+    dir: ".local/share/nvim/site/pack/local/start/melange"
