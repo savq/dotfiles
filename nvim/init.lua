@@ -29,7 +29,7 @@ map('rc', 'e ~/.config/nvim')        -- open config directory
 
 ---- Colorscheme
 opt.termguicolors = true
-cmd 'colorscheme jinora_dev' --WIP colorscheme
+cmd 'colorscheme melange_dev' --WIP colorscheme
 
 ---- Treesitter
 require('nvim-treesitter.configs').setup {

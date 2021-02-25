@@ -45,7 +45,7 @@ set undoreload=1000 " number of lines to save for undo
 
 """ LSP-related
 set completeopt=menuone,noinsert,noselect
-set shortmess+=c
+set shortmess+=cI
 set signcolumn=number
 set updatetime=300
 
