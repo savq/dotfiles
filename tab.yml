@@ -7,10 +7,6 @@ workspace:
     doc: "LaTeX config"
     dir: .latex
 
-  - tab: paq
-    doc: "Paq-nvim package manager"
-    dir: ".local/share/nvim/site/pack/local/start/paq-nvim"
-
-  - tab: colors
-    doc: "WIP color scheme"
-    dir: ".local/share/nvim/site/pack/local/start/melange"
+  - tab: nvim
+    doc: "nvim plugins"
+    dir: ".local/share/nvim/site/pack/local/start/"
