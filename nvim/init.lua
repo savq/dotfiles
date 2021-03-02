@@ -1,45 +1,38 @@
-local cmd = vim.cmd
-
-require 'lsp'       -- LSP configuration
-require 'utils'
-cmd 'runtime vimrc' -- general options
+vim.cmd 'runtime vimrc'  -- general options
+require 'lsp'            -- LSP configuration
+local map = require('utils').map
 
 -- wait for vim.opt (nvim PR #13479)
 local g, opt, win = vim.g, vim.o, vim.wo
-
--- wait for lua keymaps (nvim PR #13823)
-local function map(lhs, rhs)
-    vim.api.nvim_set_keymap('n',
-                            '<leader>' .. lhs,
-                            '<cmd>' .. rhs .. '<cr>',
-                            {noremap=true, silent=true}
-                            )
-end
-
----- nice neovim stuff
-opt.inccommand = 'nosplit' -- live substitution
-cmd 'au TextYankPost * lua vim.highlight.on_yank()'
-
----- some mappings
-map('pq', "lua require('packages')") -- update packages
-map('l',  'luafile %')               -- source lua file
-map('t',  'sp<cr> | <cmd>te')        -- open terminal
-map('rc', 'e ~/.config/nvim')        -- open config directory
+local cmd = vim.cmd
 
 
----- Colorscheme
+--- nice neovim stuff
+opt.inccommand = 'nosplit'
+cmd 'autocmd TextYankPost * lua vim.highlight.on_yank()'
+
+
+--- some mappings
+map('<leader>rc', 'e ~/.config/nvim')        -- open config directory
+map('<leader>pq', "lua require('plugins')")  -- update packages
+map('<leader>t',  'sp<cr> | <cmd>term')      -- open terminal
+map('<leader>l',  'luafile %')               -- source lua file
+
+
+--- Color scheme
 opt.termguicolors = true
-cmd 'colorscheme melange_dev' --WIP colorscheme
-
----- Treesitter
-require('nvim-treesitter.configs').setup {
-    ensure_installed = {'c', 'julia', 'lua', 'rust'},
-    highlight = {enable = true},
-}
+cmd 'colorscheme melange'
 
 
----- Statusline
-opt.statusline = table.concat({
+--- Tree-sitter
+--require('nvim-treesitter.configs').setup {
+--    ensure_installed = {'c', 'julia', 'lua', 'rust'},
+--    highlight = {enable = true},
+--}
+
+
+--- Status line
+opt.statusline = table.concat {
     '%2{mode()} | ',
     '%f ',        -- relative path
     '%m ',        -- modified flag
@@ -48,25 +41,26 @@ opt.statusline = table.concat({
     '%y',         -- filetype
     '%8(%l,%c%)', -- line, column
     '%6p%%',      -- file percentage
-})
+}
 
----- Telescope
+
+--- Telescope
 require('telescope').setup {
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
 }
-map('ff', 'Telescope find_files')
-map('fg', 'Telescope live_grep')
-map('fb', 'Telescope buffers')
-map('fh', 'Telescope help_tags')
+map('<leader>ff', 'Telescope find_files')
+map('<leader>fg', 'Telescope live_grep')
+map('<leader>fb', 'Telescope buffers')
+map('<leader>fh', 'Telescope help_tags')
 
 
----- Julia
+--- Julia
 g.latex_to_unicode_tab = 0
 g.latex_to_unicode_auto = 1
 g.latex_to_unicode_file_types = {'julia', 'markdown'}
 
 
----- Markdown and Wiki
+--- Markdown and Wiki
 g.markdown_enable_conceal = 1
 g.wiki_root = '~/Documents/wiki'
 g.wiki_filetypes = {'md'}
@@ -78,9 +72,10 @@ function! CreateLinks(text) abort
 endfunction
 ]]
 
----- Spelling
-cmd 'nnoremap <leader>c 1z=1' -- fix current word
-map('s', 'lua cyclelang()')   -- change spelling language
+
+--- Spelling
+cmd('nnoremap <leader>c 1z=1')         -- fix current word
+map('<leader>s', 'lua cyclelang()')    -- change spelling language
 do
     local i = 1
     local langs = {'', 'en', 'es', 'de'}
@@ -91,8 +86,9 @@ do
     end
 end
 
----- Zen mode
-map('z', 'lua togglezen()')
+
+--- Zen mode
+map('<leader>z', 'lua togglezen()')
 function togglezen()
     win.list           = not win.list
     win.number         = not win.number

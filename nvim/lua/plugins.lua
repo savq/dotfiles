@@ -31,10 +31,11 @@ paq 'gabrielelana/vim-markdown'
 
 paq 'rktjmp/lush.nvim'
 paq{'norcalli/nvim-colorizer.lua', opt=true}
+paq{'cocopon/inspecthi.vim', opt=true}
 
 paq 'junegunn/vim-easy-align'
 paq 'mechatroner/rainbow_csv'
 
 Pq.install()
---Pq.update()
+Pq.update()
 Pq.clean()
