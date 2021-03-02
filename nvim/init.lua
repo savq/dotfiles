@@ -1,45 +1,35 @@
-local cmd = vim.cmd
-
-require 'lsp'       -- LSP configuration
-require 'utils'
-cmd 'runtime vimrc' -- general options
+vim.cmd 'runtime vimrc'  -- general options
+require 'lsp'            -- LSP configuration
+local map = require('utils').map
 
 -- wait for vim.opt (nvim PR #13479)
 local g, opt, win = vim.g, vim.o, vim.wo
-
--- wait for lua keymaps (nvim PR #13823)
-local function map(lhs, rhs)
-    vim.api.nvim_set_keymap('n',
-                            '<leader>' .. lhs,
-                            '<cmd>' .. rhs .. '<cr>',
-                            {noremap=true, silent=true}
-                            )
-end
+local cmd = vim.cmd
 
 ---- nice neovim stuff
-opt.inccommand = 'nosplit' -- live substitution
-cmd 'au TextYankPost * lua vim.highlight.on_yank()'
+opt.inccommand = 'nosplit'
+cmd 'autocmd TextYankPost * lua vim.highlight.on_yank()'
 
 ---- some mappings
-map('pq', "lua require('packages')") -- update packages
-map('l',  'luafile %')               -- source lua file
-map('t',  'sp<cr> | <cmd>te')        -- open terminal
-map('rc', 'e ~/.config/nvim')        -- open config directory
+map('<leader>rc', 'e ~/.config/nvim')        -- open config directory
+map('<leader>pq', "lua require('plugins')")  -- update packages
+map('<leader>t',  'sp<cr> | <cmd>term')      -- open terminal
+map('<leader>l',  'luafile %')               -- source lua file
 
 
 ---- Colorscheme
 opt.termguicolors = true
-cmd 'colorscheme melange_dev' --WIP colorscheme
+cmd 'colorscheme melange'
 
 ---- Treesitter
-require('nvim-treesitter.configs').setup {
-    ensure_installed = {'c', 'julia', 'lua', 'rust'},
-    highlight = {enable = true},
-}
+--require('nvim-treesitter.configs').setup {
+--    ensure_installed = {'c', 'julia', 'lua', 'rust'},
+--    highlight = {enable = true},
+--}
 
 
 ---- Statusline
-opt.statusline = table.concat({
+opt.statusline = table.concat {
     '%2{mode()} | ',
     '%f ',        -- relative path
     '%m ',        -- modified flag
@@ -48,16 +38,16 @@ opt.statusline = table.concat({
     '%y',         -- filetype
     '%8(%l,%c%)', -- line, column
     '%6p%%',      -- file percentage
-})
+}
 
 ---- Telescope
 require('telescope').setup {
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
 }
-map('ff', 'Telescope find_files')
-map('fg', 'Telescope live_grep')
-map('fb', 'Telescope buffers')
-map('fh', 'Telescope help_tags')
+map('<leader>ff', 'Telescope find_files')
+map('<leader>fg', 'Telescope live_grep')
+map('<leader>fb', 'Telescope buffers')
+map('<leader>fh', 'Telescope help_tags')
 
 
 ---- Julia
@@ -79,8 +69,8 @@ endfunction
 ]]
 
 ---- Spelling
-cmd 'nnoremap <leader>c 1z=1' -- fix current word
-map('s', 'lua cyclelang()')   -- change spelling language
+cmd('nnoremap <leader>c 1z=1')         -- fix current word
+map('<leader>s', 'lua cyclelang()')    -- change spelling language
 do
     local i = 1
     local langs = {'', 'en', 'es', 'de'}
@@ -92,7 +82,7 @@ do
 end
 
 ---- Zen mode
-map('z', 'lua togglezen()')
+map('<leader>z', 'lua togglezen()')
 function togglezen()
     win.list           = not win.list
     win.number         = not win.number

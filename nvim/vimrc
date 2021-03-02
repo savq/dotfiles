@@ -2,16 +2,18 @@
 
 let mapleader = ' '
 let maplocalleader = ','
-noremap ; :
-noremap \| ;
+nnoremap ; :
+
+" Repeat search (typed with `alt <` and `alt >`)
+noremap ≤ ,
+noremap ≥ ;
 
 " Help
 noremap <C-]> K
-
 " Copy to system clipboard
 noremap Y "+y
 
-" Buffer navigation
+" Buffer navigation    " TODO: Find J,K mappings that don't alter the jumplist
 noremap J }
 noremap K {
 noremap H ^
@@ -26,37 +28,32 @@ noremap <C-l> <C-w>l
 
 """ OPTIONS
 
-""" General
 set mouse=a
-set number
-set relativenumber
-set wildignorecase
 set noshowmode
-set confirm            " ask to save stuff
-set hidden             " hides buffers instead of closing them
-set fileencoding=utf-8 " encoding written to file
+set wildignorecase
+set shortmess+=cI
+set completeopt=menuone,noinsert,noselect
 set spelllang=
 set conceallevel=2
 
-""" Persistent undo
-set undofile
-set undolevels=100  " How many undos
-set undoreload=1000 " number of lines to save for undo
-
-""" LSP-related
-set completeopt=menuone,noinsert,noselect
-set shortmess+=cI
+""" Left margin
+set number
+set relativenumber
 set signcolumn=number
-set updatetime=300
-
-""" Split windows
-set splitbelow
-set splitright
 
 """ Position
 set cursorcolumn
 set cursorline
 set colorcolumn=81
+
+""" Buffer management
+set confirm               " ask to save stuff
+set hidden                " hides buffers instead of closing them
+set fileencoding=utf-8    " encoding written to file
+
+""" Split windows
+set splitbelow
+set splitright
 
 """ Search
 set ignorecase
@@ -83,6 +80,12 @@ set nowrap
 set scrolloff=5
 set sidescrolloff=5
 
+""" Persistent undo
+set undofile
+set undolevels=100     " How many undos
+set undoreload=1000    " number of lines to save for undo
+
+
 """ Vim 8
 if !has('nvim')
     syntax enable
@@ -97,6 +100,6 @@ if !has('nvim')
 endif
 
 " Netrw
-let g:netrw_banner = 0     " no banner
-let g:netrw_liststyle = 3  " tree style listing
-let g:netrw_dirhistmax = 0 " no netrw history
+let g:netrw_banner = 0        " no banner
+let g:netrw_liststyle = 3     " tree style listing
+let g:netrw_dirhistmax = 0    " no netrw history
