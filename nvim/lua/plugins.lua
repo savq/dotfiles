@@ -36,5 +36,5 @@ paq 'junegunn/vim-easy-align'
 paq 'mechatroner/rainbow_csv'
 
 Pq.install()
-Pq.update()
+--Pq.update()
 Pq.clean()

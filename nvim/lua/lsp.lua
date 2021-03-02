@@ -10,9 +10,9 @@ local function lspmap(lhs, rhs, mode)
         {noremap=true, silent=true})
 end
 
-conf.rls.setup(cmpl)
-conf.clangd.setup(cmpl)
-conf.texlab.setup(cmpl)
+conf.rust_analyzer.setup(cmpl)    -- rustup
+conf.clangd.setup(cmpl)           -- llvm
+conf.texlab.setup(cmpl)           -- brew
 
 lspmap('gd', 'vim.lsp.buf.definition()')
 lspmap('gr', 'vim.lsp.buf.references()')
@@ -26,6 +26,9 @@ lspmap('d;', 'vim.lsp.diagnostic.goto_next()')
 -- Complete with tab
 cmd[[inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"]]
 cmd[[inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"]]
+
+cmd[[imap <Tab> <Plug>(completion_smart_tab)]]
+cmd[[imap <S-Tab> <Plug>(completion_smart_s_tab)]]
 
 -- Auto commands
 cmd[[autocmd BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync(nil)]]
