@@ -1,15 +1,16 @@
-fpath=($fpath $ZDOTDIR) # Same directory for user defined config and functions
-autoload -Uz compinit; compinit    # `New' completion system
-autoload -U promptinit; promptinit # Enable prompt themes
-prompt savq # my own prompt
-
+[ -z "$TAB" ] && tab savq          # on startup, open tab instead of a bare shell
+fpath=($fpath $ZDOTDIR)            # same path for config and functions
+autoload -Uz compinit; compinit    # `new' completion system
+autoload -U promptinit; promptinit # enable prompt themes
+prompt savq                        # set prompt
 
 # EDITOR - Neovim
 if type nvim > /dev/null 2>&1; then
   alias vi='nvim'
+  alias wi='nvim -c "WikiIndex" -c "lua togglezen()"'
   export VISUAL='nvim'
   export EDITOR=$VISUAL
-  export MANPAGER='nvim +Man!' # :help Man
+  export MANPAGER='nvim +Man!'
   export MANWIDTH=999
 fi
 
@@ -23,8 +24,8 @@ alias sym='ln -s'
 
 alias ino='arduino-cli'
 alias cc='clang'
-alias jl='julia'
-alias pluto="julia -e 'using Pluto; Pluto.run(port=8000)'"
+alias jl='julia -q'
+alias pluto='julia -e "using Pluto; Pluto.run(port=8000)"'
 alias py='python3' pip='pip3'
 alias pyvenv='python3 -m venv'
 alias serve='python3 -m http.server'
@@ -50,8 +51,6 @@ alias lmkc='latexmk -c'
 alias lmkx='latexmk -xelatex'
 alias lmkl='latexmk -lualatex'
 
-alias tbc='tab --close'
-alias tbl='tab --list'
 
 
 # PATH
