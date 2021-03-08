@@ -5,9 +5,10 @@ package.loaded['paq-nvim'] = nil -- refresh package list
 local Pq = require('paq-nvim')
 local paq = Pq.paq
 
---[[ use local
+--[[ under development, use local
 --paq{'savq/paq-nvim', opt=true}
 --paq 'savq/melange'
+--paq 'Olical/conjure'
 --]]
 
 paq 'neovim/nvim-lspconfig'
@@ -23,11 +24,11 @@ paq 'nvim-treesitter/playground'
 paq 'rust-lang/rust.vim'
 paq 'JuliaEditorSupport/julia-vim'
 paq 'kylelaker/riscv.vim'
-paq 'Olical/conjure'
 
 paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
 paq 'gabrielelana/vim-markdown'
+paq 'mattn/emmet-vim'
 
 paq 'rktjmp/lush.nvim'
 paq{'norcalli/nvim-colorizer.lua', opt=true}
@@ -35,6 +36,9 @@ paq{'cocopon/inspecthi.vim', opt=true}
 
 paq 'junegunn/vim-easy-align'
 paq 'mechatroner/rainbow_csv'
+
+paq 'bakpakin/fennel.vim' -- temporary, while I fix tree-sitter
+paq 'Olical/aniseed'
 
 Pq.install()
 Pq.update()

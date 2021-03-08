@@ -13,9 +13,8 @@ noremap <C-]> K
 " Copy to system clipboard
 noremap Y "+y
 
-" Buffer navigation    " TODO: Find J,K mappings that don't alter the jumplist
-noremap J }
-noremap K {
+noremap J 5j
+noremap K 5k
 noremap H ^
 noremap L $
 
@@ -29,7 +28,6 @@ noremap <C-l> <C-w>l
 """ OPTIONS
 
 set mouse=a
-set noshowmode
 set wildignorecase
 set shortmess+=cI
 set completeopt=menuone,noinsert,noselect
@@ -38,7 +36,6 @@ set conceallevel=2
 
 """ Left margin
 set number
-set relativenumber
 set signcolumn=number
 
 """ Position
@@ -96,7 +93,6 @@ if !has('nvim')
     set hlsearch
     set incsearch
     set autoindent
-    set laststatus=2
 endif
 
 " Netrw

@@ -6,7 +6,6 @@ local map = require('utils').map
 local g, opt, win = vim.g, vim.o, vim.wo
 local cmd = vim.cmd
 
-
 --- nice neovim stuff
 opt.inccommand = 'nosplit'
 cmd 'autocmd TextYankPost * lua vim.highlight.on_yank()'
@@ -15,7 +14,7 @@ cmd 'autocmd TextYankPost * lua vim.highlight.on_yank()'
 --- some mappings
 map('<leader>rc', 'e ~/.config/nvim')        -- open config directory
 map('<leader>pq', "lua require('plugins')")  -- update packages
-map('<leader>t',  'sp<cr> | <cmd>term')      -- open terminal
+map('<leader>t',  'sp<cr><cmd>term')         -- open terminal
 map('<leader>l',  'luafile %')               -- source lua file
 
 
@@ -32,16 +31,17 @@ cmd 'colorscheme melange'
 
 
 --- Status line
-opt.statusline = table.concat {
-    '%2{mode()} | ',
-    '%f ',        -- relative path
-    '%m ',        -- modified flag
-    '%=',
-    '%{&spelllang} ',
-    '%y',         -- filetype
-    '%8(%l,%c%)', -- line, column
-    '%6p%%',      -- file percentage
-}
+opt.statusline = table.concat({
+    '  ',
+    'f',            -- relative path
+    'm',            -- modified flag
+    'r',
+    '=',
+    '{&spelllang}',
+    'y',            -- filetype
+    '8(%l,%c%)',    -- line, column
+    '8p%% ',        -- file percentage
+}, ' %')
 
 
 --- Telescope
@@ -71,6 +71,7 @@ function! CreateLinks(text) abort
     return substitute(tolower(a:text), '\s\+', '-', 'g')
 endfunction
 ]]
+g.user_emmet_leader_key = '<C-e>'
 
 
 --- Spelling
@@ -90,12 +91,9 @@ end
 --- Zen mode
 map('<leader>z', 'lua togglezen()')
 function togglezen()
-    win.list           = not win.list
-    win.number         = not win.number
-    win.relativenumber = not win.relativenumber
-    win.cursorline     = not win.cursorline
-    win.cursorcolumn   = not win.cursorcolumn
-    win.colorcolumn    = win.colorcolumn == '0' and '80' or '0'
-    opt.laststatus     = opt.laststatus == 2 and 0 or 2
-    opt.ruler          = not opt.ruler
+    win.list         = not win.list
+    win.number       = not win.number
+    win.cursorline   = not win.cursorline
+    win.cursorcolumn = not win.cursorcolumn
+    opt.laststatus   = opt.laststatus == 2 and 0 or 2
 end
