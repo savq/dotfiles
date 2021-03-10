@@ -1,14 +1,11 @@
 local cmd  = vim.cmd
 local map  = require('utils').map
 local conf = require('lspconfig')
-local cmpl = {on_attach = require('completion').on_attach}
 
-local lspmap = map
-
-conf.rust_analyzer.setup(cmpl)    -- rustup
-conf.clangd.setup(cmpl)           -- llvm
-conf.texlab.setup(cmpl)           -- brew
-conf.julials.setup(cmpl)          -- Pkg.jl
+conf.rust_analyzer.setup{}    -- rustup
+conf.clangd.setup{}           -- llvm
+conf.texlab.setup{}           -- brew
+conf.julials.setup{}          -- Pkg.jl
 
 -- Disable virtual text
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(

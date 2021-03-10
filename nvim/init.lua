@@ -1,14 +1,17 @@
 vim.cmd 'runtime vimrc'  -- general options
 require 'lsp'            -- LSP configuration
+
 local map = require('utils').map
+
 
 -- wait for vim.opt (nvim PR #13479)
 local g, opt, win = vim.g, vim.o, vim.wo
 local cmd = vim.cmd
 
---- nice neovim stuff
+
+--- nice neovim nuggets
 opt.inccommand = 'nosplit'
-cmd 'autocmd TextYankPost * lua vim.highlight.on_yank()'
+cmd[[autocmd TextYankPost * lua vim.highlight.on_yank()]]
 
 
 --- some mappings
@@ -18,16 +21,59 @@ map('<leader>t',  'sp<cr><cmd>term')         -- open terminal
 map('<leader>l',  'luafile %')               -- source lua file
 
 
---- Color scheme
+--- Color scheme and tree-sitter
 opt.termguicolors = true
 cmd 'colorscheme melange'
 
+require('nvim-treesitter.configs').setup {
+    ensure_installed = {'c', 'javascript', 'julia', 'lua', 'python', 'rust'},
+    highlight = {enable = true},
+}
 
---- Tree-sitter
---require('nvim-treesitter.configs').setup {
---    ensure_installed = {'c', 'julia', 'lua', 'rust'},
---    highlight = {enable = true},
---}
+
+--- nvim-compe (auto completion)
+require'compe'.setup {
+    source = {
+      path = true,
+      buffer = true,
+      calc = true,
+      nvim_lsp = true,
+      nvim_lua = true,
+      spell = true,
+      tags = true,
+      omni = true,
+    }
+}
+
+
+--- Telescope (fuzzy finder)
+require('telescope').setup {
+    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
+}
+map('<leader>ff', 'Telescope find_files')
+map('<leader>fg', 'Telescope live_grep')
+map('<leader>fb', 'Telescope buffers')
+map('<leader>fh', 'Telescope help_tags')
+
+
+--- Prose: markdown, wiki, web
+g.markdown_enable_conceal = 1
+g.user_emmet_leader_key = '<C-e>'
+g.wiki_root = '~/Documents/wiki'
+g.wiki_filetypes = {'md'}
+g.wiki_link_target_type = 'md'
+g.wiki_map_link_create = 'CreateLinks' -- cannot use anonymous functions
+cmd [[
+function! CreateLinks(text) abort
+    return substitute(tolower(a:text), '\s\+', '-', 'g')
+endfunction
+]]
+
+
+--- Julia
+g.latex_to_unicode_tab = 0
+g.latex_to_unicode_auto = 1
+g.latex_to_unicode_file_types = {'julia', 'markdown'}
 
 
 --- Status line
@@ -42,36 +88,6 @@ opt.statusline = table.concat({
     '8(%l,%c%)',    -- line, column
     '8p%% ',        -- file percentage
 }, ' %')
-
-
---- Telescope
-require('telescope').setup {
-    file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
-}
-map('<leader>ff', 'Telescope find_files')
-map('<leader>fg', 'Telescope live_grep')
-map('<leader>fb', 'Telescope buffers')
-map('<leader>fh', 'Telescope help_tags')
-
-
---- Julia
-g.latex_to_unicode_tab = 0
-g.latex_to_unicode_auto = 1
-g.latex_to_unicode_file_types = {'julia', 'markdown'}
-
-
---- Markdown and Wiki
-g.markdown_enable_conceal = 1
-g.wiki_root = '~/Documents/wiki'
-g.wiki_filetypes = {'md'}
-g.wiki_link_target_type = 'md'
-g.wiki_map_link_create = 'CreateLinks' -- cannot use anonymous functions
-cmd [[
-function! CreateLinks(text) abort
-    return substitute(tolower(a:text), '\s\+', '-', 'g')
-endfunction
-]]
-g.user_emmet_leader_key = '<C-e>'
 
 
 --- Spelling

@@ -12,18 +12,20 @@ local paq = Pq.paq
 --]]
 
 paq 'neovim/nvim-lspconfig'
-paq 'nvim-lua/completion-nvim'
+--paq 'nvim-treesitter/nvim-treesitter'
+paq{'theHamsta/nvim-treesitter', branch='lockfile'} -- branch with update parsers
+paq 'nvim-treesitter/playground'
+
+paq 'hrsh7th/nvim-compe'
+
+paq 'JuliaEditorSupport/julia-vim'
+paq 'rust-lang/rust.vim'
+paq 'kylelaker/riscv.vim'
+paq 'Olical/aniseed'
 
 paq 'nvim-lua/popup.nvim'
 paq 'nvim-lua/plenary.nvim'
 paq 'nvim-telescope/telescope.nvim' --uses popup & plenary
-
-paq 'nvim-treesitter/nvim-treesitter'
-paq 'nvim-treesitter/playground'
-
-paq 'rust-lang/rust.vim'
-paq 'JuliaEditorSupport/julia-vim'
-paq 'kylelaker/riscv.vim'
 
 paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
@@ -34,11 +36,8 @@ paq 'rktjmp/lush.nvim'
 paq{'norcalli/nvim-colorizer.lua', opt=true}
 paq{'cocopon/inspecthi.vim', opt=true}
 
-paq 'junegunn/vim-easy-align'
-paq 'mechatroner/rainbow_csv'
-
-paq 'bakpakin/fennel.vim' -- temporary, while I fix tree-sitter
-paq 'Olical/aniseed'
+paq{'junegunn/vim-easy-align', opt=true}
+paq{'mechatroner/rainbow_csv', opt=true}
 
 Pq.install()
 Pq.update()
