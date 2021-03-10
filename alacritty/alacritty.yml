@@ -34,7 +34,7 @@ font:
     style: Light
 
   bold:
-    style: Regular
+    style: Bold
 
   italic:
     style: Light Italic
@@ -63,26 +63,26 @@ draw_bold_text_with_bright_colors: true
 schemes:
   melange: &melange
     primary:
-      foreground: '#C4C4C4'
-      background: '#262626'
+      foreground: '#E2DBD5'
+      background: '#2A2622'
     normal:
-      white:   '#C4C4C4'
-      black:   '#262626'
+      white:   '#E2DBD5'
+      black:   '#2A2622'
       red:     '#D65C70'
       yellow:  '#FFCC66'
       green:   '#4DB380'
-      cyan:    '#7AB8B8'
-      blue:    '#8C9FD9'
+      cyan:    '#85ADAD'
+      blue:    '#9CA7C9'
       magenta: '#997AB8'
     bright:
-      white:   '#262626'
-      black:   '#7A7A7A'
-      red:     '#F07F75'
+      white:   '#2A2622'
+      black:   '#FFCC66'
+      red:     '#F7856E'
       yellow:  '#CC8033'
-      green:   '#88CC66'
-      cyan:    '#7AB8B8'
-      blue:    '#8C9FD9'
-      magenta: '#EBADE0'
+      green:   '#8BC270'
+      cyan:    '#85ADAD'
+      blue:    '#9CA7C9'
+      magenta: '#D194C7'
 
 colors: *melange
 
