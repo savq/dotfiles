@@ -1,13 +1,12 @@
 vim.cmd 'runtime vimrc'  -- general options
 require 'lsp'            -- LSP configuration
+require 'prose'          -- Prose and markup formats
 
 local map = require('utils').map
-
 
 -- wait for vim.opt (nvim PR #13479)
 local g, opt, win = vim.g, vim.o, vim.wo
 local cmd = vim.cmd
-
 
 --- nice neovim nuggets
 opt.inccommand = 'nosplit'
@@ -21,28 +20,42 @@ map('<leader>t',  'sp<cr><cmd>term')         -- open terminal
 map('<leader>l',  'luafile %')               -- source lua file
 
 
---- Color scheme and tree-sitter
+--- Color scheme
 opt.termguicolors = true
 cmd 'colorscheme melange'
 
+
+--- Tree-sitter
 require('nvim-treesitter.configs').setup {
     ensure_installed = {'c', 'javascript', 'julia', 'lua', 'python', 'rust'},
     highlight = {enable = true},
+    textobjects = {
+        select = {
+            enable = true,
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["al"] = "@loop.outer",
+                ["ac"] = "@conditional.outer",
+            },
+        },
+    },
 }
 
 
 --- nvim-compe (auto completion)
-require'compe'.setup {
+require('compe').setup {
+    min_length = 3,
+    preselect = 'disable',
     source = {
-      path = true,
-      buffer = true,
-      calc = true,
-      nvim_lsp = true,
-      nvim_lua = true,
-      spell = true,
-      tags = true,
-      omni = true,
-    }
+        path = true,
+        buffer = true,
+        calc = true,
+        nvim_lsp = true,
+        nvim_lua = true,
+        spell = true,
+        tags = true,
+        omni = true,
+    },
 }
 
 
@@ -56,27 +69,12 @@ map('<leader>fb', 'Telescope buffers')
 map('<leader>fh', 'Telescope help_tags')
 
 
---- Prose: markdown, wiki, web
-g.markdown_enable_conceal = 1
-g.user_emmet_leader_key = '<C-e>'
-g.wiki_root = '~/Documents/wiki'
-g.wiki_filetypes = {'md'}
-g.wiki_link_target_type = 'md'
-g.wiki_map_link_create = 'CreateLinks' -- cannot use anonymous functions
-cmd [[
-function! CreateLinks(text) abort
-    return substitute(tolower(a:text), '\s\+', '-', 'g')
-endfunction
-]]
-
-
 --- Julia
 g.latex_to_unicode_tab = 0
 g.latex_to_unicode_auto = 1
 g.latex_to_unicode_file_types = {'julia', 'markdown'}
 
 
---- Status line
 opt.statusline = table.concat({
     '  ',
     'f',            -- relative path
@@ -90,20 +88,6 @@ opt.statusline = table.concat({
 }, ' %')
 
 
---- Spelling
-cmd('nnoremap <leader>c 1z=1')         -- fix current word
-map('<leader>s', 'lua cyclelang()')    -- change spelling language
-do
-    local i = 1
-    local langs = {'', 'en', 'es', 'de'}
-    function cyclelang()
-        i = (i % #langs) + 1
-        vim.bo.spelllang = langs[i]
-        win.spell = (langs[i] ~= '')
-    end
-end
-
-
 --- Zen mode
 map('<leader>z', 'lua togglezen()')
 function togglezen()
@@ -111,5 +95,6 @@ function togglezen()
     win.number       = not win.number
     win.cursorline   = not win.cursorline
     win.cursorcolumn = not win.cursorcolumn
+    win.conceallevel = win.conceallevel == 1 and 0 or 1
     opt.laststatus   = opt.laststatus == 2 and 0 or 2
 end
