@@ -1,19 +1,19 @@
 --NOTE: Packages are in the runtimepath, this file is only loaded for updates.
 
-vim.cmd 'packadd paq-nvim'       -- Only needed once
-package.loaded['paq-nvim'] = nil -- refresh package list
+vim.cmd 'packadd paq-nvim'
+package.loaded['paq-nvim'] = nil -- Refresh package list
 local Pq = require('paq-nvim')
 local paq = Pq.paq
 
---[[ under development, use local
---paq{'savq/paq-nvim', opt=true}
---paq 'savq/melange'
---paq 'Olical/conjure'
+--[[ Under development, use local
+paq{'savq/paq-nvim', opt=true}
+paq 'savq/melange'
+paq 'rktjmp/lush.nvim'
+paq 'Olical/conjure'
 --]]
 
 paq 'neovim/nvim-lspconfig'
---paq 'nvim-treesitter/nvim-treesitter'
-paq{'theHamsta/nvim-treesitter', branch='lockfile'} -- branch with update parsers
+paq 'nvim-treesitter/nvim-treesitter'
 paq 'nvim-treesitter/playground'
 
 paq 'hrsh7th/nvim-compe'
@@ -32,7 +32,7 @@ paq 'lervag/wiki.vim'
 paq 'gabrielelana/vim-markdown'
 paq 'mattn/emmet-vim'
 
-paq 'rktjmp/lush.nvim'
+
 paq{'norcalli/nvim-colorizer.lua', opt=true}
 paq{'cocopon/inspecthi.vim', opt=true}
 

@@ -32,7 +32,10 @@ set wildignorecase
 set shortmess+=cI
 set completeopt=menuone,noinsert,noselect
 set spelllang=
-set conceallevel=2
+set conceallevel=1
+set noswapfile            " living a dangerous life
+set updatetime=1000
+
 
 """ Left margin
 set number

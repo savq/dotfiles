@@ -4,20 +4,21 @@ require 'prose'          -- Prose and markup formats
 
 local map = require('utils').map
 
--- wait for vim.opt (nvim PR #13479)
+-- Wait for vim.opt (nvim PR #13479)
 local g, opt, win = vim.g, vim.o, vim.wo
 local cmd = vim.cmd
 
---- nice neovim nuggets
+--- Nice neovim nuggets
 opt.inccommand = 'nosplit'
 cmd[[autocmd TextYankPost * lua vim.highlight.on_yank()]]
 
 
---- some mappings
+--- Some mappings
 map('<leader>rc', 'e ~/.config/nvim')        -- open config directory
 map('<leader>pq', "lua require('plugins')")  -- update packages
-map('<leader>t',  'sp<cr><cmd>term')         -- open terminal
 map('<leader>l',  'luafile %')               -- source lua file
+map('<leader>t',  'sp<cr><cmd>term')         -- open terminal
+map('<Esc>',      '<C-\\><C-n>', 't')        -- less dumb terminal escape
 
 
 --- Color scheme
@@ -33,8 +34,13 @@ require('nvim-treesitter.configs').setup {
         select = {
             enable = true,
             keymaps = {
+                ["if"] = "@function.inner",
                 ["af"] = "@function.outer",
+                ["ik"] = "@call.inner",
+                ["ak"] = "@call.outer",
+                ["il"] = "@loop.inner",
                 ["al"] = "@loop.outer",
+                ["ic"] = "@conditional.inner",
                 ["ac"] = "@conditional.outer",
             },
         },
@@ -42,7 +48,7 @@ require('nvim-treesitter.configs').setup {
 }
 
 
---- nvim-compe (auto completion)
+--- Auto completion
 require('compe').setup {
     min_length = 3,
     preselect = 'disable',
@@ -59,7 +65,7 @@ require('compe').setup {
 }
 
 
---- Telescope (fuzzy finder)
+--- Fuzzy finder
 require('telescope').setup {
     file_previewer = require'telescope.previewers'.vim_buffer_cat.new,
 }

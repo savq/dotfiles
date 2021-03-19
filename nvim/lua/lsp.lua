@@ -32,7 +32,6 @@ cmd [[inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"]]
 
 
 -- Auto-commands
-cmd[[autocmd BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync(nil)]]
-cmd[[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]  -- floating window diagnostics
-
+cmd[[autocmd BufWritePre *.rs,*.c,*.jl lua vim.lsp.buf.formatting_sync()]]
+cmd[[autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
 cmd[[autocmd Filetype julia setlocal omnifunc=v:lua.vim.lsp.omnifunc]]

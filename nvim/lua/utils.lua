@@ -7,10 +7,14 @@ end
 -- Wait for lua keymaps (nvim PR #13823)
 -- TODO: make this function less weird
 local function map(lhs, rhs, mode)
+    mode = mode or 'n' 
+    if mode == 'n' then
+        rhs = '<cmd>' .. rhs .. '<cr>'
+    end
     vim.api.nvim_set_keymap(
-        mode or 'n',
+        mode,
         lhs,
-        '<cmd>' .. rhs .. '<cr>',
+        rhs,
         {noremap=true, silent=true}
     )
 end
