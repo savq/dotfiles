@@ -1,10 +1,11 @@
-[ -z "$TAB" ] && tab savq          # on startup, open tab instead of a bare shell
 fpath=($fpath $ZDOTDIR)            # same path for config and functions
 autoload -Uz compinit; compinit    # `new' completion system
 autoload -U promptinit; promptinit # enable prompt themes
 prompt savq                        # set prompt
 
+
 # EDITOR - Neovim
+
 if type nvim > /dev/null 2>&1; then
   alias vi='nvim'
   alias wi='nvim -c "WikiIndex" -c "lua togglezen()"'
@@ -22,20 +23,6 @@ alias ll='ls -AlF'
 alias rm='rm -v'
 alias sym='ln -s'
 
-alias ino='arduino-cli'
-alias cc='clang'
-alias jl='julia -q'
-alias pluto='julia -e "using Pluto; Pluto.run(port=8000)"'
-alias py='python3' pip='pip3'
-alias pyvenv='python3 -m venv'
-alias serve='python3 -m http.server'
-
-alias rsb='cargo build'
-alias rsc='cargo check'
-alias rsd='cargo doc --open'
-alias rsr='cargo run'
-alias rst='cargo test'
-
 alias gad='git add'
 alias gcm='git commit --verbose'
 alias gco='git checkout'
@@ -45,6 +32,23 @@ alias glg='git log --oneline'
 alias gpl='git pull'
 alias gsh='git push'
 alias gst='git status --short --branch'
+
+alias cc='clang'
+alias ino='arduino-cli'
+
+alias jl='julia -q'
+alias pluto='julia -e "using Pluto; Pluto.run()"'
+
+alias py='python3'
+alias pip='pip3'
+alias pyvenv='python3 -m venv'
+alias serve='python3 -m http.server'
+
+alias rsb='cargo build'
+alias rsc='cargo check'
+alias rsd='cargo doc --open'
+alias rsr='cargo run'
+alias rst='cargo test'
 
 alias lmk='latexmk'
 alias lmkc='latexmk -c'
@@ -59,6 +63,7 @@ export TEXDIR="$HOME/.latex"
 PATH="$PATH:$TEXDIR/bin"
 
 PATH="$PATH:$HOME/.cargo/bin"
+PATH="$PATH:$HOME/.luarocks/bin"
 
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
@@ -102,7 +107,7 @@ zstyle ':completion:*:match:*' original only
 zstyle ':completion:*' format '%d:'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' menu select=2
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS} # this doesn't work with BSD colors >:[
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS} # doesn't work with BSD colors :(
 zstyle ':completion:*' list-colors ''
 zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
