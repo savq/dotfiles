@@ -16,7 +16,6 @@ cmd[[autocmd TextYankPost * lua vim.highlight.on_yank()]]
 --- Some mappings
 map('<leader>rc', 'e ~/.config/nvim')        -- open config directory
 map('<leader>pq', "lua require('plugins')")  -- update packages
-map('<leader>l',  'luafile %')               -- source lua file
 map('<leader>t',  'sp<cr><cmd>term')         -- open terminal
 map('<Esc>',      '<C-\\><C-n>', 't')        -- less dumb terminal escape
 
@@ -24,11 +23,12 @@ map('<Esc>',      '<C-\\><C-n>', 't')        -- less dumb terminal escape
 --- Color scheme
 opt.termguicolors = true
 cmd 'colorscheme melange'
+require('lush')(require('melange.colors')) --dev
 
 
 --- Tree-sitter
 require('nvim-treesitter.configs').setup {
-    ensure_installed = {'c', 'javascript', 'julia', 'lua', 'python', 'rust'},
+    --ensure_installed = {'c', 'javascript', 'julia', 'lua', 'python', 'rust'},
     highlight = {enable = true},
     textobjects = {
         select = {
@@ -36,12 +36,12 @@ require('nvim-treesitter.configs').setup {
             keymaps = {
                 ["if"] = "@function.inner",
                 ["af"] = "@function.outer",
-                ["ik"] = "@call.inner",
-                ["ak"] = "@call.outer",
+                ["ic"] = "@call.inner",
+                ["ac"] = "@call.outer",
                 ["il"] = "@loop.inner",
                 ["al"] = "@loop.outer",
-                ["ic"] = "@conditional.inner",
-                ["ac"] = "@conditional.outer",
+                ["ik"] = "@conditional.inner",
+                ["ak"] = "@conditional.outer",
             },
         },
     },
@@ -79,6 +79,21 @@ map('<leader>fh', 'Telescope help_tags')
 g.latex_to_unicode_tab = 0
 g.latex_to_unicode_auto = 1
 g.latex_to_unicode_file_types = {'julia', 'markdown'}
+cmd[[nmap <localleader>e <Plug>(iron-send-motion)]]
+
+
+--- Racket
+g['conjure#completion#omnifunc'] = 0
+g.rainbow_conf = {
+    guifgs = { --FIXME: use melange module?
+        '#CC8033',
+        '#85ADAD',
+        '#F7C96E',
+        '#9CA7C9',
+        '#F7856E',
+        '#4DB380',
+    }
+}
 
 
 opt.statusline = table.concat({

@@ -9,8 +9,8 @@ local paq = Pq.paq
 paq{'savq/paq-nvim', opt=true}
 paq 'savq/melange'
 paq 'rktjmp/lush.nvim'
-paq 'Olical/conjure'
 --]]
+--
 
 paq 'neovim/nvim-lspconfig'
 paq 'nvim-treesitter/nvim-treesitter'
@@ -21,7 +21,11 @@ paq 'hrsh7th/nvim-compe'
 paq 'JuliaEditorSupport/julia-vim'
 paq 'rust-lang/rust.vim'
 paq 'kylelaker/riscv.vim'
-paq 'Olical/aniseed'
+
+paq{'Olical/conjure', branch ='v4.17.0'}
+paq 'hkupty/iron.nvim' --temp (until conjure-julia works)
+paq 'wlangstroth/vim-racket' -- This plugin fails sometimes???
+paq 'luochen1990/rainbow'
 
 paq 'nvim-lua/popup.nvim'
 paq 'nvim-lua/plenary.nvim'
@@ -31,7 +35,6 @@ paq 'lervag/vimtex'
 paq 'lervag/wiki.vim'
 paq 'gabrielelana/vim-markdown'
 paq 'mattn/emmet-vim'
-
 
 paq{'norcalli/nvim-colorizer.lua', opt=true}
 paq{'cocopon/inspecthi.vim', opt=true}
