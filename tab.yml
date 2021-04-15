@@ -1,12 +1,12 @@
 workspace:
-  - tab: dots
-    doc: "my dotfiles"
-    dir: .config
+  - tab: "dots"
+    dir: ".config"
 
-  - tab: tex
-    doc: "LaTeX config"
-    dir: .latex
+  - tab: "latex"
+    dir: ".latex"
 
-  - tab: nvim
-    doc: "nvim plugins"
+  - tab: "nvim"
     dir: ".local/share/nvim/site/pack/local/start/"
+
+  - tab: "website"
+    dir: ".projects/website/"
