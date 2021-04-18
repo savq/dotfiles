@@ -70,6 +70,10 @@ set smartindent
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
+augroup Indents "some exceptions
+    au!
+    au FileType c,scheme setlocal shiftwidth=2 softtabstop=2 tabstop=2
+augroup END
 
 """ Folds
 set foldlevel=2
