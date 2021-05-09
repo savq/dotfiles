@@ -1,3 +1,7 @@
+import:
+    - ~/.config/alacritty/melange_dark.yml
+      #- ~/.config/alacritty/melange_light.yml
+
 #env:
   #TERM: alacritty          # else xterm-256color
 
@@ -30,11 +34,13 @@ window:
 font:
   normal:
     family: IBM Plex Mono
-    style: Light
+    style: Regular #Light
+    #style: Light
   bold:
     style: Bold
   italic:
-    style: Light Italic
+    style: Italic
+    #style: Light Italic
   bold_italic:
     style: Bold Italic
   size: 16.0
@@ -47,70 +53,47 @@ font:
   use_thin_strokes: true    # macOS retina only
 #draw_bold_text_with_bright_colors: false
 
-melange: &melange
-  primary:
-    foreground: '#EDE6DE'
-    background: '#2A2622'
-  normal:
-    white:   '#EDE6DE'
-    black:   '#38332E'
-    red:     '#D65C70'
-    yellow:  '#F7C96E'
-    green:   '#4DB380'
-    cyan:    '#85ADAD'
-    blue:    '#9CA7C9'
-    magenta: '#997AB8'
-  bright:
-    white:   '#EDE6DE'
-    black:   '#584D41'
-    red:     '#F7856E'
-    yellow:  '#CC8033'
-    green:   '#8BC270'
-    cyan:    '#85ADAD'
-    blue:    '#9CA7C9'
-    magenta: '#D194C7'
-
-colors: *melange
-  #primary:
-    #background: '#1d1f21'
-    #foreground: '#c5c8c6'
-    #dim_foreground: '#828482'
-    #bright_foreground: '#eaeaea'
-  #cursor:
-    #text: CellBackground
-    #cursor: CellForeground
-  #search:
-    #matches:
-      #foreground: '#000000'
-      #background: '#ffffff'
-    #focused_match:
-      #foreground: CellBackground
-      #background: CellForeground
-    #bar:
-      #background: '#c5c8c6'
-      #foreground: '#1d1f21'
-  #hints:
-    #start:
-      #foreground: '#1d1f21'
-      #background: '#e9ff5e'
-    #end:
-      #foreground: '#e9ff5e'
-      #background: '#1d1f21'
-  #line_indicator:
-    #foreground: None
-    #background: None
-  #selection:
-    #text: CellBackground
-    #background: CellForeground
-  #dim:
-  #  black:   '#131415'
-  #  red:     '#864343'
-  #  green:   '#777c44'
-  #  yellow:  '#9e824c'
-  #  blue:    '#556a7d'
-  #  magenta: '#75617b'
-  #  cyan:    '#5b7d78'
-  #  white:   '#828482'
+#colors:
+#  primary:
+#    background: '1d1f21'
+#    foreground: 'c5c8c6'
+#    dim_foreground: '828482'
+#    bright_foreground: 'eaeaea'
+#  cursor:
+#    text: CellBackground
+#    cursor: CellForeground
+#  search:
+#    matches:
+#      foreground: '000000'
+#      background: 'ffffff'
+#    focused_match:
+#      foreground: CellBackground
+#      background: CellForeground
+#    bar:
+#      background: 'c5c8c6'
+#      foreground: '1d1f21'
+#  hints:
+#    start:
+#      foreground: '1d1f21'
+#      background: 'e9ff5e'
+#    end:
+#      foreground: 'e9ff5e'
+#      background: '1d1f21'
+#  line_indicator:
+#    foreground: None
+#    background: None
+#  selection:
+#    text: CellBackground
+#    background: CellForeground
+#  dim:
+#    black:   '131415'
+#    red:     '864343'
+#    green:   '777c44'
+#    yellow:  '9e824c'
+#    blue:    '556a7d'
+#    magenta: '75617b'
+#    cyan:    '5b7d78'
+#    white:   '828482'
 
 #background_opacity: 1.0
 
