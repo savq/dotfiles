@@ -1,10 +1,10 @@
-vim.cmd 'runtime vimrc'  -- general options
-require 'lsp'            -- LSP configuration
-require 'prose'          -- Prose and markup formats
+vim.cmd 'runtime vimrc'
+require 'savq.lsp'
+require 'savq.markup'
 
-local map = require('utils').map
+local map = require('savq.utils').map
 
--- Wait for vim.opt (nvim PR #13479)
+-- Wait for vim.opt: neovim/neovim#13479
 local g, opt, win = vim.g, vim.o, vim.wo
 local cmd = vim.cmd
 
@@ -13,17 +13,24 @@ opt.inccommand = 'nosplit'
 cmd[[autocmd TextYankPost * lua vim.highlight.on_yank()]]
 
 
---- Some mappings
-map('<leader>rc', 'e ~/.config/nvim')        -- open config directory
-map('<leader>pq', "lua require('plugins')")  -- update packages
-map('<leader>t',  'sp<cr><cmd>term')         -- open terminal
-map('<Esc>',      '<C-\\><C-n>', 't')        -- less dumb terminal escape
+--- Mappings
+map('<leader>rc', 'e ~/.config/nvim')             -- open config directory
+map('<leader>pq', "lua require('savq.plugins')")  -- update packages
+map('<leader>l',  'luafile %')
+map('<leader>t',  'sp<cr><cmd>term')              -- open terminal
+map('<Esc>',      '<C-\\><C-n>', 't')             -- terminal escape
 
 
 --- Color scheme
-opt.termguicolors = true
-cmd 'colorscheme melange'
-require('lush')(require('melange.colors')) --dev
+do
+    opt.termguicolors = true
+    local h = tonumber(os.date("%H"))
+    if 9 < h and h < 17 then
+        opt.background = 'light'
+    end
+    cmd 'colorscheme melange'
+    --require('lush')(require('melange')) --dev
+end
 
 
 --- Tree-sitter
@@ -34,13 +41,11 @@ require('nvim-treesitter.configs').setup {
         select = {
             enable = true,
             keymaps = {
-                ["if"] = "@function.inner",
                 ["af"] = "@function.outer",
-                ["ic"] = "@call.inner",
+                ["ar"] = "@parameter.outer",
+                ["at"] = "@class.outer",
                 ["ac"] = "@call.outer",
-                ["il"] = "@loop.inner",
                 ["al"] = "@loop.outer",
-                ["ik"] = "@conditional.inner",
                 ["ak"] = "@conditional.outer",
             },
         },
@@ -50,7 +55,7 @@ require('nvim-treesitter.configs').setup {
 
 --- Auto completion
 require('compe').setup {
-    min_length = 3,
+    --min_length = 3,
     preselect = 'disable',
     source = {
         path = true,
@@ -73,27 +78,6 @@ map('<leader>ff', 'Telescope find_files')
 map('<leader>fg', 'Telescope live_grep')
 map('<leader>fb', 'Telescope buffers')
 map('<leader>fh', 'Telescope help_tags')
-
-
---- Julia
-g.latex_to_unicode_tab = 0
-g.latex_to_unicode_auto = 1
-g.latex_to_unicode_file_types = {'julia', 'markdown'}
-cmd[[nmap <localleader>e <Plug>(iron-send-motion)]]
-
-
---- Racket
-g['conjure#completion#omnifunc'] = 0
-g.rainbow_conf = {
-    guifgs = { --FIXME: use melange module?
-        '#CC8033',
-        '#85ADAD',
-        '#F7C96E',
-        '#9CA7C9',
-        '#F7856E',
-        '#4DB380',
-    }
-}
 
 
 opt.statusline = table.concat({
@@ -119,3 +103,9 @@ function togglezen()
     win.conceallevel = win.conceallevel == 1 and 0 or 1
     opt.laststatus   = opt.laststatus == 2 and 0 or 2
 end
+
+
+--- Julia
+g.latex_to_unicode_tab = 0
+g.latex_to_unicode_auto = 1
+

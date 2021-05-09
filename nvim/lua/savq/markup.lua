@@ -1,10 +1,9 @@
 local g = vim.g
-local map = require('utils').map
+local map = require('savq.utils').map
 
 --- Markdown and HTML
 g.markdown_enable_conceal = 1
 g.user_emmet_leader_key = '<C-e>'
-
 
 --- Wiki.vim
 g.wiki_root = '~/Documents/wiki'
@@ -17,11 +16,10 @@ function! CreateLinks(text) abort
 endfunction
 ]]
 
-
 --- Spelling
-vim.cmd('nnoremap <leader>c 1z=1')     -- fix current word
-map('<leader>s', 'lua cyclelang()')    -- change spelling language
 do
+    vim.cmd('nnoremap <leader>c 1z=1')     -- fix current word
+    map('<leader>s', 'lua cyclelang()')    -- change spelling language
     local i = 1
     local langs = {'', 'en', 'es', 'de'}
     function cyclelang()

@@ -24,7 +24,6 @@ noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
-
 """ OPTIONS
 
 set mouse=a
@@ -35,6 +34,7 @@ set spelllang=
 set conceallevel=1
 set noswapfile            " living a dangerous life
 set updatetime=1000
+set noshowmode
 
 
 """ Left margin
@@ -102,7 +102,7 @@ if !has('nvim')
     set autoindent
 endif
 
-" Netrw
+""" Netrw
 let g:netrw_banner = 0        " no banner
 let g:netrw_liststyle = 3     " tree style listing
 let g:netrw_dirhistmax = 0    " no netrw history
