@@ -39,7 +39,7 @@ alias ino='arduino-cli'
 alias jl='julia -q'
 alias pluto='julia -e "using Pluto; Pluto.run()"'
 
-alias py='python3'
+alias py='python3 -q'
 alias pip='pip3'
 alias pyvenv='python3 -m venv'
 alias serve='python3 -m http.server'
@@ -86,6 +86,7 @@ source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 setopt auto_cd
 setopt no_case_glob
 setopt prompt_subst
+setopt interactivecomments
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 export CLICOLOR=1

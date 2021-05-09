@@ -1,9 +1,9 @@
 workspace:
   - tab: "dots"
-    dir: ".config"
+    dir: ".config/"
 
   - tab: "latex"
-    dir: ".latex"
+    dir: ".latex/"
 
   - tab: "nvim"
     dir: ".local/share/nvim/site/pack/local/start/"
