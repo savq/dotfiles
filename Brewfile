@@ -10,8 +10,6 @@ brew "llvm"
 brew "python"
 brew "rustup-init"
 cask "julia"
-#brew "elixir"
-#brew "minimal-racket"
 
 #### TUI
 brew "neovim", args: ["HEAD"]  # nvim 0.5
@@ -22,7 +20,6 @@ cask "alacritty"
 #### utils
 brew "ripgrep"
 brew "tokei"
-brew "wabt"
 
 #### Writing
 brew "pandoc"
