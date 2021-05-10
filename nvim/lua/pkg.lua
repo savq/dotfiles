@@ -70,8 +70,8 @@ local function register(args)
 end
 
 return setmetatable({
-    install = function() vim.tbl_map(install, packages) end,
-    update = function() vim.tbl_map(update, packages) end,
-    clean = function() rmdir(PATH..'start', 1); rmdir(PATH..'opt', 1) end,
+    install = function(self) vim.tbl_map(install, packages) return self end,
+    update = function(self) vim.tbl_map(update, packages) return self end,
+    clean = function(self) rmdir(PATH..'start', 1); rmdir(PATH..'opt', 1) return self end,
 }, {__call=function(self, tbl) packages={}; vim.tbl_map(register, tbl); return self end})
 
