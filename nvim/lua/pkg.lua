@@ -7,9 +7,7 @@ end
 
 local function call_git(name, args, cwd)
     local handle
-    handle = vim.loop.spawn(
-        'git',
-        {args=args, cwd=cwd},
+    handle = vim.loop.spawn('git', {args=args, cwd=cwd},
         vim.schedule_wrap(function(code)
             assert(code == 0, 'git failed')
             print_res(args[1], name, code == 0)
@@ -39,7 +37,7 @@ local function rmdir(dir, ispackdir) -- where packdir = start | opt
         if not name then break end
         child = dir .. '/' .. name
         if ispackdir then --check which packages are listed
-            if not packages[name] then --remove unlisted package
+            if not (packages[name] and packages[name].dir == child) then --package isn't listed or in the right directory
                 ok = rmdir(child)
                 print_res('uninstall', name, ok)
             else --do nothing
@@ -48,18 +46,16 @@ local function rmdir(dir, ispackdir) -- where packdir = start | opt
         else --it's an arbitrary directory or file
             ok = (t == 'directory') and rmdir(child) or vim.loop.fs_unlink(child)
         end
-        if not ok then return end
+        assert(ok, string.format('failed to remove %s', child))
     end
     return ispackdir or vim.loop.fs_rmdir(dir)
 end
 
 local function register(args)
     if type(args) == 'string' then args = {args} end
-
-    local name = args[1]:match('^[%w-]+/([%w-_.]+)$')
-    assert(name ~= nil, "Failed to parse name")
-
-    local dir = PATH .. (args.opt and "opt/" or "start/") .. name
+    local name = args.as or args[1]:match('^[%w-]+/([%w-_.]+)$')
+    assert(name ~= nil, 'Failed to parse name')
+    local dir = PATH .. (args.opt and 'opt/' or 'start/') .. name
     packages[name] = {
         name = name,
         branch = args.branch,
@@ -72,6 +68,6 @@ end
 return setmetatable({
     install = function(self) vim.tbl_map(install, packages) return self end,
     update = function(self) vim.tbl_map(update, packages) return self end,
-    clean = function(self) rmdir(PATH..'start', 1); rmdir(PATH..'opt', 1) return self end,
-}, {__call=function(self, tbl) packages={}; vim.tbl_map(register, tbl); return self end})
+    clean = function(self) rmdir(PATH..'start', 1) rmdir(PATH..'opt', 1) return self end,
+}, {__call = function(self, tbl) packages={} vim.tbl_map(register, tbl) return self end})
 

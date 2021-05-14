@@ -10,9 +10,11 @@ noremap ≥ ;
 
 " Help
 noremap <C-]> K
+
 " Copy to system clipboard
 noremap Y "+y
 
+" Navigation
 noremap J 5j
 noremap K 5k
 noremap H ^
@@ -25,19 +27,18 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
 """ OPTIONS
-
 set mouse=a
-set wildignorecase
-set shortmess+=cI
-set completeopt=menuone,noinsert,noselect
+set noshowmode
 set spelllang=
 set conceallevel=1
-set noswapfile            " living a dangerous life
-set updatetime=1000
-set noshowmode
+set wildignorecase
 
+set completeopt=menuone,noinsert,noselect
+set shortmess+=cI
 
-""" Left margin
+set updatetime=1000 " for CursorHold
+set noswapfile      " living a dangerous life
+
 set number
 set signcolumn=number
 
@@ -76,8 +77,10 @@ augroup Indents "some exceptions
 augroup END
 
 """ Folds
-set foldlevel=2
-set foldmethod=indent
+set foldlevel=3
+"set foldmethod=indent
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
 
 """ Scrolling
 set nowrap
