@@ -1,8 +1,8 @@
-local PATH  = vim.fn.stdpath('data') .. '/site/pack/pkgs/'
+local PATH = vim.fn.stdpath('data') .. '/site/pack/pkgs/'
 local pkgs = {}
 
 local function report(op, name, ok)
-    local m = string.format('pkg: %s %s %s', ok and '' or 'Failed to', op, name)
+    local m = string.format('pkg:%s %s %s', ok and '' or ' Failed to', op, name)
     if ok then print(m) else vim.api.nvim_err_writeln(m) end
 end
 
@@ -36,7 +36,7 @@ local function remove(dir, ispackdir) --where packdir = start | opt
         name, t = vim.loop.fs_scandir_next(handle)
         if not name then break end
         child = dir .. '/' .. name
-        if ispackdir then --check which pkgs are listed
+        if ispackdir then --check which packages are listed
             if not (pkgs[name] and pkgs[name].dir == child) then --package isn't listed or in the right directory
                 ok = remove(child)
                 report('uninstall', name, ok)
@@ -65,9 +65,15 @@ local function register(args)
     }
 end
 
+local function setcmds()
+    vim.cmd "command! PkgInstall lua require('pkg').install()"
+    vim.cmd "command! PkgUpdate lua require('pkg').update()"
+    vim.cmd "command! PkgClean lua require('pkg').clean()"
+end
+
 return setmetatable({
     install = function(self) vim.tbl_map(clone, pkgs) return self end,
     update = function(self) vim.tbl_map(pull, pkgs) return self end,
     clean = function(self) remove(PATH..'start', 1) remove(PATH..'opt', 1) return self end,
-}, {__call = function(self, tbl) pkgs={} vim.tbl_map(register, tbl) return self end})
+}, {__call = function(self, tbl) pkgs={} vim.tbl_map(register, tbl) setcmds() return self end})
 

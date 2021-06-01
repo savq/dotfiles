@@ -1,4 +1,4 @@
-local cmd, g = vim.cmd, vim.g
+local cmd, opt, g = vim.cmd, vim.opt, vim.g
 cmd 'source ~/.vimrc'
 
 savq = {}
@@ -9,12 +9,8 @@ local function map(lhs, rhs, mode, expr)    -- wait for lua keymaps: neovim/neov
     vim.api.nvim_set_keymap(mode, lhs, rhs, {noremap=true, silent=true, expr=expr})
 end
 
-
----- Plugins
-map('<leader>pq', 'lua savq.plugins()')
-function savq.plugins()
-    require 'pkg' {
-    --'savq/melange';  --dev
+require 'pkg' {
+    {'savq/melange', branch='dev'};
 
     --- Tree-sitter
     'nvim-treesitter/nvim-treesitter';
@@ -28,9 +24,9 @@ function savq.plugins()
     'JuliaEditorSupport/julia-vim';
 
     --- Markup & Prose
-    'lervag/vimtex';
+    'lervag/VimTeX';
     'lervag/wiki.vim';
-    'gabrielelana/vim-markdown';
+    --'gabrielelana/vim-markdown';
     {'mattn/emmet-vim', opt=true};
 
     --- Telescope
@@ -44,16 +40,12 @@ function savq.plugins()
     {'norcalli/nvim-colorizer.lua', as='colorizer', opt=true};
     {'junegunn/vim-easy-align', as='easy-align', opt=true};
     {'mechatroner/rainbow_csv', opt=true};
-    }
-    :install()
-    :update()
-    :clean()
-end
+}
 
 
 do ---- General
-    vim.o.inccommand = 'nosplit'
-    cmd [[au TextYankPost * lua vim.highlight.on_yank()]]
+    opt.inccommand = 'nosplit'
+    cmd "au TextYankPost * lua vim.highlight.on_yank()"
 
     map('<leader>rc', 'e ~/.config/nvim/init.lua')
     map('<leader>lf', 'luafile %')
@@ -61,20 +53,19 @@ do ---- General
     map('<leader>sh',  '12sp | term')
     map('<leader>jl',  '12sp | e term://julia -q')
     map('<leader>py',  '12sp | e term://python3 -q')
-    map('<leader>lua', '12sp | e term://lua')
     map('<Esc>',      '<C-\\><C-n>', 't')
 end
 
 
 do ---- Appearance
-    vim.o.termguicolors = true
+    opt.termguicolors = true
     local h = tonumber(os.date('%H'))
-    if 9 <= h and h < 17 then vim.o.background = 'light' end
+    if 9 <= h and h < 16 then opt.background = 'light' end
     cmd 'colorscheme melange'
     --require 'lush' (require 'melange') --dev
 
-    vim.o.statusline = table.concat({
-        '  ',
+    opt.statusline = table.concat({
+        '%2{mode()} | ',
         'f',            -- relative path
         'm',            -- modified flag
         'r',
@@ -89,7 +80,7 @@ end
 
 --- Tree-sitter
 require('nvim-treesitter.configs').setup {
-    --ensure_installed = {'c', 'javascript', 'julia', 'lua', 'python', 'rust', 'query'},
+    --ensure_installed = {'c', 'javascript', 'julia', 'lua', 'python', 'rust', 'query', 'toml'},
     highlight = {
         enable = true,
         additional_vim_regex_highlighting = true,
@@ -134,10 +125,10 @@ do ---- LSP
     conf.rust_analyzer.setup{} --rustup
 
     --- Complete with tab
-    map('<Tab>',   [[pumvisible() ? '<C-n>' : '<Tab>']], 'i', true)
-    map('<S-Tab>', [[pumvisible() ? '<C-p>' : '<S-Tab>']], 'i', true)
+    map('<Tab>',   "pumvisible() ? '<C-n>' : '<Tab>'", 'i', true)
+    map('<S-Tab>', "pumvisible() ? '<C-p>' : '<S-Tab>'", 'i', true)
     g.latex_to_unicode_tab = 0 -- julia.vim messes up completion
-    g.latex_to_unicode_auto = 1
+    --g.latex_to_unicode_auto = 1
 
     --- GOTO Mappings
     map('gd', 'lua vim.lsp.buf.definition()')
@@ -150,9 +141,9 @@ do ---- LSP
     map('d;', 'lua vim.lsp.diagnostic.goto_next()')
 
     --- auto-commands
-    cmd[[au BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()]]
-    cmd[[au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()]]
-    --cmd[[au Filetype julia setlocal omnifunc=v:lua.vim.lsp.omnifunc]]
+    cmd "au BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
+    cmd "au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()"
+    --cmd "au Filetype julia setlocal omnifunc=v:lua.vim.lsp.omnifunc"
 
     --- Disable virtual text
     vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
@@ -188,8 +179,8 @@ do ---- Markup & Prose
     local langs = {'', 'en', 'es', 'de'}
     function savq.cycle_spelllang()
         i = (i % #langs) + 1
-        vim.bo.spelllang = langs[i]
-        vim.wo.spell = (langs[i] ~= '')
+        opt.spell = (langs[i] ~= '')
+        opt.spelllang = langs[i]
     end
 end
 
@@ -213,12 +204,12 @@ do ---- Utils
 
     map('<leader>z', 'lua savq.toggle_zen()')
     function savq.toggle_zen()
-        vim.wo.list         = not vim.wo.list
-        vim.wo.number       = not vim.wo.number
-        vim.wo.cursorline   = not vim.wo.cursorline
-        vim.wo.cursorcolumn = not vim.wo.cursorcolumn
-        vim.wo.colorcolumn  = vim.wo.colorcolumn == '' and '80' or ''
-        vim.wo.conceallevel = vim.wo.conceallevel == 1 and 0 or 1
+        opt.list         = not opt.list
+        opt.number       = not opt.number
+        opt.cursorline   = not opt.cursorline
+        opt.cursorcolumn = not opt.cursorcolumn
+        opt.colorcolumn  = opt.colorcolumn == '' and '80' or ''
+        opt.conceallevel = opt.conceallevel == 1 and 0 or 1
     end
 end
 
