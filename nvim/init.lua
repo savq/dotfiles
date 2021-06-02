@@ -9,7 +9,7 @@ local function map(lhs, rhs, mode, expr)    -- wait for lua keymaps: neovim/neov
     vim.api.nvim_set_keymap(mode, lhs, rhs, {noremap=true, silent=true, expr=expr})
 end
 
-require 'pkg' {
+vim.tbl_map(require('paq-nvim').paq, {
     {'savq/melange', branch='dev'};
 
     --- Tree-sitter
@@ -40,7 +40,7 @@ require 'pkg' {
     {'norcalli/nvim-colorizer.lua', as='colorizer', opt=true};
     {'junegunn/vim-easy-align', as='easy-align', opt=true};
     {'mechatroner/rainbow_csv', opt=true};
-}
+})
 
 
 do ---- General
@@ -198,18 +198,19 @@ end
 
 do ---- Utils
     function _G.dump(...)
-        local objects = vim.tbl_map(vim.inspect, {...})
-        print(unpack(objects))
+        print(unpack(vim.tbl_map(vim.inspect, {...})))
     end
 
     map('<leader>z', 'lua savq.toggle_zen()')
+    local zen = false
     function savq.toggle_zen()
-        opt.list         = not opt.list
-        opt.number       = not opt.number
-        opt.cursorline   = not opt.cursorline
-        opt.cursorcolumn = not opt.cursorcolumn
-        opt.colorcolumn  = opt.colorcolumn == '' and '80' or ''
-        opt.conceallevel = opt.conceallevel == 1 and 0 or 1
+        opt.list         = zen
+        opt.number       = zen
+        opt.cursorline   = zen
+        opt.cursorcolumn = zen
+        opt.colorcolumn  = zen and '80' or ''
+        opt.conceallevel = zen and 0 or 1
+        zen = not zen
     end
 end
 
