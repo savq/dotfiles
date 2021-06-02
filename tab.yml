@@ -1,5 +1,5 @@
 workspace:
-  - tab: "dots"
+  - tab: "conf"
     dir: ".config/"
 
   - tab: "latex"
@@ -7,6 +7,9 @@ workspace:
 
   - tab: "nvim"
     dir: ".local/share/nvim/site/pack/local/start/"
+
+  - tab: "resume"
+    dir: "Documents/resume/"
 
   - tab: "website"
     dir: ".projects/website/"
