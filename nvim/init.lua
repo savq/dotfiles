@@ -1,6 +1,7 @@
 local cmd, opt, g = vim.cmd, vim.opt, vim.g
 cmd 'source ~/.vimrc'
 
+opt.autochdir = true -- try out
 savq = {}
 
 local function map(lhs, rhs, mode, expr)    -- wait for lua keymaps: neovim/neovim#13823
@@ -9,11 +10,12 @@ local function map(lhs, rhs, mode, expr)    -- wait for lua keymaps: neovim/neov
     vim.api.nvim_set_keymap(mode, lhs, rhs, {noremap=true, silent=true, expr=expr})
 end
 
-vim.tbl_map(require('paq-nvim').paq, {
-    {'savq/melange', branch='dev'};
+require 'paq-nvim' {
+    --{'savq/paq-nvim', branch='dev'};
+    --{'savq/melange', branch='dev'};
 
     --- Tree-sitter
-    'nvim-treesitter/nvim-treesitter';
+    {'nvim-treesitter/nvim-treesitter', run=function() vim.cmd 'TSUpdate' end};
     'nvim-treesitter/nvim-treesitter-textobjects';
     'nvim-treesitter/playground';
 
@@ -40,8 +42,7 @@ vim.tbl_map(require('paq-nvim').paq, {
     {'norcalli/nvim-colorizer.lua', as='colorizer', opt=true};
     {'junegunn/vim-easy-align', as='easy-align', opt=true};
     {'mechatroner/rainbow_csv', opt=true};
-})
-
+}
 
 do ---- General
     opt.inccommand = 'nosplit'
@@ -187,6 +188,10 @@ end
 
 do ---- Telescope
     require('telescope').setup {
+        defaults = {
+            prompt_position = 'top',
+            sorting_strategy = 'ascending',
+        },
         file_previewer = require('telescope.previewers').vim_buffer_cat.new,
     }
     map('<leader>ff', 'Telescope find_files')
