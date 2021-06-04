@@ -10,7 +10,9 @@ local function map(lhs, rhs, mode, expr)    -- wait for lua keymaps: neovim/neov
     vim.api.nvim_set_keymap(mode, lhs, rhs, {noremap=true, silent=true, expr=expr})
 end
 
-require 'paq-nvim' {
+map('<leader>pq', 'lua savq.plugins()')
+function savq.plugins()
+  require 'paq-nvim' {
     --{'savq/paq-nvim', branch='dev'};
     --{'savq/melange', branch='dev'};
 
@@ -42,7 +44,11 @@ require 'paq-nvim' {
     {'norcalli/nvim-colorizer.lua', as='colorizer', opt=true};
     {'junegunn/vim-easy-align', as='easy-align', opt=true};
     {'mechatroner/rainbow_csv', opt=true};
-}
+  }
+  :install()
+  :update()
+  :clean()
+end
 
 do ---- General
     opt.inccommand = 'nosplit'
