@@ -28,13 +28,14 @@ noremap <C-l> <C-w>l
 
 """ OPTIONS
 set mouse=a
-set noshowmode
+set noshowmode      " not needed when modes are displayed on the statusline
 set spelllang=
-set conceallevel=1
+set conceallevel=1  " conceal but leave spaces
 set wildignorecase
 
 set completeopt=menuone,noinsert,noselect
-set shortmess+=cI
+set shortmess+=c    " No ins-completion-menu messages
+set shortmess+=I    " No intro message
 
 set updatetime=1000 " for CursorHold
 set noswapfile      " living a dangerous life
@@ -78,7 +79,6 @@ augroup END
 
 """ Folds
 set foldlevel=3
-"set foldmethod=indent
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 
@@ -103,6 +103,7 @@ if !has('nvim')
     set hlsearch
     set incsearch
     set autoindent
+    set foldmethod=indent
 endif
 
 """ Netrw
