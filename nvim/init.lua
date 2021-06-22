@@ -1,8 +1,9 @@
 local cmd, opt, g = vim.cmd, vim.opt, vim.g
 cmd 'source ~/.vimrc'
 
-opt.autochdir = true -- try out
-savq = {}
+savq = {} -- Namespace for functions in mappings, autocmds, etc
+
+local function au(str) vim.cmd("autocmd!" .. str) end
 
 local function map(lhs, rhs, mode, expr)    -- wait for lua keymaps: neovim/neovim#13823
     mode = mode or 'n'
@@ -17,7 +18,7 @@ function savq.plugins()
     --{'savq/melange', branch='dev'};
 
     --- Tree-sitter
-    {'nvim-treesitter/nvim-treesitter', run=function() vim.cmd 'TSUpdate' end};
+    {'savq/nvim-treesitter', run=function() cmd 'TSUpdate' end}; -- dev
     'nvim-treesitter/nvim-treesitter-textobjects';
     'nvim-treesitter/playground';
 
@@ -30,7 +31,7 @@ function savq.plugins()
     --- Markup & Prose
     'lervag/VimTeX';
     'lervag/wiki.vim';
-    --'gabrielelana/vim-markdown';
+    'gabrielelana/vim-markdown';
     {'mattn/emmet-vim', opt=true};
 
     --- Telescope
@@ -52,15 +53,11 @@ end
 
 do ---- General
     opt.inccommand = 'nosplit'
-    cmd "au TextYankPost * lua vim.highlight.on_yank()"
+    au "TextYankPost * lua vim.highlight.on_yank()"
 
     map('<leader>rc', 'e ~/.config/nvim/init.lua')
-    map('<leader>lf', 'luafile %')
+    map('<leader>so', 'source %') -- Works with Lua and Vimscript
 
-    map('<leader>sh',  '12sp | term')
-    map('<leader>jl',  '12sp | e term://julia -q')
-    map('<leader>py',  '12sp | e term://python3 -q')
-    map('<Esc>',      '<C-\\><C-n>', 't')
 end
 
 
@@ -70,7 +67,7 @@ do ---- Appearance
     if 9 <= h and h < 16 then opt.background = 'light' end
     cmd 'colorscheme melange'
     --require 'lush' (require 'melange') --dev
-
+    --
     opt.statusline = table.concat({
         '%2{mode()} | ',
         'f',            -- relative path
@@ -84,43 +81,55 @@ do ---- Appearance
     }, ' %')
 end
 
+do  --- Tree-sitter
+    ---- Local Julia parser
+    -- require('nvim-treesitter.parsers').get_parser_configs().julia = {
+    --     install_info = {
+    --         url = '~/.projects/tree-sitter-julia/',
+    --         files = { "src/parser.c", "src/scanner.c" },
+    --     }
+    -- }
 
---- Tree-sitter
-require('nvim-treesitter.configs').setup {
-    --ensure_installed = {'c', 'javascript', 'julia', 'lua', 'python', 'rust', 'query', 'toml'},
-    highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = true,
-    },
-    textobjects = {
-        select = {
-            enable = true,
-            keymaps = {
-                ['af'] = '@function.outer',
-                ['ar'] = '@parameter.outer',
-                ['at'] = '@class.outer',
-                ['ac'] = '@call.outer',
-                ['al'] = '@loop.outer',
-                ['ak'] = '@conditional.outer',
+    require('nvim-treesitter.configs').setup {
+        --ensure_installed = {'c', 'javascript', 'julia', 'lua', 'python', 'rust', 'query', 'toml'},
+        highlight = {enable = true};
+        indent = {enable = true};
+        textobjects = {
+            select = {
+                enable = true,
+                keymaps = {
+                    af = '@function.outer',
+                    ar = '@parameter.outer',
+                    at = '@class.outer',
+                    ac = '@call.outer',
+                    al = '@loop.outer',
+                    ak = '@conditional.outer',
+                },
             },
-        },
-    },
-}
+        };
+    }
+end
 
 
---- Auto-completion
-require('compe').setup {
-    min_length = 3,
-    preselect = 'disable',
-    source = {
-        path = true,
-        buffer = true,
-        nvim_lsp = true,
-        spell = true,
-        tags = true,
-        omni = true,
-    },
-}
+do --- Auto-completion
+    require('compe').setup {
+        --min_length = 3;
+        preselect = 'disable';
+        source = {
+            path = true,
+            tags = true,
+            omni = {filetypes = {'tex'}},
+            spell = {filetypes = {'markdown', 'tex'}},
+            buffer = true,
+            nvim_lsp = true,
+        };
+    }
+
+    -- Unicode completion (julia.vim)
+    g.latex_to_unicode_tab = 0
+    g.latex_to_unicode_auto = 1
+    g.latex_to_unicode_file_types = {'julia', 'javascript'}
+end
 
 
 do ---- LSP
@@ -128,14 +137,12 @@ do ---- LSP
 
     conf.clangd.setup{}        --llvm
     --conf.julials.setup{}       --Pkg.jl
-    conf.texlab.setup{}        --brew
+    --conf.texlab.setup{}        --brew
     conf.rust_analyzer.setup{} --rustup
 
     --- Complete with tab
     map('<Tab>',   "pumvisible() ? '<C-n>' : '<Tab>'", 'i', true)
     map('<S-Tab>', "pumvisible() ? '<C-p>' : '<S-Tab>'", 'i', true)
-    g.latex_to_unicode_tab = 0 -- julia.vim messes up completion
-    --g.latex_to_unicode_auto = 1
 
     --- GOTO Mappings
     map('gd', 'lua vim.lsp.buf.definition()')
@@ -148,9 +155,9 @@ do ---- LSP
     map('d;', 'lua vim.lsp.diagnostic.goto_next()')
 
     --- auto-commands
-    cmd "au BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
-    cmd "au CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()"
-    --cmd "au Filetype julia setlocal omnifunc=v:lua.vim.lsp.omnifunc"
+    au "BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
+    au "CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()"
+    --au "Filetype julia setlocal omnifunc=v:lua.vim.lsp.omnifunc"
 
     --- Disable virtual text
     vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(
