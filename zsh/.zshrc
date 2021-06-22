@@ -26,18 +26,20 @@ alias sym='ln -s'
 alias gad='git add'
 alias gcm='git commit --verbose'
 alias gco='git checkout'
+alias gcl='git clone --depth=1'
 alias gdf='git diff'
 alias gdt='git difftool'
 alias glg='git log --oneline'
 alias gpl='git pull'
 alias gsh='git push'
 alias gst='git status --short --branch'
+alias gwt='git worktree'
 
 alias cc='clang'
 alias ino='arduino-cli'
 
 alias jl='julia -q'
-alias pluto='julia -e "using Pluto; Pluto.run()"'
+alias pluto='julia -q -e "using Pluto; Pluto.run()"'
 
 alias py='python3 -q'
 alias pip='pip3'
@@ -83,6 +85,7 @@ source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 
 # OPTIONS
 
+setopt noclobber
 setopt auto_cd
 setopt no_case_glob
 setopt prompt_subst
@@ -90,7 +93,7 @@ setopt interactivecomments
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 export CLICOLOR=1
-export LSCOLORS='gxfxcxdxbxEfEdBxGxCxDx' # BSD colors
+export LSCOLORS='gxfxcxdxbxEfEdBxGxCxDx'
 
 setopt hist_ignore_all_dups # Remove older duplicate entries from history
 setopt hist_reduce_blanks   # Remove blanks from history items
