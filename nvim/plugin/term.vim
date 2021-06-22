@@ -25,5 +25,7 @@ function! s:TermOperator(type)
     endif
 
     execute 'wincmd j | put | call feedkeys("i\<cr>\<esc>\<c-w>k")'
+
+    let @@ = saved_unnamed_register
 endfunction
 

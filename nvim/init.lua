@@ -3,13 +3,16 @@ cmd 'source ~/.vimrc'
 
 savq = {} -- Namespace for functions in mappings, autocmds, etc
 
-local function au(str) vim.cmd("autocmd!" .. str) end
-
 local function map(lhs, rhs, mode, expr)    -- wait for lua keymaps: neovim/neovim#13823
     mode = mode or 'n'
     if mode == 'n' then rhs = '<cmd>' .. rhs .. '<cr>' end
     vim.api.nvim_set_keymap(mode, lhs, rhs, {noremap=true, silent=true, expr=expr})
 end
+
+local function au(str)
+    vim.cmd("autocmd!" .. str)
+end
+
 
 map('<leader>pq', 'lua savq.plugins()')
 function savq.plugins()
@@ -54,10 +57,8 @@ end
 do ---- General
     opt.inccommand = 'nosplit'
     au "TextYankPost * lua vim.highlight.on_yank()"
-
     map('<leader>rc', 'e ~/.config/nvim/init.lua')
     map('<leader>so', 'source %') -- Works with Lua and Vimscript
-
 end
 
 
@@ -67,7 +68,7 @@ do ---- Appearance
     if 9 <= h and h < 16 then opt.background = 'light' end
     cmd 'colorscheme melange'
     --require 'lush' (require 'melange') --dev
-    --
+
     opt.statusline = table.concat({
         '%2{mode()} | ',
         'f',            -- relative path
