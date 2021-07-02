@@ -1,4 +1,4 @@
-local cmd, opt, g = vim.cmd, vim.opt, vim.g
+setmetatable(_G, {__index=vim})
 cmd "source ~/.vimrc"
 
 savq = {} -- Namespace for functions in mappings, autocmds, etc
