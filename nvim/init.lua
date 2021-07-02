@@ -204,7 +204,7 @@ end
 do ---- Telescope
     require("telescope").setup {
         defaults = {
-            prompt_position = "top",
+            layout_config = {prompt_position = "top"},
             sorting_strategy = "ascending",
         },
         file_previewer = require("telescope.previewers").vim_buffer_cat.new,
