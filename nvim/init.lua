@@ -11,15 +11,12 @@ end
 
 local function au(s) cmd("au!" .. s) end
 
-
-map("<leader>pq", "lua savq.plugins()")
-function savq.plugins()
-  require "paq" {
-    --{"savq/paq-nvim", branch="dev"};
-    --{"savq/melange", branch="dev"};
+require("paq"):setup{verbose=false} {
+    -- {"savq/paq-nvim", branch="dev", pin=true};
+    -- {"savq/melange", branch="rewrite", pin=true};
 
     --- Tree-sitter
-    {"savq/nvim-treesitter", run=function() cmd "TSUpdate" end}; -- dev
+    -- {"nvim-treesitter/nvim-treesitter", run=function() cmd "TSUpdate" end, pin=true};
     "nvim-treesitter/nvim-treesitter-textobjects";
     "nvim-treesitter/playground";
 
@@ -46,15 +43,12 @@ function savq.plugins()
     {"norcalli/nvim-colorizer.lua", as="colorizer", opt=true};
     {"junegunn/vim-easy-align", as="easy-align", opt=true};
     {"mechatroner/rainbow_csv", opt=true};
-  }
-  :install()
-  :update()
-  :clean()
-end
+}
+
 
 do ---- General
     opt.inccommand = "nosplit"
-    au "TextYankPost * lua highlight.on_yank()"
+    au "TextYankPost * lua vim.highlight.on_yank()"
     map("<leader>rc", "e ~/.config/nvim/init.lua")
     map("<leader>ss", "source %")
 end
@@ -80,37 +74,29 @@ do ---- Appearance
     }, " %")
 end
 
-do  --- Tree-sitter
-    ---- Local Julia parser
-    -- require("nvim-treesitter.parsers").get_parser_configs().julia = {
-    --     install_info = {
-    --         url = "~/.projects/tree-sitter-julia/",
-    --         files = { "src/parser.c", "src/scanner.c" },
-    --     }
-    -- }
 
-    require("nvim-treesitter.configs").setup {
-        ensure_installed = {"c", "javascript", "julia", "lua", "python", "rust"; "html", "query", "toml"},
-        highlight = {enable = true};
-        indent = {enable = false};
-        textobjects = {
-            select = {
-                enable = true,
-                keymaps = {
-                    ["af"] = "@function.outer",
-                    ["if"] = "@function.inner",
-                    ["ar"] = "@parameter.outer",
-                    ["at"] = "@class.outer",
-                    ["ac"] = "@call.outer",
-                    ["al"] = "@loop.outer",
-                    ["il"] = "@loop.outer",
-                    ["ak"] = "@conditional.outer",
-                    ["ik"] = "@conditional.outer",
-                },
+--- Tree-sitter
+require("nvim-treesitter.configs").setup {
+    ensure_installed = {"c", "javascript", "julia", "lua", "python", "rust"; "html", "query", "toml"},
+    highlight = {enable = true};
+    indent = {enable = true};
+    textobjects = {
+        select = {
+            enable = true,
+            keymaps = {
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ar"] = "@parameter.outer",
+                ["at"] = "@class.outer",
+                ["ac"] = "@call.outer",
+                ["al"] = "@loop.outer",
+                ["il"] = "@loop.outer",
+                ["ak"] = "@conditional.outer",
+                ["ik"] = "@conditional.outer",
             },
-        };
-    }
-end
+        },
+    };
+}
 
 
 do --- Auto-completion
@@ -127,6 +113,10 @@ do --- Auto-completion
         };
     }
 
+    --- Complete with tab
+    map("<Tab>",   "pumvisible() ? '<C-n>' : '<Tab>'", "i", true)
+    map("<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", "i", true)
+
     -- Unicode completion (julia.vim)
     g.latex_to_unicode_tab = 0
     g.latex_to_unicode_auto = 1
@@ -136,40 +126,45 @@ end
 
 do ---- LSP
     local conf = require("lspconfig")
+    local function on_attach(client, bufnr)
+        --- GOTO Mappings
+        map("gd", "lua vim.lsp.buf.definition()")
+        map("gr", "lua vim.lsp.buf.references()")
+        map("gs", "lua vim.lsp.buf.document_symbol()")
 
-    conf.clangd.setup{}        --llvm
-    --conf.julials.setup{}       --Pkg.jl
-    --conf.texlab.setup{}        --brew
-    conf.rust_analyzer.setup{} --rustup
+        --- Diagnostics navegation mappings
+        map("dn", "lua vim.lsp.diagnostic.goto_prev()")
+        map("dN", "lua vim.lsp.diagnostic.goto_next()")
 
-    --- Complete with tab
-    map("<Tab>",   "pumvisible() ? '<C-n>' : '<Tab>'", "i", true)
-    map("<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", "i", true)
+        map("<space>rn", "lua vim.lsp.buf.rename()")
+        map("<space>ca", "lua vim.lsp.buf.code_action()")
+        -- map("<space>e",  "lua vim.lsp.diagnostic.show_line_diagnostics()")
+        map("<C-k>",     "lua vim.lsp.buf.signature_help()")
+        -- map("<space>f",  "lua vim.lsp.buf.formatting()")
 
-    --- GOTO Mappings
-    map("gd", "lua lsp.buf.definition()")
-    map("gr", "lua lsp.buf.references()")
-    map("gs", "lua lsp.buf.document_symbol()")
-    map("ga", "lua lsp.buf.code_action()")
+        --- auto-commands
+        au "BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
+        au "CursorHold *.rs,*.c lua vim.lsp.diagnostic.show_line_diagnostics()"
 
-    --- diagnostics navegation mappings
-    map("d,", "lua lsp.diagnostic.goto_prev()")
-    map("d;", "lua lsp.diagnostic.goto_next()")
-
-    --- auto-commands
-    au "BufWritePre *.rs,*.c lua lsp.buf.formatting_sync()"
-    au "CursorHold * lua lsp.diagnostic.show_line_diagnostics()"
-    --au "Filetype julia setlocal omnifunc=v:lua.lsp.omnifunc"
+        opt.omnifunc = "v:lua.vim.lsp.omnifunc"
+    end
 
     --- Disable virtual text
-    lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
+    lsp.handlers["textDocument.publishDiagnostics"] = lsp.with(
         lsp.diagnostic.on_publish_diagnostics,
         {
             virtual_text = false,
-            underline = true,
-            signs = true,
+            signs = false,
+            update_in_insert = false,
         }
     )
+
+    for _, lsp in ipairs {"clangd", "rust_analyzer"} do
+        conf[lsp].setup {
+            on_attach = on_attach,
+            flags = {debounce_text_changes = 150}
+        }
+    end
 end
 
 
@@ -189,7 +184,7 @@ do ---- Markup & Prose
     ]]
 
     --- spelling
-    cmd("nnoremap <leader>c 1z=1") -- fix current word
+    map("<leader>c", "1z=1", "") -- fix current word
     map("<leader>sl", "lua savq.cycle_spelllang()")
     local i = 1
     local langs = {"", "en", "es", "de"}
@@ -209,10 +204,10 @@ do ---- Telescope
         },
         file_previewer = require("telescope.previewers").vim_buffer_cat.new,
     }
-    map("<leader>ff", "Telescope find_files")
-    map("<leader>fg", "Telescope live_grep")
-    map("<leader>fb", "Telescope buffers")
-    map("<leader>fh", "Telescope help_tags")
+    map("<leader>tt", "Telescope find_files")
+    map("<leader>tg", "Telescope live_grep")
+    map("<leader>tb", "Telescope buffers")
+    map("<leader>th", "Telescope help_tags")
 end
 
 
