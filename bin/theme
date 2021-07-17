@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Change the current Alacritty colorscheme by defining the colorschemes in
+# separate files and renaming the imports in `alacritty.yml` when this script is called.
+
+[[ $1 = '-l' ]] && bg='light' || bg='dark'
+sed -r -i '' -e "s/melange_(dark|light)/melange_$bg/g" "$HOME/.config/alacritty/alacritty.yml"
+
