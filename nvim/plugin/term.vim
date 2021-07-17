@@ -1,9 +1,13 @@
 " TODO: Allow horizontal splits as well as vertical splits
 
+augroup term_cmds
+    autocmd TermOpen * set nospell nonumber
+augroup END
+
 " Open shell or REPLs in small vertical split window
 nnoremap <silent><leader>sh :12sp \| term<cr>
-nnoremap <silent><leader>jl :12sp \| term julia -q<cr>
-nnoremap <silent><leader>py :12sp \| term python3 -q<cr>
+nnoremap <silent><leader>jl :12sp \| e term://julia -q \| wincmd k<cr>
+nnoremap <silent><leader>py :12sp \| e term://python3 -q \| wincmd k<cr>
 
 " Use escape key in terminal
 tnoremap <silent><Esc> <C-\><C-n>

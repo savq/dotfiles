@@ -77,11 +77,6 @@ augroup Indents "some exceptions
     au FileType c,scheme setlocal shiftwidth=2 softtabstop=2 tabstop=2
 augroup END
 
-""" Folds
-set foldlevel=3
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-
 """ Scrolling
 set nowrap
 set scrolloff=5

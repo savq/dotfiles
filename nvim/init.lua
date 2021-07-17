@@ -1,65 +1,33 @@
 setmetatable(_G, {__index=vim})
 cmd "source ~/.vimrc"
 
+local utils = require("utils")
+local map, bufmap, au = utils.map, utils.bufmap, utils.au
+
 savq = {} -- Namespace for functions in mappings, autocmds, etc
 
-local function map(lhs, rhs, mode, expr)    -- wait for lua keymaps: neovim/neovim#13823
-    mode = mode or "n"
-    if mode == "n" then rhs = "<cmd>" .. rhs .. "<cr>" end
-    api.nvim_set_keymap(mode, lhs, rhs, {noremap=true, silent=true, expr=expr})
+map("<leader>pq", "lua savq.plugins()")
+function savq.plugins()
+    package.loaded["plugins"] = nil
+    require("paq"):setup({verbose=false})(require("plugins")):sync()
 end
-
-local function au(s) cmd("au!" .. s) end
-
-require("paq"):setup{verbose=false} {
-    -- {"savq/paq-nvim", branch="dev", pin=true};
-    -- {"savq/melange", branch="rewrite", pin=true};
-
-    --- Tree-sitter
-    -- {"nvim-treesitter/nvim-treesitter", run=function() cmd "TSUpdate" end, pin=true};
-    "nvim-treesitter/nvim-treesitter-textobjects";
-    "nvim-treesitter/playground";
-
-    --- LSP & language support
-    "neovim/nvim-lspconfig";
-    "hrsh7th/nvim-compe";
-    "rust-lang/rust.vim";
-    "JuliaEditorSupport/julia-vim";
-
-    --- Markup & Prose
-    "lervag/VimTeX";
-    "lervag/wiki.vim";
-    "gabrielelana/vim-markdown";
-    {"mattn/emmet-vim", opt=true};
-
-    --- Telescope
-    "nvim-lua/popup.nvim";
-    "nvim-lua/plenary.nvim";
-    "nvim-telescope/telescope.nvim";
-
-    --- Misc
-    "tpope/vim-commentary";
-    "rktjmp/lush.nvim";
-    {"norcalli/nvim-colorizer.lua", as="colorizer", opt=true};
-    {"junegunn/vim-easy-align", as="easy-align", opt=true};
-    {"mechatroner/rainbow_csv", opt=true};
-}
 
 
 do ---- General
     opt.inccommand = "nosplit"
+    opt.foldmethod = "expr"
+    opt.foldexpr = "nvim_treesitter#foldexpr()"
+
     au "TextYankPost * lua vim.highlight.on_yank()"
-    map("<leader>rc", "e ~/.config/nvim/init.lua")
+
+    map("<leader>rc", "e $MYVIMRC")
     map("<leader>ss", "source %")
 end
 
 
 do ---- Appearance
     opt.termguicolors = true
-    local h = tonumber(os.date("%H"))
-    if 9 <= h and h < 16 then opt.background = "light" end
     cmd "colorscheme melange"
-    --require "lush" (require "melange") --dev
 
     opt.statusline = table.concat({
         "%2{mode()} | ",
@@ -79,7 +47,7 @@ end
 require("nvim-treesitter.configs").setup {
     ensure_installed = {"c", "javascript", "julia", "lua", "python", "rust"; "html", "query", "toml"},
     highlight = {enable = true};
-    indent = {enable = true};
+    indent = {enable = false};
     textobjects = {
         select = {
             enable = true,
@@ -128,19 +96,19 @@ do ---- LSP
     local conf = require("lspconfig")
     local function on_attach(client, bufnr)
         --- GOTO Mappings
-        map("gd", "lua vim.lsp.buf.definition()")
-        map("gr", "lua vim.lsp.buf.references()")
-        map("gs", "lua vim.lsp.buf.document_symbol()")
+        bufmap("gd", "lua vim.lsp.buf.definition()")
+        bufmap("gr", "lua vim.lsp.buf.references()")
+        bufmap("gs", "lua vim.lsp.buf.document_symbol()")
 
         --- Diagnostics navegation mappings
-        map("dn", "lua vim.lsp.diagnostic.goto_prev()")
-        map("dN", "lua vim.lsp.diagnostic.goto_next()")
+        bufmap("dn", "lua vim.lsp.diagnostic.goto_prev()")
+        bufmap("dN", "lua vim.lsp.diagnostic.goto_next()")
 
-        map("<space>rn", "lua vim.lsp.buf.rename()")
-        map("<space>ca", "lua vim.lsp.buf.code_action()")
-        -- map("<space>e",  "lua vim.lsp.diagnostic.show_line_diagnostics()")
-        map("<C-k>",     "lua vim.lsp.buf.signature_help()")
-        -- map("<space>f",  "lua vim.lsp.buf.formatting()")
+        bufmap("<space>rn", "lua vim.lsp.buf.rename()")
+        bufmap("<space>ca", "lua vim.lsp.buf.code_action()")
+        bufmap("<space>e",  "lua vim.lsp.diagnostic.show_line_diagnostics()")
+        bufmap("<C-k>",     "lua vim.lsp.buf.signature_help()")
+        bufmap("<space>f",  "lua vim.lsp.buf.formatting()")
 
         --- auto-commands
         au "BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
@@ -211,11 +179,7 @@ do ---- Telescope
 end
 
 
-do ---- Utils
-    function _G.dump(...)
-        print(unpack(tbl_map(inspect, {...})))
-    end
-
+do ---- Zen mode
     map("<leader>z", "lua savq.toggle_zen()")
     local zen = false
     function savq.toggle_zen()
