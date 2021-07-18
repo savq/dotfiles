@@ -144,12 +144,7 @@ do ---- Markup & Prose
     g.wiki_root = "~/Documents/wiki"
     g.wiki_filetypes = {"md"}
     g.wiki_link_target_type = "md"
-    g.wiki_map_link_create = "CreateLinks" -- cannot use anonymous functions
-    cmd [[
-    function! CreateLinks(text) abort
-        return substitute(tolower(a:text), "\s\+", "-", "g")
-    endfunction
-    ]]
+    g.wiki_map_link_create = function(txt) return txt:lower():gsub("%s+", "-") end
 
     --- spelling
     map("<leader>c", "1z=1", "") -- fix current word
