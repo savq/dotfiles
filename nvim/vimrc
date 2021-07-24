@@ -1,10 +1,9 @@
 """ MAPPINGS
-
 let mapleader = ' '
 let maplocalleader = ','
 nnoremap ; :
 
-" Repeat search (typed with `alt <` and `alt >`)
+" Repeat search (`alt <` and `alt >`)
 noremap ≤ ,
 noremap ≥ ;
 
@@ -28,9 +27,10 @@ noremap <C-l> <C-w>l
 
 """ OPTIONS
 set mouse=a
-set noshowmode      " not needed when modes are displayed on the statusline
+set noshowmode      " modes are shown in statusline
 set spelllang=
 set conceallevel=1  " conceal but leave spaces
+set foldlevel=2
 set wildignorecase
 
 set completeopt=menuone,noinsert,noselect
@@ -67,12 +67,12 @@ set listchars=tab:\|-,trail:*,extends:>,precedes:<,nbsp:_,eol:~
 set listchars+=space:· "not ASCII
 
 """ Indentation
-set expandtab     "<tab> inserts spaces
+set expandtab      "<tab> inserts spaces
 set smartindent
 set shiftwidth=4
 set softtabstop=4
 set tabstop=4
-augroup Indents "some exceptions
+augroup Indents    "some exceptions
     au!
     au FileType c,scheme setlocal shiftwidth=2 softtabstop=2 tabstop=2
 augroup END
@@ -87,9 +87,10 @@ set undofile
 set undolevels=100     " How many undos
 set undoreload=1000    " number of lines to save for undo
 
-
-""" Vim 8
-if !has('nvim')
+""" Compatibility
+if has('nvim')
+    set inccommand=nosplit
+else
     syntax enable
     set ruler
     set showcmd
@@ -103,9 +104,8 @@ endif
 
 """ Netrw
 let g:netrw_banner = 0        " no banner
+let g:netrw_dirhistmax = 0    " no history
 let g:netrw_liststyle = 3     " tree style listing
-let g:netrw_dirhistmax = 0    " no netrw history
-
 
 " Disable unnecessary internal plugins
 let g:loaded_2html_plugin = 1

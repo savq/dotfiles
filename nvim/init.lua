@@ -1,75 +1,86 @@
 setmetatable(_G, {__index=vim})
-cmd "source ~/.vimrc"
+cmd "runtime vimrc"
 
 local utils = require("utils")
-local map, bufmap, au = utils.map, utils.bufmap, utils.au
+local map, bufmap, au, import = utils.map, utils.bufmap, utils.au, utils.import
 
 savq = {} -- Namespace for functions in mappings, autocmds, etc
 
-map("<leader>pq", "lua savq.plugins()")
-function savq.plugins()
-    package.loaded["plugins"] = nil
-    require("paq"):setup({verbose=false})(require("plugins")):sync()
-end
-
-
-do ---- General
-    opt.inccommand = "nosplit"
-    opt.foldmethod = "expr"
-    opt.foldexpr = "nvim_treesitter#foldexpr()"
-
-    au "TextYankPost * lua vim.highlight.on_yank()"
-
+do -- General
     map("<leader>rc", "e $MYVIMRC")
-    map("<leader>ss", "source %")
-end
+    map("<leader>sc", "source %")
 
-
-do ---- Appearance
+    opt.statusline = "%2{mode()} | %f %m %r %= %{&spelllang} %y %8(%l,%c%) %8p%%"
     opt.termguicolors = true
     cmd "colorscheme melange"
-
-    opt.statusline = table.concat({
-        "%2{mode()} | ",
-        "f",            -- relative path
-        "m",            -- modified flag
-        "r",
-        "=",
-        "{&spelllang}",
-        "y",            -- filetype
-        "8(%l,%c%)",    -- line, column
-        "8p%% ",        -- file percentage
-    }, " %")
+    au "TextYankPost * lua vim.highlight.on_yank()"
 end
 
 
---- Tree-sitter
-require("nvim-treesitter.configs").setup {
-    ensure_installed = {"c", "javascript", "julia", "lua", "python", "rust"; "html", "query", "toml"},
-    highlight = {enable = true};
-    indent = {enable = false};
-    textobjects = {
-        select = {
-            enable = true,
-            keymaps = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ar"] = "@parameter.outer",
-                ["at"] = "@class.outer",
-                ["ac"] = "@call.outer",
-                ["al"] = "@loop.outer",
-                ["il"] = "@loop.outer",
-                ["ak"] = "@conditional.outer",
-                ["ik"] = "@conditional.outer",
+do -- Tree-sitter
+    opt.foldmethod = "expr"
+    opt.foldexpr = "nvim_treesitter#foldexpr()"
+    import "nvim-treesitter.configs" {
+        ensure_installed = {"c", "javascript", "julia", "lua", "python", "rust"; "html", "query", "toml"},
+        highlight = {enable = true};
+        indent = {enable = false};
+        textobjects = {
+            select = {
+                enable = true,
+                keymaps = {
+                    ["af"] = "@function.outer",
+                    ["if"] = "@function.inner",
+                    ["ar"] = "@parameter.outer",
+                    ["at"] = "@class.outer",
+                    ["ac"] = "@call.outer",
+                    ["al"] = "@loop.outer",
+                    ["il"] = "@loop.outer",
+                    ["ak"] = "@conditional.outer",
+                    ["ik"] = "@conditional.outer",
+                },
             },
-        },
-    };
-}
+        };
+    }
+end
 
 
-do --- Auto-completion
-    require("compe").setup {
-        --min_length = 3;
+do ---- LSP
+    local function on_attach(client, bufnr)
+        bufmap("gd", "lua vim.lsp.buf.definition()")
+        bufmap("gr", "lua vim.lsp.buf.references()")
+        bufmap("gs", "lua vim.lsp.buf.document_symbol()")
+
+        bufmap("dn", "lua vim.lsp.diagnostic.goto_prev()")
+        bufmap("dN", "lua vim.lsp.diagnostic.goto_next()")
+
+        bufmap("<leader>rn", "lua vim.lsp.buf.rename()")
+        bufmap("<leader>ca", "lua vim.lsp.buf.code_action()")
+        bufmap("<leader>d",  "lua vim.lsp.diagnostic.show_line_diagnostics()")
+        bufmap("<leader>f",  "lua vim.lsp.buf.formatting()")
+
+        au "BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
+        opt.omnifunc = "v:lua.vim.lsp.omnifunc"
+    end
+
+    --- disable virtual text
+    lsp.handlers["textDocument.publishDiagnostics"] = lsp.with(
+        lsp.diagnostic.on_publish_diagnostics,
+        {virtual_text=false, signs=false, update_in_insert=false}
+    )
+
+    local lspconfig = require("lspconfig")
+    for _,ls in ipairs{"clangd", "rust_analyzer"} do
+        lspconfig[ls].setup {
+            on_attach = on_attach,
+            flags = {debounce_text_changes = 150},
+        }
+    end
+end
+
+
+do -- Auto-completion
+    import "compe" {
+        min_length = 2;
         preselect = "disable";
         source = {
             path = true,
@@ -80,73 +91,44 @@ do --- Auto-completion
             nvim_lsp = true,
         };
     }
-
-    --- Complete with tab
     map("<Tab>",   "pumvisible() ? '<C-n>' : '<Tab>'", "i", true)
     map("<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", "i", true)
+end
 
-    -- Unicode completion (julia.vim)
+
+do -- Julia.vim
     g.latex_to_unicode_tab = 0
     g.latex_to_unicode_auto = 1
     g.latex_to_unicode_file_types = {"julia", "javascript"}
 end
 
 
-do ---- LSP
-    local conf = require("lspconfig")
-    local function on_attach(client, bufnr)
-        --- GOTO Mappings
-        bufmap("gd", "lua vim.lsp.buf.definition()")
-        bufmap("gr", "lua vim.lsp.buf.references()")
-        bufmap("gs", "lua vim.lsp.buf.document_symbol()")
-
-        --- Diagnostics navegation mappings
-        bufmap("dn", "lua vim.lsp.diagnostic.goto_prev()")
-        bufmap("dN", "lua vim.lsp.diagnostic.goto_next()")
-
-        bufmap("<space>rn", "lua vim.lsp.buf.rename()")
-        bufmap("<space>ca", "lua vim.lsp.buf.code_action()")
-        bufmap("<space>e",  "lua vim.lsp.diagnostic.show_line_diagnostics()")
-        bufmap("<C-k>",     "lua vim.lsp.buf.signature_help()")
-        bufmap("<space>f",  "lua vim.lsp.buf.formatting()")
-
-        --- auto-commands
-        au "BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
-        au "CursorHold *.rs,*.c lua vim.lsp.diagnostic.show_line_diagnostics()"
-
-        opt.omnifunc = "v:lua.vim.lsp.omnifunc"
-    end
-
-    --- Disable virtual text
-    lsp.handlers["textDocument.publishDiagnostics"] = lsp.with(
-        lsp.diagnostic.on_publish_diagnostics,
-        {
-            virtual_text = false,
-            signs = false,
-            update_in_insert = false,
-        }
-    )
-
-    for _, lsp in ipairs {"clangd", "rust_analyzer"} do
-        conf[lsp].setup {
-            on_attach = on_attach,
-            flags = {debounce_text_changes = 150}
-        }
-    end
+do -- Telescope
+    import "telescope" {
+        defaults = {
+            layout_config = {prompt_position = "top"},
+            sorting_strategy = "ascending",
+        },
+    }
+    map("<leader>tt", "Telescope find_files")
+    map("<leader>tg", "Telescope live_grep")
+    map("<leader>tb", "Telescope buffers")
+    map("<leader>th", "Telescope help_tags")
 end
 
 
-do ---- Markup & Prose
+do -- Markup
     g.markdown_enable_conceal = 1
     g.user_emmet_leader_key = "<C-e>"
 
-    --- wiki.vim
     g.wiki_root = "~/Documents/wiki"
     g.wiki_filetypes = {"md"}
     g.wiki_link_target_type = "md"
     g.wiki_map_link_create = function(txt) return txt:lower():gsub("%s+", "-") end
+end
 
-    --- spelling
+
+do -- Spelling
     map("<leader>c", "1z=1", "") -- fix current word
     map("<leader>sl", "lua savq.cycle_spelllang()")
     local i = 1
@@ -159,22 +141,7 @@ do ---- Markup & Prose
 end
 
 
-do ---- Telescope
-    require("telescope").setup {
-        defaults = {
-            layout_config = {prompt_position = "top"},
-            sorting_strategy = "ascending",
-        },
-        file_previewer = require("telescope.previewers").vim_buffer_cat.new,
-    }
-    map("<leader>tt", "Telescope find_files")
-    map("<leader>tg", "Telescope live_grep")
-    map("<leader>tb", "Telescope buffers")
-    map("<leader>th", "Telescope help_tags")
-end
-
-
-do ---- Zen mode
+do -- Zen mode
     map("<leader>z", "lua savq.toggle_zen()")
     local zen = false
     function savq.toggle_zen()
@@ -182,9 +149,54 @@ do ---- Zen mode
         opt.number       = zen
         opt.cursorline   = zen
         opt.cursorcolumn = zen
-        opt.colorcolumn  = zen and "80" or ""
+        opt.colorcolumn  = zen and "81" or ""
         opt.conceallevel = zen and 0 or 2
         zen = not zen
     end
 end
+
+
+local paq = require("paq") {
+    -- {"savq/paq-nvim", branch="dev", pin=true};
+
+    ---- Tree-sitter
+    -- {"nvim-treesitter/nvim-treesitter", run=function() cmd "TSUpdate" end, pin=true};
+    "nvim-treesitter/nvim-treesitter-textobjects";
+    "nvim-treesitter/playground";
+
+    ---- LSP & language support
+    "neovim/nvim-lspconfig";
+    "hrsh7th/nvim-compe";
+    "rust-lang/rust.vim";
+    "JuliaEditorSupport/julia-vim";
+
+    ---- Telescope
+    "nvim-lua/popup.nvim";
+    "nvim-lua/plenary.nvim";
+    "nvim-telescope/telescope.nvim";
+
+    ---- Markup
+    "lervag/VimTeX";
+    "lervag/wiki.vim";
+    "gabrielelana/vim-markdown";
+    {"mattn/emmet-vim", opt=true};
+
+    ---- Colorschemes
+    {"savq/melange", branch="dev", pin=true};
+    "rktjmp/lush.nvim";
+    -- "mhartington/oceanic-next";
+    -- "folke/tokyonight.nvim";
+    -- "ayu-theme/ayu-vim";
+    -- "sainnhe/everforest";
+    -- "gruvbox-community/gruvbox";
+
+    ---- Misc
+    "tpope/vim-commentary";
+    {"norcalli/nvim-colorizer.lua", as="colorizer", opt=true};
+    {"junegunn/vim-easy-align", as="easy-align", opt=true};
+    {"mechatroner/rainbow_csv", opt=true};
+}
+
+map("<leader>pq", "lua savq.plugins()")
+function savq.plugins() paq:setup({verbose=false}):sync() end
 
