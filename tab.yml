@@ -6,7 +6,7 @@ workspace:
     dir: ".latex/"
 
   - tab: "nvim"
-    dir: ".local/share/nvim/site/pack/local/start/"
+    dir: ".local/share/nvim/site/pack/dev/start/"
 
   - tab: "resume"
     dir: "Documents/resume/"
