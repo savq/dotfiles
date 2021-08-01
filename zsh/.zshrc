@@ -3,9 +3,7 @@ autoload -Uz compinit; compinit    # `new' completion system
 autoload -U promptinit; promptinit # enable prompt themes
 prompt savq                        # set prompt
 
-
 # EDITOR - Neovim
-
 if type nvim > /dev/null 2>&1; then
   alias vi='nvim'
   alias wi='nvim -c "WikiIndex" -c "lua savq.toggle_zen()"'
@@ -22,12 +20,14 @@ alias l='ls -1A'
 alias ll='ls -AlF'
 alias rm='rm -v'
 alias sym='ln -s'
+alias tex='tectonic'
 
 alias gad='git add'
 alias gcm='git commit --verbose'
 alias gco='git checkout'
 alias gcl='git clone --depth=1'
 alias gdf='git diff'
+alias gds='git diff --staged'
 alias gdt='git difftool'
 alias glg='git log  --graph --oneline'
 alias gpl='git pull'
@@ -37,6 +37,7 @@ alias gwt='git worktree'
 
 alias cc='clang'
 alias ino='arduino-cli'
+alias fth='gforth'
 
 alias jl='julia -q'
 alias pluto='julia -q -e "using Pluto; Pluto.run()"'
@@ -52,12 +53,6 @@ alias rsd='cargo doc --open'
 alias rsr='cargo run'
 alias rst='cargo test'
 
-alias lmk='latexmk'
-alias lmkc='latexmk -c'
-alias lmkx='latexmk -xelatex'
-alias lmkl='latexmk -lualatex'
-
-
 
 # PATH
 
@@ -70,17 +65,6 @@ PATH="$PATH:$HOME/.luarocks/bin"
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
-
-
-# UTILITIES
-
-# tab multiplexer configuration: https://github.com/austinjones/tab-rs/
-source "/Users/savq/Library/Application Support/tab/completion/zsh-history.zsh"
-# end tab configuration
-
-# Check if syntax highlighting is installed
-#[[ -a '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]] &&
-source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 
 
 # OPTIONS
@@ -123,5 +107,14 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 # References for the `new' completion system:
-# - man zshcompsys
-# - User's guide Ch. 6: http://zsh.sourceforge.net/Guide/zshguide06.html#l144
+# man zshcompsys
+# [User's guide Ch. 6](http://zsh.sourceforge.net/Guide/zshguide06.html#l144)
+
+
+#[[ -a '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]] &&
+source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+
+# tab multiplexer configuration: https://github.com/austinjones/tab-rs/
+source "/Users/savq/Library/Application Support/tab/completion/zsh-history.zsh"
+# end tab configuration
+

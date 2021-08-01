@@ -44,7 +44,7 @@ do -- Tree-sitter
 end
 
 
-do ---- LSP
+do -- LSP
     local function on_attach(client, bufnr)
         bufmap("gd", "lua vim.lsp.buf.definition()")
         bufmap("gr", "lua vim.lsp.buf.references()")
@@ -118,9 +118,8 @@ end
 
 
 do -- Markup
-    g.markdown_enable_conceal = 1
     g.user_emmet_leader_key = "<C-e>"
-
+    g.vimtex_compiler_method = "tectonic"
     g.wiki_root = "~/Documents/wiki"
     g.wiki_filetypes = {"md"}
     g.wiki_link_target_type = "md"
@@ -156,7 +155,9 @@ do -- Zen mode
 end
 
 
-local paq = require("paq") {
+map("<leader>pq", "lua savq.plugins()")
+function savq.plugins()
+  require ("paq") {
     -- {"savq/paq-nvim", branch="dev", pin=true};
 
     ---- Tree-sitter
@@ -178,7 +179,6 @@ local paq = require("paq") {
     ---- Markup
     "lervag/VimTeX";
     "lervag/wiki.vim";
-    "gabrielelana/vim-markdown";
     {"mattn/emmet-vim", opt=true};
 
     ---- Colorschemes
@@ -195,8 +195,6 @@ local paq = require("paq") {
     {"norcalli/nvim-colorizer.lua", as="colorizer", opt=true};
     {"junegunn/vim-easy-align", as="easy-align", opt=true};
     {"mechatroner/rainbow_csv", opt=true};
-}
-
-map("<leader>pq", "lua savq.plugins()")
-function savq.plugins() paq:setup({verbose=false}):sync() end
+  }:setup({verbose=false}):sync()
+end
 

@@ -1,4 +1,3 @@
-### Taps
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
@@ -6,30 +5,26 @@ tap "homebrew/core"
 tap "austinjones/taps"
 
 brew "arduino-cli"
+brew "gforth"
+brew "julia"
 brew "llvm"
 brew "python"
+brew "rust-analyzer"
 brew "rustup-init"
-cask "julia"
 
-#### TUI
-brew "neovim", args: ["HEAD"]  # nvim 0.5
-brew "austinjones/taps/tab"    # tab-rs term-multiplexer
+brew "neovim", args: ["HEAD"]
 brew "zsh-syntax-highlighting"
-cask "alacritty"
+brew "austinjones/taps/tab"
 
-#### utils
 brew "ripgrep"
 brew "tokei"
 
-#### Writing
-brew "pandoc"
-brew "texlab"        # TeX language server
-brew "zola"          # SSG
-cask "mactex-no-gui"
+brew "tectonic"
+brew "zola"
 
-#### GUI & Other Casks
+cask "alacritty"
 cask "android-file-transfer"
-cask "android-platform-tools"
+# cask "android-platform-tools"
 cask "discord"
 cask "firefox"
 cask "font-fira-code"
@@ -38,13 +33,12 @@ cask "font-fira-sans"
 cask "font-ibm-plex"
 cask "font-juliamono"
 cask "google-backup-and-sync"
-#cask "ghdl"
-#cask "gtkwave"
+# cask "ghdl"
+# cask "gtkwave"
 cask "iina"          # media player
 cask "itsycal"       # menu bar calendar. Y-M-d EEEEE HH:mm
 cask "protonvpn"
 cask "qbittorrent"
 cask "rectangle"     # window manager
 cask "spotify"
-cask "supercollider"
 cask "zotero"
