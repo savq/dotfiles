@@ -2,14 +2,5 @@ workspace:
   - tab: "conf"
     dir: ".config/"
 
-  - tab: "latex"
-    dir: ".latex/"
-
   - tab: "nvim"
     dir: ".local/share/nvim/site/pack/dev/start/"
-
-  - tab: "resume"
-    dir: "Documents/resume/"
-
-  - tab: "website"
-    dir: ".projects/website/"
