@@ -17,15 +17,9 @@ do -- Tree-sitter
             select = {
                 enable = true,
                 keymaps = {
-                    ["af"] = "@function.outer",
-                    ["if"] = "@function.inner",
-                    ["ar"] = "@parameter.outer",
-                    ["at"] = "@class.outer",
-                    ["ac"] = "@call.outer",
-                    ["al"] = "@loop.outer",
-                    ["il"] = "@loop.outer",
-                    ["ak"] = "@conditional.outer",
-                    ["ik"] = "@conditional.outer",
+                    ac = "@call.outer",
+                    af = "@function.outer",
+                    at = "@class.outer"
                 },
             },
         };
@@ -42,10 +36,9 @@ do -- LSP
         bufmap("dn", "lua vim.lsp.diagnostic.goto_prev()")
         bufmap("dN", "lua vim.lsp.diagnostic.goto_next()")
 
-        bufmap("<leader>lr", "lua vim.lsp.buf.rename()")
-        bufmap("<leader>lc", "lua vim.lsp.buf.code_action()")
-        bufmap("<leader>ld", "lua vim.lsp.diagnostic.show_line_diagnostics()")
-        bufmap("<leader>lf", "lua vim.lsp.buf.formatting()")
+        bufmap("<leader>rn", "lua vim.lsp.buf.rename()")
+        bufmap("<leader>ca", "lua vim.lsp.buf.code_action()")
+        bufmap("<leader>dl", "lua vim.lsp.diagnostic.show_line_diagnostics()")
 
         cmd "au BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
         opt.omnifunc = "v:lua.vim.lsp.omnifunc"

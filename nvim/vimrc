@@ -2,17 +2,22 @@
 let mapleader = ' '
 let maplocalleader = ','
 nnoremap ; :
-noremap <leader>rc <cmd>edit $MYVIMRC<cr>
+
+" Copy to system clipboard
+noremap Y "+y
+
+" Help
+noremap <C-]> K
 
 " Repeat search (`alt <` and `alt >`)
 noremap ≤ ,
 noremap ≥ ;
 
-" Help
-noremap <C-]> K
+" Edit config
+noremap <leader>rc <cmd>edit $MYVIMRC<cr>
 
-" Copy to system clipboard
-noremap Y "+y
+" Indent file
+noremap <leader>i mmgg=G`m
 
 " Navigation
 noremap J 5j
