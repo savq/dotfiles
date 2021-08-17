@@ -2,26 +2,15 @@ setmetatable(_G, {__index=vim})
 cmd "runtime vimrc"
 
 local utils = require("utils")
-local map, bufmap, au, import = utils.map, utils.bufmap, utils.au, utils.import
+local map, bufmap, import = utils.map, utils.bufmap, utils.import
 
 savq = {} -- Namespace for functions in mappings, autocmds, etc
-
-do -- General
-    map("<leader>rc", "e $MYVIMRC")
-    map("<leader>sc", "source %")
-
-    opt.statusline = "%2{mode()} | %f %m %r %= %{&spelllang} %y %8(%l,%c%) %8p%%"
-    opt.termguicolors = true
-    cmd "colorscheme melange"
-    au "TextYankPost * lua vim.highlight.on_yank()"
-end
-
 
 do -- Tree-sitter
     opt.foldmethod = "expr"
     opt.foldexpr = "nvim_treesitter#foldexpr()"
     import "nvim-treesitter.configs" {
-        ensure_installed = {"c", "javascript", "julia", "lua", "python", "rust"; "html", "query", "toml"},
+        ensure_installed = {"c", "javascript", "julia", "lua", "python", "rust", "html", "query", "toml"};
         highlight = {enable = true};
         indent = {enable = false};
         textobjects = {
@@ -53,12 +42,12 @@ do -- LSP
         bufmap("dn", "lua vim.lsp.diagnostic.goto_prev()")
         bufmap("dN", "lua vim.lsp.diagnostic.goto_next()")
 
-        bufmap("<leader>rn", "lua vim.lsp.buf.rename()")
-        bufmap("<leader>ca", "lua vim.lsp.buf.code_action()")
-        bufmap("<leader>d",  "lua vim.lsp.diagnostic.show_line_diagnostics()")
-        bufmap("<leader>f",  "lua vim.lsp.buf.formatting()")
+        bufmap("<leader>lr", "lua vim.lsp.buf.rename()")
+        bufmap("<leader>lc", "lua vim.lsp.buf.code_action()")
+        bufmap("<leader>ld", "lua vim.lsp.diagnostic.show_line_diagnostics()")
+        bufmap("<leader>lf", "lua vim.lsp.buf.formatting()")
 
-        au "BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
+        cmd "au BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
         opt.omnifunc = "v:lua.vim.lsp.omnifunc"
     end
 
@@ -110,10 +99,10 @@ do -- Telescope
             sorting_strategy = "ascending",
         },
     }
-    map("<leader>tt", "Telescope find_files")
-    map("<leader>tg", "Telescope live_grep")
-    map("<leader>tb", "Telescope buffers")
-    map("<leader>th", "Telescope help_tags")
+    map("<leader>ff", "Telescope find_files")
+    map("<leader>fg", "Telescope live_grep")
+    map("<leader>fb", "Telescope buffers")
+    map("<leader>fh", "Telescope help_tags")
 end
 
 
@@ -155,9 +144,17 @@ do -- Zen mode
 end
 
 
+do -- Appearance
+    opt.statusline = "%2{mode()} | %f %m %r %= %{&spelllang} %y %8(%l,%c%) %8p%%"
+    opt.termguicolors = true
+    cmd "colorscheme melange"
+    cmd "au TextYankPost * lua vim.highlight.on_yank()"
+end
+
+
 map("<leader>pq", "lua savq.plugins()")
 function savq.plugins()
-  require ("paq") {
+  require "paq" {
     -- {"savq/paq-nvim", branch="dev", pin=true};
 
     ---- Tree-sitter
@@ -171,27 +168,19 @@ function savq.plugins()
     "rust-lang/rust.vim";
     "JuliaEditorSupport/julia-vim";
 
-    ---- Telescope
-    "nvim-lua/popup.nvim";
-    "nvim-lua/plenary.nvim";
-    "nvim-telescope/telescope.nvim";
-
     ---- Markup
     "lervag/VimTeX";
     "lervag/wiki.vim";
+    "rhysd/vim-gfm-syntax";
     {"mattn/emmet-vim", opt=true};
 
     ---- Colorschemes
     {"savq/melange", branch="dev", pin=true};
     "rktjmp/lush.nvim";
-    -- "mhartington/oceanic-next";
-    -- "folke/tokyonight.nvim";
-    -- "ayu-theme/ayu-vim";
-    -- "sainnhe/everforest";
-    -- "gruvbox-community/gruvbox";
 
     ---- Misc
     "tpope/vim-commentary";
+    "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim";
     {"norcalli/nvim-colorizer.lua", as="colorizer", opt=true};
     {"junegunn/vim-easy-align", as="easy-align", opt=true};
     {"mechatroner/rainbow_csv", opt=true};

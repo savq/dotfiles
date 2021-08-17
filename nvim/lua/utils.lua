@@ -12,10 +12,6 @@ function utils.bufmap(lhs, rhs, mode, expr)
     vim.api.nvim_buf_set_keymap(0, mode, lhs, rhs, {noremap=true, silent=true, expr=expr})
 end
 
-function utils.au(s)
-    vim.cmd("au!" .. s)
-end
-
 -- Safe require. Sometimes. Just in case.
 function utils.import(path)
     -- local err, mod = pcall(require, path)

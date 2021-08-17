@@ -2,6 +2,7 @@
 let mapleader = ' '
 let maplocalleader = ','
 nnoremap ; :
+noremap <leader>rc <cmd>edit $MYVIMRC<cr>
 
 " Repeat search (`alt <` and `alt >`)
 noremap ≤ ,
@@ -19,11 +20,16 @@ noremap K 5k
 noremap H ^
 noremap L $
 
-" Window navigation
+" Windows
 noremap <C-h> <C-w>h
 noremap <C-j> <C-w>j
 noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
+
+" Buffers
+noremap <left>  <cmd>bp<cr>
+noremap <right> <cmd>bn<cr>
+noremap <down>  <cmd>bd<cr>
 
 """ OPTIONS
 set mouse=a
