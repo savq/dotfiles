@@ -1,16 +1,12 @@
 setmetatable(_G, {__index=vim})
 cmd "runtime vimrc"
-
-local utils = require("utils")
-local map, bufmap, import = utils.map, utils.bufmap, utils.import
-
-savq = {} -- Namespace for functions in mappings, autocmds, etc
+local keymap = require("keymap").keymap
 
 do -- Tree-sitter
     opt.foldmethod = "expr"
     opt.foldexpr = "nvim_treesitter#foldexpr()"
-    import "nvim-treesitter.configs" {
-        ensure_installed = {"c", "javascript", "julia", "lua", "python", "rust", "html", "query", "toml"};
+    require("nvim-treesitter.configs").setup {
+        -- ensure_installed = {"c", "javascript", "julia", "lua", "python", "rust", "html", "query", "toml"};
         highlight = {enable = true};
         indent = {enable = false};
         textobjects = {
@@ -19,36 +15,36 @@ do -- Tree-sitter
                 keymaps = {
                     ac = "@call.outer",
                     af = "@function.outer",
-                    at = "@class.outer"
-                },
-            },
-        };
+                    at = "@class.outer",
+                }
+            }
+        }
     }
 end
 
 
 do -- LSP
     local function on_attach(client, bufnr)
-        bufmap("gd", "lua vim.lsp.buf.definition()")
-        bufmap("gr", "lua vim.lsp.buf.references()")
-        bufmap("gs", "lua vim.lsp.buf.document_symbol()")
-
-        bufmap("dn", "lua vim.lsp.diagnostic.goto_prev()")
-        bufmap("dN", "lua vim.lsp.diagnostic.goto_next()")
-
-        bufmap("<leader>rn", "lua vim.lsp.buf.rename()")
-        bufmap("<leader>ca", "lua vim.lsp.buf.code_action()")
-        bufmap("<leader>dl", "lua vim.lsp.diagnostic.show_line_diagnostics()")
-
+        keymap({
+            g = {
+                d = vim.lsp.buf.definition,
+                r = vim.lsp.buf.references,
+                s = vim.lsp.buf.document_symbol,
+            },
+            ["[d"] = vim.lsp.diagnostic.goto_prev,
+            ["]d"] = vim.lsp.diagnostic.goto_next,
+            ["<leader>"] = {
+                ca = vim.lsp.buf.code_action,
+                rn = vim.lsp.buf.rename,
+                ld = vim.lsp.diagnostic.show_line_diagnostics,
+            }
+        }, {buffer=0})
         cmd "au BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
         opt.omnifunc = "v:lua.vim.lsp.omnifunc"
     end
 
-    --- disable virtual text
-    lsp.handlers["textDocument.publishDiagnostics"] = lsp.with(
-        lsp.diagnostic.on_publish_diagnostics,
-        {virtual_text=false, signs=false, update_in_insert=false}
-    )
+    lsp.handlers["textDocument/publishDiagnostics"] =
+        lsp.with(lsp.diagnostic.on_publish_diagnostics, {virtual_text = false})
 
     local lspconfig = require("lspconfig")
     for _,ls in ipairs{"clangd", "rust_analyzer"} do
@@ -61,7 +57,7 @@ end
 
 
 do -- Auto-completion
-    import "compe" {
+    require("compe").setup {
         min_length = 2;
         preselect = "disable";
         source = {
@@ -71,10 +67,12 @@ do -- Auto-completion
             spell = {filetypes = {"markdown", "tex"}},
             buffer = true,
             nvim_lsp = true,
-        };
+        }
     }
-    map("<Tab>",   "pumvisible() ? '<C-n>' : '<Tab>'", "i", true)
-    map("<S-Tab>", "pumvisible() ? '<C-p>' : '<S-Tab>'", "i", true)
+    keymap({
+        ["<Tab>"] = "pumvisible() ? '<C-n>' : '<Tab>'",
+        ["<S-Tab>"] = "pumvisible() ? '<C-p>' : '<S-Tab>'",
+    }, {mode="i", opts={expr=true}})
 end
 
 
@@ -86,16 +84,22 @@ end
 
 
 do -- Telescope
-    import "telescope" {
+    require("telescope").setup {
         defaults = {
             layout_config = {prompt_position = "top"},
             sorting_strategy = "ascending",
-        },
+        }
     }
-    map("<leader>ff", "Telescope find_files")
-    map("<leader>fg", "Telescope live_grep")
-    map("<leader>fb", "Telescope buffers")
-    map("<leader>fh", "Telescope help_tags")
+    local builtin = require "telescope.builtin"
+    keymap {
+        ["<leader>f"] = {
+            f = builtin.find_files,
+            b = builtin.buffers,
+            h = builtin.help_tags,
+            g = builtin.live_grep,
+            r = builtin.registers,
+        }
+    }
 end
 
 
@@ -110,30 +114,35 @@ end
 
 
 do -- Spelling
-    map("<leader>c", "1z=1", "") -- fix current word
-    map("<leader>sl", "lua savq.cycle_spelllang()")
     local i = 1
     local langs = {"", "en", "es", "de"}
-    function savq.cycle_spelllang()
-        i = (i % #langs) + 1
-        opt.spell = (langs[i] ~= "")
-        opt.spelllang = langs[i]
-    end
+    keymap {
+        ["<leader>"] = {
+            c = "1z=1",
+            sl = function ()
+                i = (i % #langs) + 1
+                opt.spell = langs[i] ~= ""
+                opt.spelllang = langs[i]
+            end
+        }
+    }
 end
 
 
 do -- Zen mode
-    map("<leader>z", "lua savq.toggle_zen()")
-    local zen = false
-    function savq.toggle_zen()
-        opt.list         = zen
-        opt.number       = zen
-        opt.cursorline   = zen
-        opt.cursorcolumn = zen
-        opt.colorcolumn  = zen and "81" or ""
-        opt.conceallevel = zen and 0 or 2
-        zen = not zen
-    end
+    local active = false
+    zen = {
+        toggle = function()
+            opt.list         = active
+            opt.number       = active
+            opt.cursorline   = active
+            opt.cursorcolumn = active
+            opt.colorcolumn  = active and "81" or ""
+            opt.conceallevel = active and 0 or 2
+            active = not active
+        end
+    }
+    keymap {["<leader>z"] = zen.toggle}
 end
 
 
@@ -145,13 +154,12 @@ do -- Appearance
 end
 
 
-map("<leader>pq", "lua savq.plugins()")
-function savq.plugins()
+keymap {["<leader>pq"] = function()
   require "paq" {
     -- {"savq/paq-nvim", branch="dev", pin=true};
 
     ---- Tree-sitter
-    -- {"nvim-treesitter/nvim-treesitter", run=function() cmd "TSUpdate" end, pin=true};
+    {"nvim-treesitter/nvim-treesitter", run=function() cmd "TSUpdate" end, pin=true};
     "nvim-treesitter/nvim-treesitter-textobjects";
     "nvim-treesitter/playground";
 
@@ -173,10 +181,13 @@ function savq.plugins()
 
     ---- Misc
     "tpope/vim-commentary";
-    "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim";
+    "nvim-telescope/telescope.nvim"; "nvim-lua/plenary.nvim";
     {"norcalli/nvim-colorizer.lua", as="colorizer", opt=true};
     {"junegunn/vim-easy-align", as="easy-align", opt=true};
     {"mechatroner/rainbow_csv", opt=true};
   }:setup({verbose=false}):sync()
-end
+end}
+
+-- For debugging
+function dump(...) print(unpack(tbl_map(inspect, {...}))) end
 

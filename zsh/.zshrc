@@ -6,7 +6,7 @@ prompt savq                        # set prompt
 # EDITOR - Neovim
 if type nvim > /dev/null 2>&1; then
   alias vi='nvim'
-  alias wi='nvim -c "WikiIndex" -c "lua savq.toggle_zen()"'
+  alias wi='nvim -c "WikiIndex" -c "lua zen.toggle()"'
   export VISUAL='nvim'
   export EDITOR=$VISUAL
   export MANPAGER='nvim +Man!'
