@@ -13,6 +13,16 @@ if type nvim > /dev/null 2>&1; then
   export MANWIDTH=999
 fi
 
+# Appearance
+function theme() {
+    # Change the current Alacritty colorscheme by defining the colorschemes in
+    # separate files and renaming the imports in `alacritty.yml` when this function is called.
+    [[ $1 = '-l' ]] && bg='light' || bg='dark'
+    sed -E -i '' -e "s/melange_(dark|light)/melange_$bg/g" "$HOME/.config/alacritty/alacritty.yml"
+}
+
+[ `date +'%H'` -ge 17 ] && theme || theme -l
+
 
 # ALIASES
 
