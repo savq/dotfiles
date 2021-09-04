@@ -8,6 +8,7 @@ noremap Y "+y
 
 " Help
 noremap <C-]> K
+noremap <leader>h :vert help<space>
 
 " Repeat search (`alt <` and `alt >`)
 noremap ≤ ,
@@ -16,8 +17,9 @@ noremap ≥ ;
 " Edit config
 noremap <leader>rc <cmd>edit $MYVIMRC<cr>
 
-" Indent file
-noremap <leader>i mmgg=G`m
+" Sessions
+noremap <Leader>ss :mksession! .session.vim<CR>
+nnoremap <Leader>sr :source .session.vim<CR>
 
 " Navigation
 noremap J 5j
@@ -32,9 +34,10 @@ noremap <C-k> <C-w>k
 noremap <C-l> <C-w>l
 
 " Buffers
-noremap <left>  <cmd>bp<cr>
-noremap <right> <cmd>bn<cr>
-noremap <down>  <cmd>bd<cr>
+noremap <s-left>  <cmd>bp<cr>
+noremap <s-right> <cmd>bn<cr>
+noremap <s-down>  <cmd>bd<cr>
+
 
 """ OPTIONS
 set mouse=a
@@ -48,7 +51,7 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c    " No ins-completion-menu messages
 set shortmess+=I    " No intro message
 
-set updatetime=1000 " for CursorHold
+set updatetime=500  " for CursorHold
 set noswapfile      " living a dangerous life
 
 set number
@@ -85,7 +88,7 @@ set softtabstop=4
 set tabstop=4
 augroup Indents    "some exceptions
     au!
-    au FileType c,scheme setlocal shiftwidth=2 softtabstop=2 tabstop=2
+    au FileType c,scheme,markdown setlocal shiftwidth=2 softtabstop=2 tabstop=2
 augroup END
 
 """ Scrolling
@@ -118,9 +121,10 @@ let g:netrw_banner = 0        " no banner
 let g:netrw_dirhistmax = 0    " no history
 let g:netrw_liststyle = 3     " tree style listing
 
-" Disable unnecessary internal plugins
+" Disable unnecessary bundled plugins
 let g:loaded_2html_plugin = 1
 let g:loaded_gzip = 1
+let g:loaded_matchit = 1
 let g:loaded_remote_plugins = 1
 let g:loaded_spellfile_plugin = 1
 let g:loaded_tarPlugin = 1

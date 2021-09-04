@@ -18,6 +18,7 @@
 #### Nvim
 tags
 [._]*.un~
+.session.vim
 
 #### Rust
 debug/
