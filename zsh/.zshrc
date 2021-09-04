@@ -26,13 +26,14 @@ function theme() {
 
 # ALIASES
 
-alias l='ls -1A'
+alias l='ls -1AH'
 alias ll='ls -AlF'
 alias rm='rm -v'
 alias sym='ln -s'
 alias tex='tectonic'
 
-alias gad='git add'
+alias gad='git add --verbose'
+alias gbr='git branch --verbose'
 alias gcm='git commit --verbose'
 alias gco='git checkout'
 alias gcl='git clone --depth=1'
@@ -41,7 +42,7 @@ alias gds='git diff --staged'
 alias gdt='git difftool'
 alias glg='git log  --graph --oneline'
 alias gpl='git pull'
-alias gsh='git push'
+# alias gsh='git push'
 alias gst='git status --branch --short'
 alias gwt='git worktree'
 
