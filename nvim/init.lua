@@ -15,6 +15,7 @@ do -- Tree-sitter
                 keymaps = {
                     ac = "@call.outer",
                     af = "@function.outer",
+                    ak = "@conditional.outer",
                     at = "@class.outer",
                 }
             }
@@ -40,11 +41,14 @@ do -- LSP
             }
         }, {buffer=0})
         cmd "au BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
+        cmd "au CursorHold,CursorHoldI *.rs,*.c lua vim.lsp.diagnostic.show_line_diagnostics{focusable=false}"
         opt.omnifunc = "v:lua.vim.lsp.omnifunc"
     end
 
-    lsp.handlers["textDocument/publishDiagnostics"] =
-        lsp.with(lsp.diagnostic.on_publish_diagnostics, {virtual_text = false})
+    lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
+        lsp.diagnostic.on_publish_diagnostics,
+        {underline=false, update_in_insert=false, virtual_text=false}
+    )
 
     local lspconfig = require("lspconfig")
     for _,ls in ipairs{"clangd", "rust_analyzer"} do
@@ -79,7 +83,7 @@ end
 do -- Julia.vim
     g.latex_to_unicode_tab = 0
     g.latex_to_unicode_auto = 1
-    g.latex_to_unicode_file_types = {"julia", "javascript"}
+    g.latex_to_unicode_file_types = {"julia", "javascript", "markdown"}
 end
 
 
@@ -117,15 +121,14 @@ do -- Spelling
     local i = 1
     local langs = {"", "en", "es", "de"}
     keymap {
-        ["<leader>"] = {
-            c = "1z=1",
-            sl = function ()
-                i = (i % #langs) + 1
-                opt.spell = langs[i] ~= ""
-                opt.spelllang = langs[i]
-            end
-        }
+        ["<leader>sl"] = function()
+            i = (i % #langs) + 1
+            opt.spell = langs[i] ~= ""
+            opt.spelllang = langs[i]
+        end,
+        ["<c-s>"] = "mmb1z=`m", -- TODO: How to combine these two mappings?
     }
+    keymap ({["<c-s>"] = "<esc>mmb1z=`ma"}, {mode="i"})
 end
 
 
@@ -189,5 +192,5 @@ keymap {["<leader>pq"] = function()
 end}
 
 -- For debugging
-function dump(...) print(unpack(tbl_map(inspect, {...}))) end
+function dump(...) print(unpack(tbl_map(inspect, {...}))) return ... end
 

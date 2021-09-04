@@ -1,11 +1,12 @@
 " TODO: Allow horizontal splits as well as vertical splits
 
 augroup term_stuff
-    autocmd TermOpen * set nospell nonumber nocursorcolumn nocursorline
+    au!
+    au TermOpen * set nospell nonumber nocursorcolumn nocursorline
 
-    autocmd FileType lua,vim noremap <buffer><leader>sc <cmd>source %<cr>
-    autocmd FileType python  noremap <buffer><leader>sc <cmd>!python3 %<cr>
-    autocmd FileType julia   noremap <buffer><leader>sc <cmd>!julia %<cr>
+    au FileType lua,vim noremap <buffer><leader>sc <cmd>source %<cr>
+    au FileType python  noremap <buffer><leader>sc <cmd>!python3 %<cr>
+    au FileType julia   noremap <buffer><leader>sc <cmd>!julia %<cr>
 augroup END
 
 " Open shell or REPLs in small vertical split window
