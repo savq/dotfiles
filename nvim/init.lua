@@ -8,7 +8,7 @@ do -- Tree-sitter
     require("nvim-treesitter.configs").setup {
         -- ensure_installed = {"c", "javascript", "julia", "lua", "python", "rust", "html", "query", "toml"};
         highlight = {enable = true};
-        indent = {enable = false};
+        indent = {enable = true};
         textobjects = {
             select = {
                 enable = true,
@@ -26,23 +26,19 @@ end
 
 do -- LSP
     local function on_attach(client, bufnr)
-        keymap({
-            g = {
-                d = vim.lsp.buf.definition,
-                r = vim.lsp.buf.references,
-                s = vim.lsp.buf.document_symbol,
-            },
+        opt.omnifunc = "v:lua.vim.lsp.omnifunc"
+        keymap({buffer=0}, {
+            ["gd"] = vim.lsp.buf.definition,
+            ["gr"] = vim.lsp.buf.references,
+            ["gs"] = vim.lsp.buf.document_symbol,
             ["[d"] = vim.lsp.diagnostic.goto_prev,
             ["]d"] = vim.lsp.diagnostic.goto_next,
-            ["<leader>"] = {
-                ca = vim.lsp.buf.code_action,
-                rn = vim.lsp.buf.rename,
-                ld = vim.lsp.diagnostic.show_line_diagnostics,
-            }
-        }, {buffer=0})
+            ["<leader>ca"] = vim.lsp.buf.code_action,
+            ["<leader>rn"] = vim.lsp.buf.rename,
+            ["<leader>ld"] = vim.lsp.diagnostic.show_line_diagnostics,
+        })
         cmd "au BufWritePre *.rs,*.c lua vim.lsp.buf.formatting_sync()"
         cmd "au CursorHold,CursorHoldI *.rs,*.c lua vim.lsp.diagnostic.show_line_diagnostics{focusable=false}"
-        opt.omnifunc = "v:lua.vim.lsp.omnifunc"
     end
 
     lsp.handlers["textDocument/publishDiagnostics"] = lsp.with(
@@ -73,10 +69,10 @@ do -- Auto-completion
             nvim_lsp = true,
         }
     }
-    keymap({
+    keymap({mode="i", opts={expr=true}}, {
         ["<Tab>"] = "pumvisible() ? '<C-n>' : '<Tab>'",
         ["<S-Tab>"] = "pumvisible() ? '<C-p>' : '<S-Tab>'",
-    }, {mode="i", opts={expr=true}})
+    })
 end
 
 
@@ -96,13 +92,11 @@ do -- Telescope
     }
     local builtin = require "telescope.builtin"
     keymap {
-        ["<leader>f"] = {
-            f = builtin.find_files,
-            b = builtin.buffers,
-            h = builtin.help_tags,
-            g = builtin.live_grep,
-            r = builtin.registers,
-        }
+        ["<leader>ff"] = builtin.find_files,
+        ["<leader>fb"] = builtin.buffers,
+        ["<leader>fh"] = builtin.help_tags,
+        ["<leader>fg"] = builtin.live_grep,
+        ["<leader>fr"] = builtin.registers,
     }
 end
 
@@ -126,9 +120,11 @@ do -- Spelling
             opt.spell = langs[i] ~= ""
             opt.spelllang = langs[i]
         end,
-        ["<c-s>"] = "mmb1z=`m", -- TODO: How to combine these two mappings?
+        ["<c-s>"] = "mmb1z=`m" 
     }
-    keymap ({["<c-s>"] = "<esc>mmb1z=`ma"}, {mode="i"})
+    keymap({mode="i"}, {
+        ["<c-s>"] = "<esc>mmb1z=`ma", -- TODO: How to combine this mapping with the one above?
+    })
 end
 
 
@@ -154,6 +150,12 @@ do -- Appearance
     opt.termguicolors = true
     cmd "colorscheme melange"
     cmd "au TextYankPost * lua vim.highlight.on_yank()"
+end
+
+
+do -- Inspection
+    function show(...) print(unpack(tbl_map(inspect, {...}))) return ... end
+    cmd "command! -nargs=* L :lua show(<args>)"  --args are not quoted or anything. USE COMMAS!
 end
 
 
@@ -190,7 +192,4 @@ keymap {["<leader>pq"] = function()
     {"mechatroner/rainbow_csv", opt=true};
   }:setup({verbose=false}):sync()
 end}
-
--- For debugging
-function dump(...) print(unpack(tbl_map(inspect, {...}))) return ... end
 

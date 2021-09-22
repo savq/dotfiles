@@ -20,24 +20,25 @@ local function keymap(tbl, cfg, keys)
     for k,v in pairs(tbl) do
         local t = type(v)
         local lhs = (keys or "") .. k
-        if t == "table" then
-            keymap(v, cfg, lhs)
+        -- if t == "table" then keymap(v, cfg, lhs) else end
+        local rhs = t == "function" and fn_to_cmd(v) or v
+        if cfg.buffer then
+            vim.api.nvim_buf_set_keymap(cfg.buffer, cfg.mode, lhs, rhs, cfg.opts)
         else
-            local rhs = t == "function" and fn_to_cmd(v) or v
-            if cfg.buffer then
-                vim.api.nvim_buf_set_keymap(cfg.buffer, cfg.mode, lhs, rhs, cfg.opts)
-            else
-                vim.api.nvim_set_keymap(cfg.mode, lhs, rhs, cfg.opts)
-            end
-            -- for mode in cfg.mode:gmatch "." do end
+            vim.api.nvim_set_keymap(cfg.mode, lhs, rhs, cfg.opts)
         end
+        -- for mode in cfg.mode:gmatch "." do end
     end
 end
 
 return {
     _fns = _fns,
-    keymap = function(tbl, cfg)
-        keymap(tbl, cfg and vim.tbl_deep_extend("force", defaults, cfg) or defaults)
+    keymap = function(t1, t2)
+        if not t2 then
+            keymap(t1, defaults)
+        else
+            keymap(t2, vim.tbl_deep_extend("force", defaults, t1))
+        end
     end,
 }
 
