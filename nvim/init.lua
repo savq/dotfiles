@@ -102,12 +102,14 @@ end
 
 
 do -- Markup
+    g.markdown_enable_conceal = true
+    g.markdown_enable_insert_mode_mappings = false
     g.user_emmet_leader_key = "<C-e>"
     g.vimtex_compiler_method = "tectonic"
-    g.wiki_root = "~/Documents/wiki"
     g.wiki_filetypes = {"md"}
     g.wiki_link_target_type = "md"
     g.wiki_map_link_create = function(txt) return txt:lower():gsub("%s+", "-") end
+    g.wiki_root = "~/Documents/wiki"
 end
 
 
@@ -150,6 +152,7 @@ do -- Appearance
     opt.termguicolors = true
     cmd "colorscheme melange"
     cmd "au TextYankPost * lua vim.highlight.on_yank()"
+    cmd "au! ColorScheme melange hi! markdownLinkText gui=NONE"
 end
 
 
@@ -177,7 +180,7 @@ keymap {["<leader>pq"] = function()
     ---- Markup
     "lervag/VimTeX";
     "lervag/wiki.vim";
-    "rhysd/vim-gfm-syntax";
+    "gabrielelana/vim-markdown";
     {"mattn/emmet-vim", opt=true};
 
     ---- Colorschemes
