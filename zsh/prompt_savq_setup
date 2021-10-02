@@ -2,19 +2,23 @@ autoload -Uz vcs_info # automatically retrieve version control information
 
 # Git support
 zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' stagedstr ' !'
-zstyle ':vcs_info:*' unstagedstr  ' ?'
+zstyle ':vcs_info:*' stagedstr '!'
+zstyle ':vcs_info:*' unstagedstr  '?'
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' actionformats "[%b|%a%c%u] "
-zstyle ':vcs_info:*' formats "[%b%c%u] "
+zstyle ':vcs_info:*' actionformats '#%b|%a%c%u'
+zstyle ':vcs_info:*' formats '#%b%c%u'
 
 precmd () { vcs_info }
 
-# Prompt
-PS1='%F{magenta}$TAB%f '              # Tab-rs
-PS1+='%F{cyan}%1~%f '                 # Current directory
-PS1+='%F{yellow}${vcs_info_msg_0_}%f' # Git info
-PS1+='%(?.%F{green}.%F{red})%#%f '    # Exit code: green (0) or red (not 0)
+# Prompt for easy copy-pastying
+PROMPT='%F{blue}: '
+if (($+TAB)); then; PROMPT+="$TAB "; fi # tab-rs
+PROMPT+='%f%F{cyan}%1~%f '              # Current directory
+PROMPT+='%(?.%F{green}.%F{red});%f%f '  # Exit code: 0 => green, not 0 => red
+
+RPROMPT='%F{yellow}$vcs_info_msg_0_%f'  # Git info on the RHS
+
+# /^:.*; \(.*\)#.*$/\1/
 
 # Docs on Git support and prompt themes:
 # % man zshcontrib
