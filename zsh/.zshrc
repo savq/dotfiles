@@ -28,6 +28,7 @@ function theme() {
 
 alias l='ls -1AH'
 alias ll='ls -AlF'
+alias mkdir='mkdir -p'
 alias rm='rm -v'
 alias sym='ln -s'
 alias tex='tectonic'
@@ -50,8 +51,8 @@ alias cc='clang'
 alias ino='arduino-cli'
 alias fth='gforth'
 
-alias jl='julia -q'
-alias pluto='julia -q -e "using Pluto; Pluto.run()"'
+alias jl='julia --startup-file=no --quiet'
+alias pluto='julia --quiet -e "using Pluto; Pluto.run()"'
 
 alias py='python3 -q'
 alias pip='pip3'
@@ -93,6 +94,7 @@ export LSCOLORS='gxfxcxdxbxEfEdBxGxCxDx'
 setopt hist_ignore_all_dups # Remove older duplicate entries from history
 setopt hist_reduce_blanks   # Remove blanks from history items
 setopt share_history        # Same history for all open terminals
+bindkey -e
 bindkey '^[[B' history-beginning-search-forward
 bindkey '^[[A' history-beginning-search-backward 
 
@@ -124,6 +126,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 #[[ -a '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]] &&
 source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+ZSH_HIGHLIGHT_STYLES[comment]=none
 
 # tab multiplexer configuration: https://github.com/austinjones/tab-rs/
 source "/Users/savq/Library/Application Support/tab/completion/zsh-history.zsh"
