@@ -80,6 +80,12 @@ set list
 set listchars=tab:\|-,trail:*,extends:>,precedes:<,nbsp:_,eol:~
 set listchars+=space:· "not ASCII
 
+""" Folds
+set fillchars=fold:\  " hmmm...
+set foldlevel=2
+set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
+
+
 """ Indentation
 set expandtab      "<tab> inserts spaces
 set smartindent
