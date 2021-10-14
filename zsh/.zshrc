@@ -124,8 +124,7 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # [User's guide Ch. 6](http://zsh.sourceforge.net/Guide/zshguide06.html#l144)
 
 
-#[[ -a '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh' ]] &&
-source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+source "$HOME/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 ZSH_HIGHLIGHT_STYLES[comment]=none
 
 # tab multiplexer configuration: https://github.com/austinjones/tab-rs/

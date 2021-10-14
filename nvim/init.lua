@@ -176,6 +176,7 @@ keymap {["<leader>pq"] = function()
     "hrsh7th/nvim-compe";
     "rust-lang/rust.vim";
     "JuliaEditorSupport/julia-vim";
+    "LnL7/vim-nix";
 
     ---- Markup
     "lervag/VimTeX";
