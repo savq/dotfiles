@@ -8,8 +8,12 @@
 
 ### Shell: [Zsh](https://www.zsh.org/)
 
-- `zsh/.zshrc` includes aliases as well as some (copy-pasted) auto-completion commands.
+- `zsh/.zshrc` includes aliases and some basic options.
 - `zsh/prompt_savq_setup` has a minimal prompt with git support.
+- Plugins:
+  - [zsh-users/zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+  - [zsh-users/zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+
 
 ### Other stuff
 
