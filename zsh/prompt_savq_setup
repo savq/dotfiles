@@ -25,3 +25,5 @@ RPROMPT='%F{yellow}$vcs_info_msg_0_%f'  # Git info on the RHS
 # or online: <zsh.sourceforge.net/Doc/Release/User-Contributions.html>
 # 26.5 Gathering information from version control systems
 # 26.6 Prompt Themes
+
+# vim:filetype=zsh
