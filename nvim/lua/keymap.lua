@@ -1,5 +1,3 @@
--- Based on https://github.com/LionC/nest.nvim
-
 local defaults = {
     mode = "n",
     -- buffer = nil,
@@ -18,16 +16,15 @@ end
 
 local function keymap(tbl, cfg, keys)
     for k,v in pairs(tbl) do
-        local t = type(v)
         local lhs = (keys or "") .. k
-        -- if t == "table" then keymap(v, cfg, lhs) else end
-        local rhs = t == "function" and fn_to_cmd(v) or v
-        if cfg.buffer then
-            vim.api.nvim_buf_set_keymap(cfg.buffer, cfg.mode, lhs, rhs, cfg.opts)
-        else
-            vim.api.nvim_set_keymap(cfg.mode, lhs, rhs, cfg.opts)
+        local rhs = type(v) == "function" and fn_to_cmd(v) or v
+        for mode in cfg.mode:gmatch "." do
+            if cfg.buffer then
+                vim.api.nvim_buf_set_keymap(cfg.buffer, mode, lhs, rhs, cfg.opts)
+            else
+                vim.api.nvim_set_keymap(mode, lhs, rhs, cfg.opts)
+            end
         end
-        -- for mode in cfg.mode:gmatch "." do end
     end
 end
 
@@ -42,3 +39,4 @@ return {
     end,
 }
 
+-- Based on https://github.com/LionC/nest.nvim

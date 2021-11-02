@@ -18,8 +18,8 @@ noremap ≥ ;
 noremap <leader>rc <cmd>edit $MYVIMRC<cr>
 
 " Sessions
-noremap <Leader>ss :mksession! .session.vim<CR>
-nnoremap <Leader>sr :source .session.vim<CR>
+noremap <leader>ss :mksession! .session.vim<cr>
+noremap <leader>sr :source     .session.vim<cr>
 
 " Navigation
 noremap J 5j
@@ -40,16 +40,16 @@ noremap <s-down>  <cmd>bd<cr>
 
 
 """ OPTIONS
+set conceallevel=1  " conceal but leave spaces
+set foldlevel=2
 set mouse=a
 set noshowmode      " modes are shown in statusline
 set spelllang=
-set conceallevel=1  " conceal but leave spaces
-set foldlevel=2
 set wildignorecase
 
 set completeopt=menuone,noinsert,noselect
-set shortmess+=c    " No ins-completion-menu messages
 set shortmess+=I    " No intro message
+set shortmess+=c    " No ins-completion-menu messages
 
 set updatetime=500  " for CursorHold
 set noswapfile      " living a dangerous life
@@ -58,14 +58,14 @@ set number
 set signcolumn=number
 
 """ Position
+set colorcolumn=81
 set cursorcolumn
 set cursorline
-set colorcolumn=81
 
 """ Buffer management
 set confirm               " ask to save stuff
-set hidden                " hides buffers instead of closing them
 set fileencoding=utf-8    " encoding written to file
+set hidden                " hides buffers instead of closing them
 
 """ Split windows
 set splitbelow
@@ -81,7 +81,7 @@ set listchars=tab:\|-,trail:*,extends:>,precedes:<,nbsp:_,eol:~
 set listchars+=space:· "not ASCII
 
 """ Folds
-set fillchars=fold:\  " hmmm...
+set fillchars=fold:\  " no fillchars
 set foldlevel=2
 set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
 
@@ -112,14 +112,15 @@ if has('nvim')
     set inccommand=nosplit
 else
     syntax enable
-    set ruler
-    set showcmd
+    set autoindent
     set autoread
-    set wildmenu
+    set foldmethod=indent
     set hlsearch
     set incsearch
-    set autoindent
-    set foldmethod=indent
+    set ruler
+    set showcmd
+    set undodir="$HOME/.local/share/nvim/undo"
+    set wildmenu
 endif
 
 """ Netrw
@@ -127,7 +128,7 @@ let g:netrw_banner = 0        " no banner
 let g:netrw_dirhistmax = 0    " no history
 let g:netrw_liststyle = 3     " tree style listing
 
-" Disable unnecessary bundled plugins
+""" Disable bundled plugins
 let g:loaded_2html_plugin = 1
 let g:loaded_gzip = 1
 let g:loaded_matchit = 1

@@ -1,19 +1,33 @@
 " TODO: Allow horizontal splits as well as vertical splits
 
+" TODO: should I move this elsewhere?
+augroup scripting
+    au!
+    " run scripts with <cr>
+    au FileType julia   noremap <silent><buffer><cr> <cmd>!julia %<cr>
+    au FileType lua,vim noremap <silent><buffer><cr> <cmd>source %<cr>
+    au FileType python  noremap <silent><buffer><cr> <cmd>!python3 %<cr>
+    au FileType rust    noremap <silent><buffer><cr> <cmd>Cargo run<cr>
+
+    " compile with <bs>
+    au FileType c,lua   noremap <silent><buffer><bs> <cmd>make<cr>
+    au FileType rust    noremap <silent><buffer><bs> <cmd>Cargo build<cr>
+augroup END
+
+
 augroup term_stuff
     au!
     au TermOpen * set nospell nonumber nocursorcolumn nocursorline
-
-    au FileType lua,vim noremap <buffer><leader>sc <cmd>source %<cr>
-    au FileType python  noremap <buffer><leader>sc <cmd>!python3 %<cr>
-    au FileType julia   noremap <buffer><leader>sc <cmd>!julia %<cr>
 augroup END
 
 " Open shell or REPLs in small vertical split window
-nnoremap <silent><leader>sh :12sp \| term<cr>
-nnoremap <silent><leader>jl :12sp \| e term://julia -q \| wincmd k<cr>
-nnoremap <silent><leader>py :12sp \| e term://python3 -q \| wincmd k<cr>
-nnoremap <silent><leader>4  :12sp \| e term://gforth \| wincmd k<cr>
+nnoremap <silent><leader>sh <cmd>12sp \| term<cr>
+nnoremap <silent><leader>jl <cmd>12sp \| e term://julia -q   \| wincmd k<cr>
+nnoremap <silent><leader>py <cmd>12sp \| e term://python3 -q \| wincmd k<cr>
+nnoremap <silent><leader>4  <cmd>12sp \| e term://gforth     \| wincmd k<cr>
+
+" Quit terminal on EOF
+tnoremap <C-d> <C-d><cmd>q<cr>
 
 " Use escape key in terminal
 tnoremap <silent><Esc> <C-\><C-n>
