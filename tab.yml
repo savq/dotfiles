@@ -4,3 +4,6 @@ workspace:
 
   - tab: "nvim"
     dir: ".local/share/nvim/site/pack/dev/start/"
+
+  - tab: "unal"
+    dir: "academia/unal/2021-II"
