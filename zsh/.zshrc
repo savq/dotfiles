@@ -20,7 +20,7 @@ alias ll='ls -AlF'
 alias mkdir='mkdir -p'
 alias rm='rm -v'
 alias sym='ln -s'
-alias tex='tectonic'
+# alias tex='tectonic'
 
 alias gad='git add --verbose'
 alias gbr='git branch --verbose'
@@ -33,7 +33,7 @@ alias gdt='git difftool'
 alias glg='git log  --graph --oneline'
 alias gpl='git pull'
 # alias gsh='git push'
-alias gst='git status --branch --short'
+alias gst='git status --branch --short .'
 alias gwt='git worktree'
 
 alias cc='clang'
@@ -53,6 +53,11 @@ alias rsc='cargo check'
 alias rsd='cargo doc --open'
 alias rsr='cargo run'
 alias rst='cargo test'
+
+alias lmk= 'latexmk'
+alias lmkc='latexmk -c'
+alias lmkx='latexmk -xelatex'
+alias lmkl='latexmk -lualatex'
 
 
 # PATH
@@ -99,10 +104,11 @@ function theme() {
 
 # [ `date +'%H'` -ge 17 ] && theme || theme -l
 
-
 # Zsh plugins
-source "$HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-source "$HOME/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+# source "$HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+# source "$HOME/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source '/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
+source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 ZSH_HIGHLIGHT_STYLES[comment]=none
 
 # tab multiplexer configuration: https://github.com/austinjones/tab-rs/
