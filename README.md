@@ -1,5 +1,13 @@
 # Dotfiles
 
+## Setup
+
+```sh
+git clone https://github.com/savq/dotfiles.git ~/.config
+cd ~/.config
+make install
+ ```
+
 ### Editor: [Neovim](https://github.com/neovim/neovim/)
 
 - `nvim/vimrc` has a minimal setup. It's vim 8 compatible and uses no plugins.
