@@ -94,15 +94,26 @@ setopt share_history        # Same history for all open terminals
  # case insensitive completion
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 
-# Appearance
+
+# APPEARANCE
 function theme() {
-    # Change the current Alacritty colorscheme by defining the colorschemes in
-    # separate files and renaming the imports in `alacritty.yml` when this function is called.
-    [[ $1 = '-l' ]] && bg='light' || bg='dark'
-    sed -E -i '' -e "s/melange_(dark|light)/melange_$bg/g" "$HOME/.config/alacritty/alacritty.yml"
+    # themes are defined  in separate files, so renaming the import in
+    # `alacritty.yml` changes the current theme.
+
+    # Check if theme should change to light or dark
+    local bgcolor ;
+    [[ $1 = '-l' ]] && bgcolor='light' || bgcolor='dark'
+
+    # Replace second line in-place
+    sed -E -i '' \
+        -e "2s/melange_(dark|light)/melange_$bgcolor/g" \
+        "$HOME/.config/alacritty/alacritty.yml"
 }
 
-# [ `date +'%H'` -ge 17 ] && theme || theme -l
+# Automatically set theme based on current system settings. This command fails
+# if light mode is active, so we check the exit code instead of the output lmao.
+defaults read -g AppleInterfaceStyle &>/dev/null && theme || theme -l
+
 
 # Zsh plugins
 # source "$HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
