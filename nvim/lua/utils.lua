@@ -1,20 +1,13 @@
 -- utils.lua
 -- Define Neovim commands, autocommands and keymaps in Lua.
---
--- TODO:
--- write a class/metatable for commands with __call and __tostring metamethods:
--- docstrings!
+
+-- TODO: docstrings!
+-- IDEA: write a class/metatable for commands with __call and __tostring metamethods
 
 local _fns = {}
-local function fn_to_cmd(fn, iskeymap) -- FIXME
-    if type(fn) == 'function' then
-        table.insert(_fns, fn)
-        return (iskeymap and '<cmd>' or ':') ..
-            ('lua require\'utils\'._fns[%d]()'):format(#_fns) ..
-            ((iskeymap and '<cr>' or ''))
-    else
-        return fn
-    end
+local function fn_to_cmd(fn)
+    table.insert(_fns, fn)
+    return ('lua require\'utils\'._fns[%d]()'):format(#_fns)
 end
 
 -- TODO: better handling of attributes
@@ -34,14 +27,16 @@ local function autocmd(events, patterns, cmd)
     vim.cmd(table.concat({'autocmd', events, patterns, fn_to_cmd(cmd)}, ' '))
 end
 
-local function augroup(name, ...)
-    vim.cmd('augroup ' .. name)
-    vim.cmd('au!')
-    for _, v in ipairs(...) do
-        autocmd(unpack(v))
-    end
-    vim.cmd 'augroup END'
-end
+local augroup = setmetatable({}, {
+    __index = function(t, name, ...)
+        vim.cmd('augroup ' .. name)
+        vim.cmd 'au!'
+        for _, v in ipairs(...) do
+            autocmd(unpack(v))
+        end
+        vim.cmd 'augroup END'
+    end,
+})
 
 local keymap_defaults = {
     mode = 'n',
@@ -53,10 +48,10 @@ local keymap_defaults = {
     },
 }
 
-local function keymap(tbl, cfg, keys)
+local function _keymap(tbl, cfg, keys)
     for k, v in pairs(tbl) do
         local lhs = (keys or '') .. k
-        local rhs = fn_to_cmd(v, true)
+        local rhs = type(v) == 'function' and ('<cmd>%s<cr>'):format(fn_to_cmd(v)) or v
         for mode in cfg.mode:gmatch '.' do
             if cfg.buffer then
                 vim.api.nvim_buf_set_keymap(cfg.buffer, mode, lhs, rhs, cfg.opts)
@@ -74,9 +69,9 @@ return {
     augroup = augroup,
     keymap = function(t1, t2)
         if not t2 then
-            keymap(t1, keymap_defaults)
+            _keymap(t1, keymap_defaults)
         else
-            keymap(t2, vim.tbl_deep_extend('force', keymap_defaults, t1))
+            _keymap(t2, vim.tbl_deep_extend('force', keymap_defaults, t1))
         end
     end,
 }

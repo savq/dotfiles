@@ -38,10 +38,10 @@ do -- LSP
 
     local function on_attach(client, bufnr)
         opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
-        augroup('Lsp', {
+        augroup.Lsp = {
             { 'BufWritePre', '*.rs,*.c', vim.lsp.buf.formatting_sync },
             { 'CursorHold,CursorHoldI', '*.rs,*.c', vim.lsp.diagnostic.show_line_diagnostics },
-        })
+        }
     end
 
     lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(
@@ -153,10 +153,13 @@ do -- Appearance
     opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y %8(%l,%c%) %8p%%'
     opt.termguicolors = true
     cmd 'colorscheme melange'
-    augroup('ColorEvents', {
-        { 'TextYankPost', '*', vim.highlight.on_yank },
-        { 'ColorScheme', 'melange', 'hi! markdownLinkText gui=NONE' },
-    })
+    augroup.Highlights = {
+        { 'TextYankPost', '*',  vim.highlight.on_yank },
+        { 'ColorScheme', '*',   'hi! markdownLinkText gui=NONE' },
+        { 'ColorScheme', '*',   'hi! link markdownRule PreProc' },
+        { 'ColorScheme', '*',   'hi! link markdownXmlComment Comment' },
+        { 'FileType', 'tex',    'hi! link Conceal Normal' }
+    }
 end
 
 do -- Inspection
@@ -201,6 +204,5 @@ keymap {['<leader>pq'] = function()
     { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },
     { 'junegunn/vim-easy-align', as = 'easy-align', opt = true },
     { 'mechatroner/rainbow_csv', opt = true },
-    'arcticicestudio/nord-vim',
   }:sync()
 end}
