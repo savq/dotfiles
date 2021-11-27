@@ -18,7 +18,7 @@ augroup.scripting = {
 }
 
 -- Open shell or REPLs in small vertical split window
-local rhs = [[<cmd>12sp | %s<cr>]] -- | wincmd k<cr>]]
+local rhs = [[<cmd>12sp | %s<cr>]]
 keymap {
     ['<leader>sh'] = rhs:format 'term',
     ['<leader>jl'] = rhs:format 'e term://julia -q',
@@ -35,7 +35,6 @@ keymap({ mode = 'v' }, { ['<leader>e'] = [[<c-u>call v:lua.require'term'.operato
 
 -- TODO: Allow horizontal splits as well as vertical splits
 local function operator(type)
-    show(type)
     local reg = vim.fn.getreg()
     if type == 'V' or type == 'v' or type == '\22' then
         vim.cmd 'normal! `<v`>y'

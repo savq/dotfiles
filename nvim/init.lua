@@ -12,6 +12,10 @@ do -- Tree-sitter
         -- ensure_installed = { 'c', 'javascript', 'julia', 'lua', 'python', 'rust', 'html', 'query', 'toml' },
         highlight = { enable = true },
         indent = { enable = false },
+        incremental_selection = {
+            enable = true,
+            keymaps = { init_selection = '+', node_incremental = '+', node_decremental = '_' },
+        },
         textobjects = {
             select = {
                 enable = true,
@@ -38,7 +42,7 @@ do -- LSP
 
     local function on_attach(client, bufnr)
         opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
-        augroup.Lsp = {
+        augroup.lsp = {
             { 'BufWritePre', '*.rs,*.c', vim.lsp.buf.formatting_sync },
             { 'CursorHold,CursorHoldI', '*.rs,*.c', vim.lsp.diagnostic.show_line_diagnostics },
         }
@@ -133,32 +137,30 @@ do -- Spelling
     })
 end
 
-do -- Zen mode
+do -- Focus mode
     local active = false
-    zen = {
-        toggle = function()
-            opt.list = active
-            opt.number = active
-            opt.cursorline = active
-            opt.cursorcolumn = active
-            opt.colorcolumn = active and '81' or ''
-            opt.conceallevel = active and 0 or 2
-            active = not active
-        end,
-    }
-    keymap { ['<leader>z'] = zen.toggle }
+    function focus_toggle()
+        opt.list = active
+        opt.number = active
+        opt.cursorline = active
+        opt.cursorcolumn = active
+        opt.colorcolumn = active and '81' or ''
+        opt.conceallevel = active and 0 or 2
+        active = not active
+    end
+    keymap { ['<leader>z'] = focus_toggle }
 end
 
 do -- Appearance
     opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y %8(%l,%c%) %8p%%'
     opt.termguicolors = true
     cmd 'colorscheme melange'
-    augroup.Highlights = {
-        { 'TextYankPost', '*',  vim.highlight.on_yank },
-        { 'ColorScheme', '*',   'hi! markdownLinkText gui=NONE' },
-        { 'ColorScheme', '*',   'hi! link markdownRule PreProc' },
-        { 'ColorScheme', '*',   'hi! link markdownXmlComment Comment' },
-        { 'FileType', 'tex',    'hi! link Conceal Normal' }
+    augroup.highlights = {
+        { 'TextYankPost', '*', vim.highlight.on_yank },
+        { 'ColorScheme', '*', 'hi! markdownLinkText gui=NONE' },
+        { 'ColorScheme', '*', 'hi! link markdownRule PreProc' },
+        { 'ColorScheme', '*', 'hi! link markdownXmlComment Comment' },
+        { 'FileType', 'tex', 'hi! link Conceal Normal' },
     }
 end
 
@@ -172,8 +174,8 @@ end
 
 -- stylua: ignore
 keymap {['<leader>pq'] = function()
-  package.loaded.paq = nil
-  local paq = require 'paq' {
+  -- package.loaded.paq = nil
+  require 'paq' {
     -- { 'savq/paq-nvim', pin=true },
     -- { 'savq/melange', pin=true },
     'rktjmp/lush.nvim',
@@ -197,10 +199,10 @@ keymap {['<leader>pq'] = function()
     { 'mattn/emmet-vim', opt = true },
 
     -- Misc
+    'tpope/vim-commentary',
     'tpope/vim-fugitive',
-    { 'tpope/vim-commentary', run=function() print 'running hook...' end },
-    'nvim-telescope/telescope.nvim',
     'nvim-lua/plenary.nvim',
+    'nvim-telescope/telescope.nvim',
     { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },
     { 'junegunn/vim-easy-align', as = 'easy-align', opt = true },
     { 'mechatroner/rainbow_csv', opt = true },
