@@ -6,6 +6,9 @@
 
 local _fns = {}
 local function fn_to_cmd(fn)
+    if type(fn) ~= 'function' then
+        return fn
+    end
     table.insert(_fns, fn)
     return ('lua require\'utils\'._fns[%d]()'):format(#_fns)
 end
@@ -20,18 +23,19 @@ local function command(name, rhs, attributes)
             table.insert(attrs, ('-%s=%s'):format(k, v))
         end
     end
-    vim.cmd(table.concat(vim.tbl_flatten{'silent command!', attrs, name, fn_to_cmd(rhs)}, ' '))
+    vim.cmd(table.concat(vim.tbl_flatten { 'silent command!', attrs, name, fn_to_cmd(rhs) }, ' '))
 end
 
 local function autocmd(events, patterns, cmd)
-    vim.cmd(table.concat({'autocmd', events, patterns, fn_to_cmd(cmd)}, ' '))
+    -- show(events, patterns, cmd)
+    vim.cmd(table.concat({ 'autocmd', events, patterns, fn_to_cmd(cmd) }, ' '))
 end
 
 local augroup = setmetatable({}, {
-    __index = function(t, name, ...)
+    __newindex = function(t, name, autocmds)
         vim.cmd('augroup ' .. name)
         vim.cmd 'au!'
-        for _, v in ipairs(...) do
+        for _, v in ipairs(autocmds) do
             autocmd(unpack(v))
         end
         vim.cmd 'augroup END'
