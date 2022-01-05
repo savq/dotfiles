@@ -87,6 +87,10 @@ do -- Julia.vim
     g.latex_to_unicode_file_types = { 'julia', 'javascript', 'markdown' }
 end
 
+do -- Git
+    require('gitsigns').setup { signcolumn = false }
+end
+
 do -- Telescope
     require('telescope').setup {
         defaults = {
@@ -203,6 +207,7 @@ keymap {['<leader>pq'] = function()
     'tpope/vim-fugitive',
     'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope.nvim',
+    'lewis6991/gitsigns.nvim',
     { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },
     { 'junegunn/vim-easy-align', as = 'easy-align', opt = true },
     { 'mechatroner/rainbow_csv', opt = true },

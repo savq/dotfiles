@@ -40,7 +40,6 @@ noremap <s-down>  <cmd>bd<cr>
 
 
 """ OPTIONS
-set conceallevel=1  " conceal but leave spaces
 set foldlevel=2
 set mouse=a
 set noshowmode      " modes are shown in statusline
@@ -55,7 +54,11 @@ set updatetime=500  " for CursorHold
 set noswapfile      " living a dangerous life
 
 set number
-set signcolumn=number
+" set signcolumn=number  " don't use this when using gitsigns
+
+""" Conceal
+set conceallevel=1   " conceal but leave spaces
+set concealcursor=n  " conceal in normal mode
 
 """ Position
 set colorcolumn=81
