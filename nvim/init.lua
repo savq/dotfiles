@@ -87,6 +87,22 @@ do -- Julia.vim
     g.latex_to_unicode_file_types = { 'julia', 'javascript', 'markdown' }
 end
 
+do -- Markup
+    g.markdown_enable_conceal = true
+    g.markdown_enable_insert_mode_mappings = false
+    g.user_emmet_leader_key = '<C-e>'
+
+    g.vimtex_compiler_method = 'latexmk'
+    g.vimtex_quickfix_mode = 2
+
+    g.wiki_filetypes = { 'md' }
+    g.wiki_link_target_type = 'md'
+    g.wiki_map_link_create = function(txt)
+        return txt:lower():gsub('%s+', '-')
+    end
+    g.wiki_root = '~/Documents/wiki'
+end
+
 do -- Git
     require('gitsigns').setup { signcolumn = false }
 end
@@ -106,22 +122,6 @@ do -- Telescope
         ['<leader>fg'] = builtin.live_grep,
         ['<leader>fr'] = builtin.registers,
     }
-end
-
-do -- Markup
-    g.markdown_enable_conceal = true
-    g.markdown_enable_insert_mode_mappings = false
-    g.user_emmet_leader_key = '<C-e>'
-
-    g.vimtex_compiler_method = 'latexmk'
-    g.vimtex_quickfix_mode = 2
-
-    g.wiki_filetypes = { 'md' }
-    g.wiki_link_target_type = 'md'
-    g.wiki_map_link_create = function(txt)
-        return txt:lower():gsub('%s+', '-')
-    end
-    g.wiki_root = '~/Documents/wiki'
 end
 
 do -- Spelling
@@ -176,40 +176,9 @@ do -- Inspection
     command('L', ':lua _=show(<args>)', { nargs = '*', complete = 'lua' })
 end
 
--- stylua: ignore
-keymap {['<leader>pq'] = function()
-  -- package.loaded.paq = nil
-  require 'paq' {
-    -- { 'savq/paq-nvim', pin=true },
-    -- { 'savq/melange', pin=true },
-    'rktjmp/lush.nvim',
-
-    -- Tree-sitter
-    -- { 'nvim-treesitter/nvim-treesitter', run = function() cmd 'TSUpdate' end },
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    'nvim-treesitter/playground',
-
-    -- LSP & language support
-    'neovim/nvim-lspconfig',
-    'hrsh7th/nvim-compe',
-    'rust-lang/rust.vim',
-    'JuliaEditorSupport/julia-vim',
-    'LnL7/vim-nix',
-
-    -- Markup
-    'lervag/VimTeX',
-    'lervag/wiki.vim',
-    'gabrielelana/vim-markdown',
-    { 'mattn/emmet-vim', opt = true },
-
-    -- Misc
-    'tpope/vim-commentary',
-    'tpope/vim-fugitive',
-    'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope.nvim',
-    'lewis6991/gitsigns.nvim',
-    { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },
-    { 'junegunn/vim-easy-align', as = 'easy-align', opt = true },
-    { 'mechatroner/rainbow_csv', opt = true },
-  }:sync()
-end}
+keymap {
+    ['<leader>pq'] = function()
+        -- package.loaded.paq = nil
+        require 'paq'(require 'plugins'):sync()
+    end,
+}

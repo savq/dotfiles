@@ -14,8 +14,7 @@ brew:
 	brew bundle --file $(XDG_CONFIG_HOME)/Brewfile
 
 nvim:
-	git clone https://github.com/savq/paq-nvim.git \
-		$(PAQ_PATH)/start/paq-nvim
+	nvim --headless -u NONE -c 'lua require("bootstrap").bootstrap_paq()'
 
 symlinks:
 	ln -s $(XDG_CONFIG_HOME)/nvim/vimrc   $(HOME)/.vimrc
