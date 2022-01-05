@@ -6,7 +6,7 @@ prompt savq                        # set prompt
 # EDITOR - Neovim
 if type nvim > /dev/null 2>&1; then
   alias vi='nvim'
-  alias wi='nvim -c "WikiIndex" -c "lua zen.toggle()"'
+  alias wi='nvim -c "WikiIndex" -c "lua focus_toggle()"'
   export VISUAL='nvim'
   export EDITOR=$VISUAL
   export MANPAGER='nvim +Man!'
@@ -112,7 +112,7 @@ function theme() {
 
 # Automatically set theme based on current system settings. This command fails
 # if light mode is active, so we check the exit code instead of the output lmao.
-defaults read -g AppleInterfaceStyle &>/dev/null && theme || theme -l
+# defaults read -g AppleInterfaceStyle &>/dev/null && theme || theme -l
 
 
 # Zsh plugins
