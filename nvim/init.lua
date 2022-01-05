@@ -30,55 +30,59 @@ do -- Tree-sitter
     }
 end
 
+do -- Auto-completion
+    local cmp = require 'cmp'
+    cmp.setup {
+        sources = cmp.config.sources({
+            { name = 'nvim_lua' },
+            { name = 'nvim_lsp' },
+        }, {
+            { name = 'buffer' },
+        }),
+        keyword_length = 2,
+        preselect = cmp.PreselectMode.None,
+        mapping = {
+            ['<tab>'] = function(fallback)
+                return cmp.visible() and cmp.select_next_item() or fallback()
+            end,
+            ['<s-tab>'] = function(fallback)
+                return cmp.visible() and cmp.select_prev_item() or fallback()
+            end,
+        },
+    }
+end
+
 do -- LSP
     command('LspDef', lsp.buf.definition)
     command('LspRefs', lsp.buf.references)
     command('LspDocSymbols', lsp.buf.document_symbol)
     command('LspCodeAction', lsp.buf.code_action)
     command('LspRename', lsp.buf.rename)
-    command('LspLineDiagnostics', vim.diagnostic.show_line_diagnostics)
-    -- command('LspGotoPrev', diagnostic.goto_prev) -- different on stable/nightly
-    -- command('LspGotoNext', diagnostic.goto_next)
+    command('LspLineDiagnostics', vim.diagnostic.open_float)
+    command('LspGotoPrev', diagnostic.goto_prev)
+    command('LspGotoNext', diagnostic.goto_next)
 
     local function on_attach(client, bufnr)
         opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
         augroup.lsp = {
             { 'BufWritePre', '*.rs,*.c', vim.lsp.buf.formatting_sync },
-            { 'CursorHold,CursorHoldI', '*.rs,*.c', vim.lsp.diagnostic.show_line_diagnostics },
+            -- { 'CursorHold', '*.rs,*.c', vim.lsp.diagnostic.open_float },
         }
     end
 
-    lsp.handlers['textDocument/publishDiagnostics'] = lsp.with(
-        lsp.diagnostic.on_publish_diagnostics,
-        { underline = false, update_in_insert = false, virtual_text = false } -- No virtual text.
-    )
+    vim.diagnostic.config {
+        -- virtual_text = false,
+        signs = true,
+    }
 
     local lspconfig = require 'lspconfig'
     for _, ls in ipairs { 'clangd', 'rust_analyzer' } do
         lspconfig[ls].setup {
+            capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
             on_attach = on_attach,
             flags = { debounce_text_changes = 150 },
         }
     end
-end
-
-do -- Auto-completion
-    require('compe').setup {
-        min_length = 2,
-        preselect = 'disable',
-        source = {
-            path = true,
-            tags = true,
-            omni = { filetypes = { 'tex' } },
-            spell = { filetypes = { 'markdown', 'tex' } },
-            buffer = true,
-            nvim_lsp = true,
-        },
-    }
-    keymap({ mode = 'i', opts = { expr = true } }, {
-        ['<Tab>'] = 'pumvisible() ? \'<C-n>\' : \'<Tab>\'',
-        ['<S-Tab>'] = 'pumvisible() ? \'<C-p>\' : \'<S-Tab>\'',
-    })
 end
 
 do -- Julia.vim
