@@ -87,7 +87,7 @@ export CPPFLAGS="-I/usr/local/opt/llvm/include"
 ## OPTIONS
 
 bindkey -e
-bindkey '^[[A' history-beginning-search-backward 
+bindkey '^[[A' history-beginning-search-backward
 bindkey '^[[B' history-beginning-search-forward
 export CLICOLOR=1
 export LANG='en_US.UTF-8'
@@ -119,16 +119,11 @@ function tell {
 }
 
 
-## Change Alacritty and Neovim's appereance
+## Change Neovim's appereance
 function theme {
   # Check if theme should change to light or dark
   local BGCOLOR;
   [ "$1" = '-l' ] && BGCOLOR='light' || BGCOLOR='dark';
-
-  # Rename the import in `alacritty.yml` to change the current theme
-  sed -E -i '' \
-    -e "2s/melange_(dark|light)/melange_$BGCOLOR/g" \
-    "$HOME/.config/alacritty/alacritty.yml"
 
   # If there's an nvim instance open, change the background
   [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-send "<cmd>set bg=$BGCOLOR<cr>"
@@ -140,7 +135,3 @@ function theme {
 source '/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
 source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 ZSH_HIGHLIGHT_STYLES[comment]=fg=white ;
-
-# tab multiplexer configuration: https://github.com/austinjones/tab-rs/
-source "/Users/savq/Library/Application Support/tab/completion/zsh-history.zsh"
-# end tab configuration

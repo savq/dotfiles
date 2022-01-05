@@ -26,6 +26,5 @@ make install
 ### Other stuff
 
 * Colorscheme: [melange](https://github.com/savq/melange)
-* Terminal emulator: [Alacritty](https://github.com/alacritty/alacritty)
-* Terminal multiplexer: [Tab-rs](https://github.com/austinjones/tab-rs/)
+* Terminal emulator: [Wezterm](https://github.com/wez/wezterm)
 

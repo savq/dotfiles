@@ -1,4 +1,3 @@
-tap "austinjones/taps"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
@@ -19,12 +18,10 @@ brew "tokei"
 brew "zola"
 brew "zsh-autosuggestions"
 brew "zsh-syntax-highlighting"
-brew "austinjones/taps/tab"
 
 # brew "tectonic"
 cask "mactex-no-gui"
 
-cask "alacritty"
 # cask "android-file-transfer"
 # cask "android-platform-tools"
 cask "discord"
@@ -42,6 +39,7 @@ cask "qbittorrent"
 cask "rectangle"     # window manager
 cask "slack"
 cask "spotify"
+cask "wezterm"
 cask "zotero"
 cask "zulip"
 
