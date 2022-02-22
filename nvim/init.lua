@@ -38,6 +38,7 @@ do -- Auto-completion
             { name = 'nvim_lsp' },
         }, {
             { name = 'buffer' },
+            { name = 'path' },
         }),
         keyword_length = 2,
         preselect = cmp.PreselectMode.None,
@@ -52,33 +53,35 @@ do -- Auto-completion
     }
 end
 
-do -- LSP
+do -- LSP & Diagnostics
     command('LspDef', lsp.buf.definition)
     command('LspRefs', lsp.buf.references)
     command('LspDocSymbols', lsp.buf.document_symbol)
     command('LspCodeAction', lsp.buf.code_action)
     command('LspRename', lsp.buf.rename)
-    command('LspLineDiagnostics', vim.diagnostic.open_float)
+
+    command('LineDiagnostics', diagnostic.open_float)
     command('LspGotoPrev', diagnostic.goto_prev)
     command('LspGotoNext', diagnostic.goto_next)
 
-    local function on_attach(client, bufnr)
-        opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
-        augroup.lsp = {
-            { 'BufWritePre', '*.rs,*.c', vim.lsp.buf.formatting_sync },
-            -- { 'CursorHold', '*.rs,*.c', vim.lsp.diagnostic.open_float },
-        }
-    end
-
-    vim.diagnostic.config {
+    diagnostic.config {
         -- virtual_text = false,
         signs = true,
     }
 
+    local function on_attach(client, bufnr)
+        opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
+        augroup.lsp = {
+            { 'BufWritePre', '*.rs,*.c', lsp.buf.formatting_sync },
+            -- { 'CursorHold', '*.rs,*.c', lsp.diagnostic.open_float },
+        }
+    end
+
     local lspconfig = require 'lspconfig'
-    for _, ls in ipairs { 'clangd', 'rust_analyzer' } do
+    local servers = { 'clangd', 'rust_analyzer' }
+    for _, ls in ipairs(servers) do
         lspconfig[ls].setup {
-            capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+            capabilities = require('cmp_nvim_lsp').update_capabilities(lsp.protocol.make_client_capabilities()),
             on_attach = on_attach,
             flags = { debounce_text_changes = 150 },
         }
@@ -108,7 +111,7 @@ do -- Markup
 end
 
 do -- Git
-    require('gitsigns').setup { signcolumn = false }
+    require('gitsigns').setup { signcolumn = false, numhl = true }
 end
 
 do -- Telescope
