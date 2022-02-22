@@ -5,6 +5,9 @@ local augroup = utils.augroup
 local command = utils.command
 local keymap = utils.keymap
 
+-- Paq
+keymap { ['<leader>pq'] = require('plugins').sync_all }
+
 do -- Tree-sitter
     opt.foldmethod = 'expr'
     opt.foldexpr = 'nvim_treesitter#foldexpr()'
@@ -183,9 +186,3 @@ do -- Inspection
     command('L', ':lua _=show(<args>)', { nargs = '*', complete = 'lua' })
 end
 
-keymap {
-    ['<leader>pq'] = function()
-        -- package.loaded.paq = nil
-        require 'paq'(require 'plugins'):sync()
-    end,
-}

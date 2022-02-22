@@ -14,7 +14,7 @@ brew:
 	brew bundle --file $(XDG_CONFIG_HOME)/Brewfile
 
 nvim:
-	nvim --headless -u NONE -c 'lua require("bootstrap").bootstrap_paq()'
+	nvim --headless -u NONE -c 'lua require("plugins").bootstrap()'
 
 symlinks:
 	ln -s $(XDG_CONFIG_HOME)/nvim/vimrc   $(HOME)/.vimrc
