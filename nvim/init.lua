@@ -6,11 +6,17 @@ local command = utils.command
 local keymap = utils.keymap
 
 -- Paq
-keymap { ['<leader>pq'] = require('plugins').sync_all }
+keymap {
+    ['<leader>pq'] = function()
+        package.loaded.plugins = nil
+        require('plugins').sync_all()
+    end,
+}
 
 do -- Tree-sitter
     opt.foldmethod = 'expr'
     opt.foldexpr = 'nvim_treesitter#foldexpr()'
+    require 'tsjl' -- local Julia grammar
     require('nvim-treesitter.configs').setup {
         -- ensure_installed = { 'c', 'javascript', 'julia', 'lua', 'python', 'rust', 'html', 'query', 'toml' },
         highlight = { enable = true },
@@ -35,17 +41,19 @@ end
 
 do -- Auto-completion
     local cmp = require 'cmp'
+
     cmp.setup {
+        keyword_length = 2,
         sources = cmp.config.sources({
-            { name = 'nvim_lua' },
             { name = 'nvim_lsp' },
+            { name = 'nvim_lua' },
         }, {
             { name = 'buffer' },
             { name = 'path' },
+            { name = 'latex_symbols' },
         }),
-        keyword_length = 2,
-        preselect = cmp.PreselectMode.None,
         mapping = {
+            ['<cr>'] = cmp.mapping.confirm { select = false },
             ['<tab>'] = function(fallback)
                 return cmp.visible() and cmp.select_next_item() or fallback()
             end,
@@ -54,6 +62,18 @@ do -- Auto-completion
             end,
         },
     }
+    cmp.setup.cmdline('/', {
+        sources = {
+            { name = 'buffer' },
+        },
+    })
+    cmp.setup.cmdline(':', {
+        sources = cmp.config.sources({
+            { name = 'path' },
+        }, {
+            { name = 'cmdline' },
+        }),
+    })
 end
 
 do -- LSP & Diagnostics
@@ -93,14 +113,14 @@ end
 
 do -- Julia.vim
     g.latex_to_unicode_tab = 0
-    g.latex_to_unicode_auto = 1
-    g.latex_to_unicode_file_types = { 'julia', 'javascript', 'markdown' }
+    -- g.latex_to_unicode_auto = 1
+    -- g.latex_to_unicode_file_types = { 'julia', 'javascript', 'markdown' }
 end
 
 do -- Markup
     g.markdown_enable_conceal = true
     g.markdown_enable_insert_mode_mappings = false
-    g.user_emmet_leader_key = '<C-e>'
+    -- g.user_emmet_leader_key = '<C-e>'
 
     g.vimtex_compiler_method = 'latexmk'
     g.vimtex_quickfix_mode = 2
@@ -114,7 +134,10 @@ do -- Markup
 end
 
 do -- Git
-    require('gitsigns').setup { signcolumn = false, numhl = true }
+    require('gitsigns').setup {
+        numhl = true,
+        signcolumn = false,
+    }
 end
 
 do -- Telescope
@@ -127,8 +150,8 @@ do -- Telescope
     local builtin = require 'telescope.builtin'
     keymap {
         ['<leader>ff'] = builtin.find_files,
-        ['<leader>fb'] = builtin.buffers,
-        ['<leader>fh'] = builtin.help_tags,
+        -- ['<leader>fb'] = builtin.buffers,
+        -- ['<leader>fh'] = builtin.help_tags,
         ['<leader>fg'] = builtin.live_grep,
         ['<leader>fr'] = builtin.registers,
     }
@@ -185,4 +208,3 @@ do -- Inspection
     end
     command('L', ':lua _=show(<args>)', { nargs = '*', complete = 'lua' })
 end
-

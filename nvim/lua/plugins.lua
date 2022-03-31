@@ -4,24 +4,26 @@ local PKGS = {
 
     -- Tree-sitter
     -- { 'nvim-treesitter/nvim-treesitter', run = function() cmd 'TSUpdate' end },
-    'nvim-treesitter/nvim-treesitter-textobjects',
+    -- 'nvim-treesitter/nvim-treesitter-textobjects',
     'nvim-treesitter/playground',
 
-    -- LSP & Auto-completion
+    -- LSP & Language plugins
     'neovim/nvim-lspconfig',
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-path',
-    'hrsh7th/nvim-cmp',
-
-    -- Language plugins
     'rust-lang/rust.vim',
     'JuliaEditorSupport/julia-vim',
+
+    -- Auto-completion
+    'hrsh7th/cmp-cmdline',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-nvim-lua',
+    'hrsh7th/cmp-path',
+    'hrsh7th/nvim-cmp',
+    'kdheepak/cmp-latex-symbols',
 
     -- Markup
     'lervag/VimTeX',
     'lervag/wiki.vim',
-    'gabrielelana/vim-markdown',
     { 'mattn/emmet-vim', opt = true },
 
     -- Git

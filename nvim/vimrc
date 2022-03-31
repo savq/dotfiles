@@ -37,6 +37,7 @@ noremap <C-l> <C-w>l
 noremap <s-left>  <cmd>bp<cr>
 noremap <s-right> <cmd>bn<cr>
 noremap <s-down>  <cmd>bd<cr>
+noremap <s-up>    <cmd>b 1<cr>
 
 
 """ OPTIONS
@@ -56,9 +57,11 @@ set noswapfile      " living a dangerous life
 set number
 " set signcolumn=number  " don't use this when using gitsigns
 
+set virtualedit=block
+
 """ Conceal
 set conceallevel=1   " conceal but leave spaces
-set concealcursor=n  " conceal in normal mode
+" set concealcursor=n  " conceal in normal mode
 
 """ Position
 set colorcolumn=81
@@ -97,7 +100,7 @@ set softtabstop=4
 set tabstop=4
 augroup Indents    "some exceptions
     au!
-    au FileType c,scheme,markdown setlocal shiftwidth=2 softtabstop=2 tabstop=2
+    au FileType c,scheme,markdown,javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2
 augroup END
 
 """ Scrolling

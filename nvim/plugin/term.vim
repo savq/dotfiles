@@ -16,12 +16,13 @@ augroup END
 augroup Term
     au!
     au TermOpen * set nospell nonumber nocursorcolumn nocursorline
-    au TermClose * quit
+    au TermClose * bdel
 augroup END
 
 " Open shell or REPLs in small vertical split window
 nnoremap <silent><leader>sh <cmd>12sp \| term<cr>
-nnoremap <silent><leader>jl <cmd>12sp \| e term://julia -q   \| wincmd k<cr>
+nnoremap <silent><leader>jl <cmd>12sp \| e term://julia --project=@. -q \| wincmd k<cr>
+nnoremap <silent><leader>js <cmd>12sp \| e term://deno       \| wincmd k<cr>
 nnoremap <silent><leader>py <cmd>12sp \| e term://python3 -q \| wincmd k<cr>
 nnoremap <silent><leader>4  <cmd>12sp \| e term://gforth     \| wincmd k<cr>
 
