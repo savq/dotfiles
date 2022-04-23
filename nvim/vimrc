@@ -48,8 +48,8 @@ set spelllang=
 set wildignorecase
 
 set completeopt=menuone,noinsert,noselect
-set shortmess+=I    " No intro message
-set shortmess+=c    " No ins-completion-menu messages
+set shortmess+=I    " no intro message
+set shortmess+=c    " no ins-completion-menu messages
 
 set updatetime=500  " for CursorHold
 set noswapfile      " living a dangerous life
@@ -60,7 +60,7 @@ set number
 set virtualedit=block
 
 """ Conceal
-set conceallevel=1   " conceal but leave spaces
+set conceallevel=1   " conceal, but leave spaces
 " set concealcursor=n  " conceal in normal mode
 
 """ Position
@@ -91,7 +91,6 @@ set fillchars=fold:\  " no fillchars
 set foldlevel=2
 set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
 
-
 """ Indentation
 set expandtab      "<tab> inserts spaces
 set smartindent
@@ -100,7 +99,7 @@ set softtabstop=4
 set tabstop=4
 augroup Indents    "some exceptions
     au!
-    au FileType c,scheme,markdown,javascript setlocal shiftwidth=2 softtabstop=2 tabstop=2
+    au FileType c,scheme,markdown,javascript,gitcommit setlocal shiftwidth=2 softtabstop=2 tabstop=2
 augroup END
 
 """ Scrolling
@@ -128,6 +127,10 @@ else
     set undodir="$HOME/.local/share/nvim/undo"
     set wildmenu
 endif
+
+augroup Misc
+    au FileType c setlocal commentstring=//%s
+augroup END
 
 """ Netrw
 let g:netrw_banner = 0        " no banner

@@ -24,10 +24,11 @@ local PKGS = {
     -- Markup
     'lervag/VimTeX',
     'lervag/wiki.vim',
+    'rhysd/vim-gfm-syntax',
     { 'mattn/emmet-vim', opt = true },
 
     -- Git
-    'tpope/vim-fugitive',
+    -- 'tpope/vim-fugitive',
     'lewis6991/gitsigns.nvim',
 
     -- Misc

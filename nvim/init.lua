@@ -1,17 +1,27 @@
 setmetatable(_G, { __index = vim })
 cmd 'runtime vimrc'
-local utils = require 'utils'
-local augroup = utils.augroup
-local command = utils.command
-local keymap = utils.keymap
 
--- Paq
-keymap {
-    ['<leader>pq'] = function()
+-- Utils
+local command = vim.api.nvim_create_user_command
+local function keymap(lhs, rhs, mode)
+    vim.keymap.set(mode or 'n', lhs, rhs)
+end
+local function augroup(name, autocmds)
+    local group = vim.api.nvim_create_augroup(name, {})
+    for event, cmd in pairs(autocmds) do
+        cmd.group = group
+        vim.api.nvim_create_autocmd(event, cmd)
+    end
+end
+
+do -- Paq
+    keymap('<leader>pq', function()
         package.loaded.plugins = nil
         require('plugins').sync_all()
-    end,
-}
+    end)
+
+    keymap('<leader>pg', '<cmd>edit ' .. fn.stdpath 'config' .. '/lua/plugins.lua<cr>')
+end
 
 do -- Tree-sitter
     opt.foldmethod = 'expr'
@@ -43,7 +53,9 @@ do -- Auto-completion
     local cmp = require 'cmp'
 
     cmp.setup {
-        keyword_length = 2,
+        completion = {
+            keyword_length = 3,
+        },
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
             { name = 'nvim_lua' },
@@ -52,7 +64,7 @@ do -- Auto-completion
             { name = 'path' },
             { name = 'latex_symbols' },
         }),
-        mapping = {
+        mapping = cmp.mapping.preset.insert {
             ['<cr>'] = cmp.mapping.confirm { select = false },
             ['<tab>'] = function(fallback)
                 return cmp.visible() and cmp.select_next_item() or fallback()
@@ -62,42 +74,55 @@ do -- Auto-completion
             end,
         },
     }
+
     cmp.setup.cmdline('/', {
+        mapping = cmp.mapping.preset.cmdline(),
         sources = {
             { name = 'buffer' },
         },
     })
     cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
             { name = 'path' },
         }, {
-            { name = 'cmdline' },
+            { name = 'cmdline' }, -- keyword_pattern = [[^\@<!Man\s]] },
         }),
     })
+
+    -- Don't use julia-vim unicode (use latex_symbols instead)
+    g.latex_to_unicode_tab = 0
 end
 
 do -- LSP & Diagnostics
-    command('LspDef', lsp.buf.definition)
-    command('LspRefs', lsp.buf.references)
-    command('LspDocSymbols', lsp.buf.document_symbol)
-    command('LspCodeAction', lsp.buf.code_action)
-    command('LspRename', lsp.buf.rename)
+    local lsp_cmds = {
+        LspDef = lsp.buf.definition,
+        LspRefs = lsp.buf.references,
+        LspDocSymbols = lsp.buf.document_symbol,
+        LspCodeAction = lsp.buf.code_action,
+        LspRename = lsp.buf.rename,
 
-    command('LineDiagnostics', diagnostic.open_float)
-    command('LspGotoPrev', diagnostic.goto_prev)
-    command('LspGotoNext', diagnostic.goto_next)
+        LineDiagnostics = diagnostic.open_float,
+        LspGotoPrev = diagnostic.goto_prev,
+        LspGotoNext = diagnostic.goto_next,
+    }
+    for name, cmd in pairs(lsp_cmds) do
+        command(name, cmd, {})
+    end
 
     diagnostic.config {
         -- virtual_text = false,
         signs = true,
+        float = { focus = false },
     }
 
     local function on_attach(client, bufnr)
         opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
-        augroup.lsp = {
-            { 'BufWritePre', '*.rs,*.c', lsp.buf.formatting_sync },
-            -- { 'CursorHold', '*.rs,*.c', lsp.diagnostic.open_float },
-        }
+        pat = { '*.rs', '*.c', '*.h', '<buffer>' }
+        augroup('Lsp', {
+            BufWritePre = { pattern = pat, callback = lsp.buf.formatting_sync, desc = 'format' },
+            CursorHold = { pattern = pat, callback = diagnostic.open_float, desc = 'diagnostic floating window' },
+        })
     end
 
     local lspconfig = require 'lspconfig'
@@ -111,13 +136,7 @@ do -- LSP & Diagnostics
     end
 end
 
-do -- Julia.vim
-    g.latex_to_unicode_tab = 0
-    -- g.latex_to_unicode_auto = 1
-    -- g.latex_to_unicode_file_types = { 'julia', 'javascript', 'markdown' }
-end
-
-do -- Markup
+do -- Markup: markdown, HTML, LaTeX
     g.markdown_enable_conceal = true
     g.markdown_enable_insert_mode_mappings = false
     -- g.user_emmet_leader_key = '<C-e>'
@@ -148,30 +167,24 @@ do -- Telescope
         },
     }
     local builtin = require 'telescope.builtin'
-    keymap {
-        ['<leader>ff'] = builtin.find_files,
-        -- ['<leader>fb'] = builtin.buffers,
-        -- ['<leader>fh'] = builtin.help_tags,
-        ['<leader>fg'] = builtin.live_grep,
-        ['<leader>fr'] = builtin.registers,
-    }
+    keymap('<leader>ff', builtin.find_files)
+    keymap('<leader>fg', builtin.live_grep)
+    keymap('<leader>fr', builtin.registers)
 end
 
 do -- Spelling
     local i = 1
     local langs = { '', 'en', 'es', 'de' }
-    keymap {
-        ['<leader>sl'] = function()
-            i = (i % #langs) + 1
-            opt.spell = langs[i] ~= ''
-            opt.spelllang = langs[i]
-        end,
-    }
-    keymap({ mode = 'ni' }, {
-        ['<c-s>'] = function()
-            vim.fn.execute 'normal! mmb1z=`m'
-        end,
-    })
+
+    keymap('<leader>l', function()
+        i = (i % #langs) + 1
+        opt.spell = langs[i] ~= ''
+        opt.spelllang = langs[i]
+    end)
+
+    keymap('<c-s>', function()
+        vim.fn.execute 'normal! mmb1z=`m'
+    end, { 'n', 'i' })
 end
 
 do -- Focus mode
@@ -185,26 +198,34 @@ do -- Focus mode
         opt.conceallevel = active and 0 or 2
         active = not active
     end
-    keymap { ['<leader>z'] = focus_toggle }
+    keymap('<leader>z', focus_toggle)
 end
 
 do -- Appearance
+    opt.laststatus = 3 -- global statusline
     opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y %8(%l,%c%) %8p%%'
     opt.termguicolors = true
+
+    augroup('Highlights', {
+        TextYankPost = { callback = highlight.on_yank, desc = 'highlight.on_yank' },
+        FileType = { pattern = 'tex', command = 'highlight! link Conceal Normal' },
+    })
     cmd 'colorscheme melange'
-    augroup.highlights = {
-        { 'TextYankPost', '*', vim.highlight.on_yank },
-        { 'ColorScheme', '*', 'hi! markdownLinkText gui=NONE' },
-        { 'ColorScheme', '*', 'hi! link markdownRule PreProc' },
-        { 'ColorScheme', '*', 'hi! link markdownXmlComment Comment' },
-        { 'FileType', 'tex', 'hi! link Conceal Normal' },
-    }
 end
 
-do -- Inspection
+do -- Lua
     function show(...)
         print(unpack(vim.tbl_map(vim.inspect, { ... })))
         return ...
     end
     command('L', ':lua _=show(<args>)', { nargs = '*', complete = 'lua' })
+
+    augroup('LuaHelp', {
+        FileType = {
+            pattern = 'lua',
+            callback = function()
+                vim.bo.keywordprg = ':help'
+            end,
+        },
+    })
 end
