@@ -5,6 +5,7 @@ tap "homebrew/cask-fonts"
 tap "homebrew/core"
 
 # brew "arduino-cli"
+brew "deno"
 brew "julia"
 # brew "llvm"
 # brew "python"
@@ -35,7 +36,7 @@ cask "font-juliamono"
 # cask "gtkwave"
 cask "google-drive"
 cask "iina"          # media player
-cask "itsycal"       # menu bar calendar. Y-M-d EEEEE HH:mm
+cask "itsycal"       # menu bar calendar. Y-MM-dd EEEEE HH:mm
 cask "protonvpn"
 cask "qbittorrent"
 cask "rectangle"     # window manager

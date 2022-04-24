@@ -6,6 +6,7 @@ prompt savq                        # set prompt
 # EDITOR - Neovim
 if type nvim > /dev/null 2>&1; then
   alias vi='nvim'
+  alias viu='nvim -u NONE'
   alias wi='nvim -c "WikiIndex" -c "lua focus_toggle()"'
   export VISUAL='nvim'
   export EDITOR=$VISUAL
@@ -20,7 +21,6 @@ alias ll='ls -AlF'
 alias mkdir='mkdir -p'
 alias rm='rm -v'
 alias sym='ln -s'
-# alias tex='tectonic'
 
 alias gad='git add --verbose'
 alias gbr='git branch --verbose'
@@ -38,15 +38,12 @@ alias gwt='git worktree'
 
 alias cc='clang'
 alias ino='arduino-cli'
-alias fth='gforth'
-
-alias jl='julia --startup-file=no --quiet'
-alias pluto='julia --quiet -e "using Pluto; Pluto.run()"'
-
+alias js='deno'
 alias py='python3 -q'
 alias pip='pip3'
-alias pyvenv='python3 -m venv'
-alias serve='python3 -m http.server'
+
+alias jl='julia --project=@. --startup-file=no --quiet'
+alias pluto='julia --quiet -e "using Pluto; Pluto.run(;auto_reload_from_file=true)"'
 
 alias rsb='cargo build'
 alias rsc='cargo check'
@@ -54,10 +51,15 @@ alias rsd='cargo doc --open'
 alias rsr='cargo run'
 alias rst='cargo test'
 
-alias lmk= 'latexmk'
+alias lmk='latexmk'
 alias lmkc='latexmk -c'
 alias lmkx='latexmk -xelatex'
 alias lmkl='latexmk -lualatex'
+# alias tex='tectonic'
+
+alias tsg='tree-sitter generate'
+alias tst='tree-sitter test'
+alias tsp='tree-sitter parse'
 
 
 # PATH
@@ -66,7 +68,9 @@ export TEXDIR="$HOME/.latex"
 PATH="$PATH:$TEXDIR/bin"
 
 PATH="$PATH:$HOME/.cargo/bin"
-PATH="$PATH:$HOME/.luarocks/bin"
+source "$HOME/.cargo/env"
+
+PATH="$PATH:$HOME/.deno/bin"
 
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
@@ -94,8 +98,7 @@ setopt share_history        # Same history for all open terminals
  # case insensitive completion
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 
-
-# APPEARANCE
+# utility function to change alacritty's appereance
 function theme() {
     # themes are defined  in separate files, so renaming the import in
     # `alacritty.yml` changes the current theme.
@@ -110,17 +113,10 @@ function theme() {
         "$HOME/.config/alacritty/alacritty.yml"
 }
 
-# Automatically set theme based on current system settings. This command fails
-# if light mode is active, so we check the exit code instead of the output lmao.
-# defaults read -g AppleInterfaceStyle &>/dev/null && theme || theme -l
-
-
 # Zsh plugins
-# source "$HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
-# source "$HOME/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 source '/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
 source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
-ZSH_HIGHLIGHT_STYLES[comment]=none
+ZSH_HIGHLIGHT_STYLES[comment]=fg=white ;
 
 # tab multiplexer configuration: https://github.com/austinjones/tab-rs/
 source "/Users/savq/Library/Application Support/tab/completion/zsh-history.zsh"
