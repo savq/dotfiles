@@ -1,4 +1,3 @@
-""" MAPPINGS
 let mapleader = ' '
 let maplocalleader = ','
 nnoremap ; :
@@ -10,28 +9,22 @@ noremap Y "+y
 noremap <C-]> K
 noremap <leader>h :vert help<space>
 
+" Edit configuration
+noremap <leader>rc <cmd>edit $MYVIMRC<cr>
+
+" Sessions
+noremap <leader>ss <cmd>mksession! .session.vim<cr>
+noremap <leader>sr <cmd>source     .session.vim<cr>
+
 " Repeat search (`alt <` and `alt >`)
 noremap ≤ ,
 noremap ≥ ;
 
-" Edit config
-noremap <leader>rc <cmd>edit $MYVIMRC<cr>
-
-" Sessions
-noremap <leader>ss :mksession! .session.vim<cr>
-noremap <leader>sr :source     .session.vim<cr>
-
-" Navigation
+" Cursor navigation
 noremap J 5j
 noremap K 5k
 noremap H ^
-noremap L $
-
-" Windows
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+noremap L g_
 
 " Buffers
 noremap <s-left>  <cmd>bp<cr>
@@ -39,98 +32,88 @@ noremap <s-right> <cmd>bn<cr>
 noremap <s-down>  <cmd>bd<cr>
 noremap <s-up>    <cmd>b 1<cr>
 
+" Windows
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
 
-""" OPTIONS
-set foldlevel=2
+""" Movement
 set mouse=a
-set noshowmode      " modes are shown in statusline
-set spelllang=
-set wildignorecase
-
-set completeopt=menuone,noinsert,noselect
-set shortmess+=I    " no intro message
-set shortmess+=c    " no ins-completion-menu messages
-
-set updatetime=500  " for CursorHold
-set noswapfile      " living a dangerous life
-
-set number
-" set signcolumn=number  " don't use this when using gitsigns
-
-set virtualedit=block
-
-""" Conceal
-set conceallevel=1   " conceal, but leave spaces
-" set concealcursor=n  " conceal in normal mode
-
-""" Position
-set colorcolumn=81
-set cursorcolumn
-set cursorline
-
-""" Buffer management
-set confirm               " ask to save stuff
-set fileencoding=utf-8    " encoding written to file
-set hidden                " hides buffers instead of closing them
-
-""" Split windows
-set splitbelow
-set splitright
-
-""" Search
-set ignorecase
-set smartcase
-
-""" Whitespace
-set list
-set listchars=tab:\|-,trail:*,extends:>,precedes:<,nbsp:_,eol:~
-set listchars+=space:· "not ASCII
-
-""" Folds
-set fillchars=fold:\  " no fillchars
-set foldlevel=2
-set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
-
-""" Indentation
-set expandtab      "<tab> inserts spaces
-set smartindent
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
-augroup Indents    "some exceptions
-    au!
-    au FileType c,scheme,markdown,javascript,gitcommit setlocal shiftwidth=2 softtabstop=2 tabstop=2
-augroup END
-
-""" Scrolling
 set nowrap
 set scrolloff=5
 set sidescrolloff=5
+set virtualedit=block
+set whichwrap=<,>,[,]   " L/R arrows keys can move to next line
+
+""" Completion
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c    " no ins-completion-menu messages
+set wildignorecase
+set wildmenu
+
+""" Search
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+""" UI
+syntax enable
+set number
+set signcolumn=number   " (don't use this if using gitsigns)
+set ruler
+set shortmess+=I        " no intro message
+set showcmd
+set noshowmode
+
+set colorcolumn=81,120
+set cursorcolumn
+set cursorline
+
+""" Conceal
+set conceallevel=1
+" set concealcursor=n  " conceal in normal mode
+
+""" Folds
+set foldlevel=2
+" set foldmethod=indent           " when not using tree-sitter
+set fillchars=fold:\ ,eob:\     " less fillchars
+set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
+
+""" Whitespace
+set list
+set listchars=eol:~,nbsp:_,extends:»,precedes:«,tab:├─,multispace:·,trail:•
+
+""" Indentation
+set autoindent
+set smartindent
+set expandtab       " <tab> inserts spaces
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+augroup IndentExceptions
+    au!
+    au FileType c,scheme,markdown,javascript,gitcommit
+                \ setlocal shiftwidth=2 softtabstop=2 tabstop=2
+augroup END
+
+""" Files, buffers, windows
+set autoread
+set confirm             " ask to save stuff
+set fileencoding=utf-8  " encoding written to file
+set hidden              " hide buffers instead of closing them
+set noswapfile
+set spelllang=
+set splitbelow
+set splitright
 
 """ Persistent undo
+set undodir="$HOME/.local/share/nvim/undo"
 set undofile
-set undolevels=100     " How many undos
-set undoreload=1000    " number of lines to save for undo
-
-""" Compatibility
-if has('nvim')
-    set inccommand=nosplit
-else
-    syntax enable
-    set autoindent
-    set autoread
-    set foldmethod=indent
-    set hlsearch
-    set incsearch
-    set ruler
-    set showcmd
-    set undodir="$HOME/.local/share/nvim/undo"
-    set wildmenu
-endif
-
-augroup Misc
-    au FileType c setlocal commentstring=//%s
-augroup END
+set undolevels=100      " How many undos
+set undoreload=1000     " number of lines to save for undo
+set updatetime=500
 
 """ Netrw
 let g:netrw_banner = 0        " no banner
