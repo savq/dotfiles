@@ -13,10 +13,11 @@ local PKGS = {
     'JuliaEditorSupport/julia-vim',
 
     -- Auto-completion
-    'hrsh7th/cmp-cmdline',
     'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-cmdline',
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lua',
+    'hrsh7th/cmp-omni',
     'hrsh7th/cmp-path',
     'hrsh7th/nvim-cmp',
     'kdheepak/cmp-latex-symbols',
@@ -35,6 +36,7 @@ local PKGS = {
     'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope.nvim',
     'tpope/vim-commentary',
+    'tpope/vim-surround',
     'rktjmp/lush.nvim',
     { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },
     { 'junegunn/vim-easy-align', as = 'easy-align', opt = true },

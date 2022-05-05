@@ -7,7 +7,9 @@ noremap Y "+y
 
 " Help
 noremap <C-]> K
-noremap <leader>h :vert help<space>
+" noremap <leader>h :vert help<space>
+cabbrev vh vert help
+
 
 " Edit configuration
 noremap <leader>rc <cmd>edit $MYVIMRC<cr>
@@ -59,7 +61,7 @@ set ignorecase
 set smartcase
 
 """ UI
-syntax enable
+" syntax enable
 set number
 set signcolumn=number   " (don't use this if using gitsigns)
 set ruler
@@ -67,9 +69,9 @@ set shortmess+=I        " no intro message
 set showcmd
 set noshowmode
 
-set colorcolumn=81,120
-set cursorcolumn
-set cursorline
+set colorcolumn=81,121
+" set cursorcolumn
+" set cursorline
 
 """ Conceal
 set conceallevel=1

@@ -1,18 +1,10 @@
 setmetatable(_G, { __index = vim })
 cmd 'runtime vimrc'
 
--- Utils
-local command = vim.api.nvim_create_user_command
-local function keymap(lhs, rhs, mode)
-    vim.keymap.set(mode or 'n', lhs, rhs)
-end
-local function augroup(name, autocmds)
-    local group = vim.api.nvim_create_augroup(name, {})
-    for event, cmd in pairs(autocmds) do
-        cmd.group = group
-        vim.api.nvim_create_autocmd(event, cmd)
-    end
-end
+local _utils = require 'utils'
+local command = _utils.command
+local keymap = _utils.keymap
+local augroup = _utils.augroup
 
 do -- Paq
     keymap('<leader>pq', function()
@@ -20,13 +12,15 @@ do -- Paq
         require('plugins').sync_all()
     end)
 
-    keymap('<leader>pg', '<cmd>edit ' .. fn.stdpath 'config' .. '/lua/plugins.lua<cr>')
+    keymap('<leader>pg', function()
+        cmd(fn.stdpath('config'):format 'edit/%s/lua/plugins.lua')
+    end)
 end
 
 do -- Tree-sitter
     opt.foldmethod = 'expr'
     opt.foldexpr = 'nvim_treesitter#foldexpr()'
-    require 'tsjl' -- local Julia grammar
+    require 'julia-grammar' -- local Julia grammar
     require('nvim-treesitter.configs').setup {
         -- ensure_installed = { 'c', 'javascript', 'julia', 'lua', 'python', 'rust', 'html', 'query', 'toml' },
         highlight = { enable = true },
@@ -61,6 +55,7 @@ do -- Auto-completion
             { name = 'nvim_lua' },
         }, {
             { name = 'buffer' },
+            { name = 'omni' },
             { name = 'path' },
             { name = 'latex_symbols' },
         }),
@@ -150,6 +145,12 @@ do -- Markup: markdown, HTML, LaTeX
         return txt:lower():gsub('%s+', '-')
     end
     g.wiki_root = '~/Documents/wiki'
+    keymap('<leader>wv', function()
+        cmd 'vs'
+        cmd 'WikiIndex'
+    end)
+
+    g.disable_rainbow_hover = true -- rainbow_csv
 end
 
 do -- Git
@@ -192,9 +193,7 @@ do -- Focus mode
     function focus_toggle()
         opt.list = active
         opt.number = active
-        opt.cursorline = active
-        opt.cursorcolumn = active
-        opt.colorcolumn = active and '81' or ''
+        opt.colorcolumn = active and '81,121' or ''
         opt.conceallevel = active and 0 or 2
         active = not active
     end
@@ -219,13 +218,4 @@ do -- Lua
         return ...
     end
     command('L', ':lua _=show(<args>)', { nargs = '*', complete = 'lua' })
-
-    augroup('LuaHelp', {
-        FileType = {
-            pattern = 'lua',
-            callback = function()
-                vim.bo.keywordprg = ':help'
-            end,
-        },
-    })
 end
