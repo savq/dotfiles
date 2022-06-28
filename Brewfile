@@ -13,6 +13,7 @@ brew "rust-analyzer"
 brew "rustup-init"
 
 brew "neovim"
+brew "pandoc"
 brew "ripgrep"
 brew "tokei"
 brew "zola"
@@ -21,7 +22,7 @@ brew "zsh-syntax-highlighting"
 brew "austinjones/taps/tab"
 
 # brew "tectonic"
-# cask "mactex-no-gui"
+cask "mactex-no-gui"
 
 cask "alacritty"
 # cask "android-file-transfer"
@@ -34,14 +35,14 @@ cask "font-ibm-plex"
 cask "font-juliamono"
 # cask "ghdl"
 # cask "gtkwave"
-cask "google-drive"
 cask "iina"          # media player
 cask "itsycal"       # menu bar calendar. Y-MM-dd EEEEE HH:mm
 cask "protonvpn"
 cask "qbittorrent"
 cask "rectangle"     # window manager
+cask "slack"
 cask "spotify"
-cask "zoom"
 cask "zotero"
+cask "zulip"
 
 # vim:filetype=ruby
