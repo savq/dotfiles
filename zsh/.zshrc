@@ -1,20 +1,27 @@
-fpath=($fpath $ZDOTDIR)            # same path for config and functions
-autoload -Uz compinit; compinit    # `new' completion system
-autoload -U promptinit; promptinit # enable prompt themes
-prompt savq                        # set prompt
+fpath=($fpath $ZDOTDIR)            # Same path for config and functions
+autoload -Uz compinit; compinit    # "New" completion system
+autoload -U promptinit; promptinit # Enable prompt themes
+prompt savq                        # Set prompt
 
-# EDITOR - Neovim
-if type nvim > /dev/null 2>&1; then
-  alias vi='nvim'
-  alias viu='nvim -u NONE'
-  alias wi='nvim -c "WikiIndex" -c "lua focus_toggle()"'
-  export VISUAL='nvim'
-  export EDITOR=$VISUAL
-  export MANPAGER='nvim +Man!'
-  export MANWIDTH=999
+## EDITOR - Neovim
+if type nvim > /dev/null 2>&1
+then
+    function vi {
+        # If vi is called from within a `:terminal`,
+        # open a new buffer instead of a nested nvim instance.
+        nvim --server "$NVIM" --remote-silent $@
+    }
+    alias viu='nvim -u NONE'
+    alias wi='nvim -c "WikiIndex" -c "lua focus_toggle()"'
+    export VISUAL='nvim'
+    export EDITOR=$VISUAL
+    export MANPAGER='nvim +Man!'
+    export MANWIDTH=999
+else
+    echo "nvim not found use $(which vi)"
 fi
 
-# ALIASES
+## ALIASES
 
 alias l='ls -1AH'
 alias ll='ls -AlF'
@@ -26,7 +33,7 @@ alias gad='git add --verbose'
 alias gbr='git branch --verbose'
 alias gcm='git commit --verbose'
 alias gco='git checkout'
-alias gcl='git clone --depth=1'
+# alias gcl='git clone --depth=1'
 alias gdf='git diff'
 alias gds='git diff --staged'
 alias gdt='git difftool'
@@ -36,6 +43,8 @@ alias gpl='git pull'
 alias gst='git status --branch --short .'
 alias gwt='git worktree'
 
+alias -s git='git clone --depth=1' # Suffix alias for quick clones
+
 alias cc='clang'
 alias ino='arduino-cli'
 alias js='deno'
@@ -43,7 +52,7 @@ alias py='python3 -q'
 alias pip='pip3'
 
 alias jl='julia --project=@. --startup-file=no --quiet'
-alias pluto='julia --quiet -e "using Pluto; Pluto.run(;auto_reload_from_file=true)"'
+alias pluto='julia --quiet -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
 
 alias rsb='cargo build'
 alias rsc='cargo check'
@@ -62,7 +71,7 @@ alias tst='tree-sitter test'
 alias tsp='tree-sitter parse'
 
 
-# PATH
+## PATH
 
 export TEXDIR="$HOME/.latex"
 PATH="$PATH:$TEXDIR/bin"
@@ -77,7 +86,7 @@ export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
 
 
-# OPTIONS
+## OPTIONS
 
 bindkey -e
 bindkey '^[[A' history-beginning-search-backward 
@@ -95,25 +104,35 @@ setopt hist_ignore_all_dups # Remove older duplicate entries from history
 setopt hist_reduce_blanks   # Remove blanks from history items
 setopt share_history        # Same history for all open terminals
 
- # case insensitive completion
+## Case insensitive completion
 zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
 
-# utility function to change alacritty's appereance
-function theme() {
-    # themes are defined  in separate files, so renaming the import in
-    # `alacritty.yml` changes the current theme.
 
-    # Check if theme should change to light or dark
-    local bgcolor ;
-    [[ $1 = '-l' ]] && bgcolor='light' || bgcolor='dark'
-
-    # Replace second line in-place
-    sed -E -i '' \
-        -e "2s/melange_(dark|light)/melange_$bgcolor/g" \
-        "$HOME/.config/alacritty/alacritty.yml"
+## Notify when a command is done
+function tell {
+    $@
+    say "Done: $@"
 }
 
-# Zsh plugins
+
+## Change Alacritty and Neovim's appereance
+function theme {
+    # Check if theme should change to light or dark
+    local BGCOLOR ;
+    [ "$1" = '-l' ] && BGCOLOR='light' || BGCOLOR='dark'
+
+    # Rename the import in `alacritty.yml` to change the current theme
+    sed -E -i '' \
+        -e "2s/melange_(dark|light)/melange_$BGCOLOR/g" \
+        "$HOME/.config/alacritty/alacritty.yml"
+
+    # If there's an nvim instance open, change the background
+    [ -n "$NVIM" ] && nvim --server $NVIM --remote-send "<cmd>set bg=$BGCOLOR<cr>"
+    return
+}
+
+
+## Zsh plugins
 source '/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
 source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 ZSH_HIGHLIGHT_STYLES[comment]=fg=white ;
