@@ -6,7 +6,7 @@ tap "homebrew/core"
 
 # brew "arduino-cli"
 brew "deno"
-brew "julia"
+brew "juliaup"
 # brew "llvm"
 # brew "python"
 brew "rust-analyzer"
