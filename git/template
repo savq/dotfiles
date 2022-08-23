@@ -1,17 +1,17 @@
 
+# type[(scope)][!]: Description
 
-# HEADER # Append ! for breaking changes. Add scope in parentheses.
+# TYPES:
+# feat     Add new feature
+# fix      Patch bug
+# refactor Change that neither adds features nor fixes bugs
+# build    Change build system
+# docs     Change documentation
+# style    Update formatting
+# test     Add/Update tests
 
-# feat: add new feature
-# fix: patch bug
-# refactor: change that neither adds a feature nor fixes a bug
-# build: change to the build system
-# docs: change to the documentation
-# style: update formatting (white-space, semi-colors, etc.)
-# test: add/correct tests
+# BODY:    Explain change. Use the imperative present tense
 
 
-# BODY # Explain change. Use the imperative present tense
-
-# FOOTER # Mention Breaking Changes and reference GitHub issues
+# FOOTER:  Mention Breaking Changes and reference GitHub issues
 
