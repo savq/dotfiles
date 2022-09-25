@@ -23,8 +23,8 @@ fi
 
 ## ALIASES
 
-alias l='ls -1AH'
-alias ll='ls -AlF'
+alias l='ls -1A'
+alias ll='ls -AFlh'
 alias mkdir='mkdir -p'
 alias rm='rm -v'
 alias sym='ln -s'
@@ -33,26 +33,30 @@ alias gad='git add --verbose'
 alias gbr='git branch --verbose'
 alias gcm='git commit --verbose'
 alias gco='git checkout'
-# alias gcl='git clone --depth=1'
 alias gdf='git diff'
-alias gds='git diff --staged'
+alias gds='git difftool --staged'
 alias gdt='git difftool'
-alias glg='git log  --graph --oneline'
+alias glg='git log  --all --graph --oneline'
 alias gpl='git pull'
-# alias gsh='git push'
+alias grv='git remote --verbose'
 alias gst='git status --branch --short .'
 alias gwt='git worktree'
 
 alias -s git='git clone --depth=1' # Suffix alias for quick clones
 
+alias brew-tree='brew deps --graph --installed'
+
 alias cc='clang'
 alias ino='arduino-cli'
-alias js='deno'
-alias py='python3 -q'
-alias pip='pip3'
 
 alias jl='julia --project=@. --startup-file=no --quiet'
 alias pluto='julia --quiet -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
+
+alias js='deno'
+alias serve='file_server'
+
+alias py='python3 -q'
+alias pip='pip3'
 
 alias rsb='cargo build'
 alias rsc='cargo check'
@@ -62,13 +66,13 @@ alias rst='cargo test'
 
 alias lmk='latexmk'
 alias lmkc='latexmk -c'
-alias lmkx='latexmk -xelatex'
 alias lmkl='latexmk -lualatex'
+alias lmkx='latexmk -xelatex'
 # alias tex='tectonic'
 
 alias tsg='tree-sitter generate'
-alias tst='tree-sitter test'
 alias tsp='tree-sitter parse'
+alias tst='tree-sitter test'
 
 
 ## PATH
@@ -110,8 +114,7 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:
 
 ## Notify when a command is done
 function tell {
-    $@
-    say "Done: $@"
+    $@ && say "Done: $@" || say "Failed: $@"
 }
 
 
@@ -128,7 +131,7 @@ function theme {
 
     # If there's an nvim instance open, change the background
     [ -n "$NVIM" ] && nvim --server $NVIM --remote-send "<cmd>set bg=$BGCOLOR<cr>"
-    return
+    return 0
 }
 
 
