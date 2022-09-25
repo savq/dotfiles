@@ -1,6 +1,5 @@
-local hi = vim.api.nvim_set_hl
-hi(0, 'TrailWS', { link = 'diffText' })
-vim.fn.matchadd('TrailWS', [[\s\{2,}$]])
+vim.fn.matchadd('TrailWS', [[\s\{1,}$]])
+vim.api.nvim_set_hl(0, 'TrailWS', { link = 'diffText' })
 
 require('utils').augroup('Whitespace', {
     BufWritePre = {
@@ -8,11 +7,12 @@ require('utils').augroup('Whitespace', {
             '*.c',
             '*.h',
             '*.html',
-            '*.jl',
+            -- '*.jl',
             '*.js',
             '*.lua',
             '*.py',
             '*.rs',
+            '*.tex',
         },
         callback = function()
             local st = vim.fn.winsaveview()

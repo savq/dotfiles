@@ -4,7 +4,7 @@ local cmds = require('utils').cmds
 
 augroup('Term', {
     TermOpen = { command = 'set nospell nonumber nocursorcolumn nocursorline' },
-    TermClose = { command = 'bdelete' },
+    -- TermClose = { command = 'bdelete' },
 })
 
 -- Use escape key in terminal

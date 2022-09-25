@@ -13,18 +13,23 @@ do -- Paq
     end)
 
     keymap('<leader>pg', function()
-        cmd(fn.stdpath('config'):format 'edit/%s/lua/plugins.lua')
+        cmd('edit ' .. fn.stdpath 'config' .. '/lua/plugins.lua')
     end)
 end
 
 do -- Tree-sitter
     opt.foldmethod = 'expr'
     opt.foldexpr = 'nvim_treesitter#foldexpr()'
-    require 'julia-grammar' -- local Julia grammar
+
+    -- Use local Julia grammar
+    require 'julia-grammar'
+
+    local langs = { 'c', 'rust', 'julia', 'lua', 'python', 'query', 'comment', 'html', 'javascript', 'typescript' }
+
     require('nvim-treesitter.configs').setup {
-        -- ensure_installed = { 'c', 'javascript', 'julia', 'lua', 'python', 'rust', 'html', 'query', 'toml' },
+        ensure_installed = langs,
         highlight = { enable = true },
-        indent = { enable = false },
+        indent = { enable = true },
         incremental_selection = {
             enable = true,
             keymaps = { init_selection = '+', node_incremental = '+', node_decremental = '_' },
@@ -33,10 +38,11 @@ do -- Tree-sitter
             select = {
                 enable = true,
                 keymaps = {
-                    ac = '@call.outer',
-                    af = '@function.outer',
-                    ak = '@conditional.outer',
-                    at = '@class.outer',
+                    ['ac'] = '@call.outer',
+                    ['af'] = '@function.outer',
+                    ['if'] = '@function.inner',
+                    ['ak'] = '@conditional.outer',
+                    ['at'] = '@class.outer',
                 },
             },
         },
@@ -48,7 +54,8 @@ do -- Auto-completion
 
     cmp.setup {
         completion = {
-            keyword_length = 3,
+            keyword_length = 2,
+            -- keyword_pattern = [[\k\+]], -- autocomplete non-ascii characters
         },
         sources = cmp.config.sources({
             { name = 'nvim_lsp' },
@@ -60,7 +67,7 @@ do -- Auto-completion
             { name = 'latex_symbols' },
         }),
         mapping = cmp.mapping.preset.insert {
-            ['<cr>'] = cmp.mapping.confirm { select = false },
+            ['<cr>'] = cmp.mapping.confirm { select = true },
             ['<tab>'] = function(fallback)
                 return cmp.visible() and cmp.select_next_item() or fallback()
             end,
@@ -106,7 +113,7 @@ do -- LSP & Diagnostics
     end
 
     diagnostic.config {
-        -- virtual_text = false,
+        virtual_text = false,
         signs = true,
         float = { focus = false },
     }
@@ -121,7 +128,7 @@ do -- LSP & Diagnostics
     end
 
     local lspconfig = require 'lspconfig'
-    local servers = { 'clangd', 'rust_analyzer' }
+    local servers = { 'clangd', 'rust_analyzer', 'tsserver', 'svelte' }
     for _, ls in ipairs(servers) do
         lspconfig[ls].setup {
             capabilities = require('cmp_nvim_lsp').update_capabilities(lsp.protocol.make_client_capabilities()),
@@ -134,15 +141,15 @@ end
 do -- Markup: markdown, HTML, LaTeX
     g.markdown_enable_conceal = true
     g.markdown_enable_insert_mode_mappings = false
-    -- g.user_emmet_leader_key = '<C-e>'
+    g.user_emmet_leader_key = '<C-e>'
 
     g.vimtex_compiler_method = 'latexmk'
     g.vimtex_quickfix_mode = 2
 
-    g.wiki_filetypes = { 'md' }
-    g.wiki_link_target_type = 'md'
-    g.wiki_map_link_create = function(txt)
-        return txt:lower():gsub('%s+', '-')
+    g.wiki_filetypes = { 'wiki', 'md' }
+    -- g.wiki_link_target_type = 'md'
+    g.wiki_map_text_to_link = function(txt)
+        return { txt:lower():gsub('%s+', '-'), txt }
     end
     g.wiki_root = '~/Documents/wiki'
     keymap('<leader>wv', function()
