@@ -6,7 +6,7 @@ BREW_SCRIPTS_URL = https://raw.githubusercontent.com/Homebrew/install/HEAD
 .PHONY: install brew nvim symlinks \
 	clean clean.brew clean.nvim clean.symlinks
 
-install: brew nvim symlinks
+install: brew nvim symlinks rust
 
 brew:
 	curl -fsSL '$(BREW_SCRIPTS_URL)/install.sh' > install.sh
@@ -20,8 +20,11 @@ symlinks:
 	ln -s $(XDG_CONFIG_HOME)/nvim/vimrc   $(HOME)/.vimrc
 	ln -s $(XDG_CONFIG_HOME)/zsh/.zshenv  $(HOME)/.zshenv
 
+rust:
+	rustup completions zsh rustup > $(XDG_CONFIG_HOME)/zsh/_rustup
+	rustup completions zsh cargo > $(XDG_CONFIG_HOME)/zsh/_cargo
 
-clean: clean.brew clean.nvim clean.symlinks
+clean: clean.brew clean.nvim clean.symlinks clean.rust
 
 clean.brew:
 	curl -fsSL '$(BREW_SCRIPTS_URL)/uninstall.sh' > uninstall.sh
@@ -33,3 +36,7 @@ clean.nvim:
 clean.symlinks:
 	rm $(HOME)/.vimrc
 	rm $(HOME)/.zshenv
+
+clean.rust:
+	rm $(XDG_CONFIG_HOME)/zsh/_rustup
+	rm $(XDG_CONFIG_HOME)/zsh/_cargo
