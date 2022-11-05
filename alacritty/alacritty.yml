@@ -32,22 +32,22 @@ window:
 
 font:
   normal:
-    family: IBM Plex Mono
-    style: Light
+    # family: IBM Plex Mono
+    family: JuliaMono
+    style: Regular
   bold:
     style: Bold
   italic:
-    style: Light Italic
+    style: LightItalic
   bold_italic:
-    style: Bold Italic
-  size: 16.0
+    style: BoldItalic
+  size: 14.0
   #offset:
   #  x: 0
   #  y: 0
   #glyph_offset:
   #  x: 0
   #  y: 0
-  use_thin_strokes: true    # macOS retina only
 #draw_bold_text_with_bright_colors: false
 
 #background_opacity: 1.0
