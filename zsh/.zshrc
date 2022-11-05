@@ -23,6 +23,7 @@ fi
 
 ## ALIASES
 
+alias fd='find . -path ./.git -prune -o -iname'
 alias l='ls -1A'
 alias ll='ls -AFlh'
 alias mkdir='mkdir -p'
@@ -49,14 +50,16 @@ alias brew-tree='brew deps --graph --installed'
 alias cc='clang'
 alias ino='arduino-cli'
 
-alias jl='julia --project=@. --startup-file=no --quiet'
-alias pluto='julia --quiet -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
+alias jl='julia --project --startup-file=no --quiet'
+alias pluto='jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
 
 alias js='deno'
 alias serve='file_server'
 
-alias py='python3 -q'
 alias pip='pip3'
+alias py='python3 -q'
+alias venv='python3 -m venv'
+alias nb='jupyter notebook'
 
 alias rsb='cargo build'
 alias rsc='cargo check'
