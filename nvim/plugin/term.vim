@@ -1,4 +1,5 @@
 " TODO: Port to lua (operatorfunc doesn't work)
+lua require 'term'
 
 " Modified from: learnvimscriptthehardway.stevelosh.com/chapters/34.html
 function! s:TermOperator(type)
@@ -20,3 +21,4 @@ endfunction
 nnoremap <silent><leader>e :set operatorfunc=<SID>TermOperator<cr>g@
 vnoremap <silent><leader>e :<c-u>call <SID>TermOperator(visualmode())<cr>
 
+command Vterm vs<bar>term

@@ -10,7 +10,7 @@ require('utils').augroup('Whitespace', {
             -- '*.jl',
             '*.js',
             '*.lua',
-            '*.py',
+            -- '*.py',
             '*.rs',
             '*.tex',
         },

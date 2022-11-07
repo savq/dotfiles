@@ -19,7 +19,7 @@ local function cmds(cs)
 end
 
 keymap('<leader>sh', cmds { '10sp', 'term' })
-keymap('<leader>jl', cmds { '10sp', 'e term://julia --project=@. -q', 'wincmd k' })
+keymap('<leader>jl', cmds { '10sp', 'e term://julia --project -q', 'wincmd k' })
 keymap('<leader>js', cmds { '10sp', 'e term://deno', 'wincmd k' })
 keymap('<leader>py', cmds { '10sp', 'e term://python3 -q', 'wincmd k' })
 

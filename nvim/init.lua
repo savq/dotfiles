@@ -1,6 +1,9 @@
 setmetatable(_G, { __index = vim })
 cmd 'runtime vimrc'
 
+require 'trailing_whitespace'
+require 'modes'
+
 local _utils = require 'utils'
 local command = _utils.command
 local keymap = _utils.keymap
@@ -67,7 +70,7 @@ do -- Auto-completion
             { name = 'latex_symbols' },
         }),
         mapping = cmp.mapping.preset.insert {
-            ['<cr>'] = cmp.mapping.confirm { select = true },
+            ['<cr>'] = cmp.mapping.confirm { select = false },
             ['<tab>'] = function(fallback)
                 return cmp.visible() and cmp.select_next_item() or fallback()
             end,
@@ -131,7 +134,7 @@ do -- LSP & Diagnostics
     local servers = { 'clangd', 'rust_analyzer', 'tsserver', 'svelte' }
     for _, ls in ipairs(servers) do
         lspconfig[ls].setup {
-            capabilities = require('cmp_nvim_lsp').update_capabilities(lsp.protocol.make_client_capabilities()),
+            capabilities = require('cmp_nvim_lsp').default_capabilities(),
             on_attach = on_attach,
             flags = { debounce_text_changes = 150 },
         }
