@@ -1,4 +1,4 @@
-fpath=($fpath $ZDOTDIR)            # Same path for config and functions
+fpath=($fpath $ZDOTDIR);           # Same path for config and functions
 autoload -Uz compinit; compinit    # "New" completion system
 autoload -U promptinit; promptinit # Enable prompt themes
 prompt savq                        # Set prompt
@@ -6,23 +6,22 @@ prompt savq                        # Set prompt
 ## EDITOR - Neovim
 if type nvim > /dev/null 2>&1
 then
-    function vi {
-        # If vi is called from within a `:terminal`,
-        # open a new buffer instead of a nested nvim instance.
-        nvim --server "$NVIM" --remote-silent $@
-    }
-    alias viu='nvim -u NONE'
-    alias wi='nvim -c "WikiIndex" -c "lua focus_toggle()"'
-    export VISUAL='nvim'
-    export EDITOR=$VISUAL
-    export MANPAGER='nvim +Man!'
-    export MANWIDTH=999
+  function vi {
+    # When calling vi in a :terminal, open a buffer instead of a nested instance
+    nvim --server "$NVIM" --remote-silent $@
+  }
+  alias wi='nvim -c "WikiIndex" -c "lua focus_toggle()"'
+  export VISUAL='nvim'
+  export EDITOR=$VISUAL
+  export MANPAGER='nvim +Man!'
+  export MANWIDTH=999
 else
-    echo "nvim not found use $(which vi)"
+  echo "nvim not found. Use $(which vi)"
 fi
 
 ## ALIASES
 
+alias brew-tree='brew deps --graph --installed'
 alias fd='find . -path ./.git -prune -o -iname'
 alias l='ls -1A'
 alias ll='ls -AFlh'
@@ -30,22 +29,18 @@ alias mkdir='mkdir -p'
 alias rm='rm -v'
 alias sym='ln -s'
 
-alias gad='git add --verbose'
-alias gbr='git branch --verbose'
-alias gcm='git commit --verbose'
-alias gco='git checkout'
-alias gdf='git diff'
-alias gds='git difftool --staged'
-alias gdt='git difftool'
-alias glg='git log  --all --graph --oneline'
-alias gpl='git pull'
-alias grv='git remote --verbose'
-alias gst='git status --branch --short .'
-alias gwt='git worktree'
-
-alias -s git='git clone --depth=1' # Suffix alias for quick clones
-
-alias brew-tree='brew deps --graph --installed'
+alias -s git='git clone --depth=1'
+alias ga='git add --update --verbose'
+alias gb='git branch --verbose --verbose'
+alias gc='git commit --verbose'
+alias gd='git difftool'
+alias ge='git checkout'
+alias gf='git diff'
+alias gg='git log --all --graph --oneline'
+alias gr='git remote --verbose'
+alias gs='git status --branch --short .'
+alias gt='git difftool --staged'
+alias gw='git pull'
 
 alias cc='clang'
 alias ino='arduino-cli'
@@ -72,10 +67,6 @@ alias lmkc='latexmk -c'
 alias lmkl='latexmk -lualatex'
 alias lmkx='latexmk -xelatex'
 # alias tex='tectonic'
-
-alias tsg='tree-sitter generate'
-alias tsp='tree-sitter parse'
-alias tst='tree-sitter test'
 
 
 ## PATH
@@ -117,24 +108,31 @@ zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:
 
 ## Notify when a command is done
 function tell {
-    $@ && say "Done: $@" || say "Failed: $@"
+  local exit_code=$?;
+  # If there are no arguments say the result of the previous command.
+  if [ $# -eq 0 ]
+  then
+    [ $exit_code -eq 0 ] && say "Done." || say "Failed. $exit_code."
+  else
+    time "$@" && say "Done. $@ ." || say "Failed. $?. $@ ."
+  fi
 }
 
 
 ## Change Alacritty and Neovim's appereance
 function theme {
-    # Check if theme should change to light or dark
-    local BGCOLOR ;
-    [ "$1" = '-l' ] && BGCOLOR='light' || BGCOLOR='dark'
+  # Check if theme should change to light or dark
+  local BGCOLOR;
+  [ "$1" = '-l' ] && BGCOLOR='light' || BGCOLOR='dark';
 
-    # Rename the import in `alacritty.yml` to change the current theme
-    sed -E -i '' \
-        -e "2s/melange_(dark|light)/melange_$BGCOLOR/g" \
-        "$HOME/.config/alacritty/alacritty.yml"
+  # Rename the import in `alacritty.yml` to change the current theme
+  sed -E -i '' \
+    -e "2s/melange_(dark|light)/melange_$BGCOLOR/g" \
+    "$HOME/.config/alacritty/alacritty.yml"
 
-    # If there's an nvim instance open, change the background
-    [ -n "$NVIM" ] && nvim --server $NVIM --remote-send "<cmd>set bg=$BGCOLOR<cr>"
-    return 0
+  # If there's an nvim instance open, change the background
+  [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-send "<cmd>set bg=$BGCOLOR<cr>"
+  return 0
 }
 
 
