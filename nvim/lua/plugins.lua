@@ -1,10 +1,10 @@
 local PKGS = {
-    -- { 'savq/paq-nvim', pin=true },
-    -- { 'savq/melange', pin=true },
+    -- { 'savq/paq-nvim', pin = true },
+    -- { 'savq/melange', pin = true },
 
     -- Tree-sitter
-    -- { 'nvim-treesitter/nvim-treesitter', run = function() cmd 'TSUpdate' end },
-    -- 'nvim-treesitter/nvim-treesitter-textobjects',
+    { 'nvim-treesitter/nvim-treesitter', run = function() cmd 'TSUpdate' end },
+    'nvim-treesitter/nvim-treesitter-textobjects',
     'nvim-treesitter/playground',
 
     -- LSP & Language plugins
@@ -25,11 +25,12 @@ local PKGS = {
     -- Markup
     'lervag/VimTeX',
     'lervag/wiki.vim',
+    'lervag/wiki-ft.vim',
     'rhysd/vim-gfm-syntax',
     { 'mattn/emmet-vim', opt = true },
 
     -- Git
-    -- 'tpope/vim-fugitive',
+    'tpope/vim-fugitive',
     'lewis6991/gitsigns.nvim',
 
     -- Misc
@@ -37,7 +38,6 @@ local PKGS = {
     'nvim-telescope/telescope.nvim',
     'tpope/vim-commentary',
     'tpope/vim-surround',
-    'rktjmp/lush.nvim',
     { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },
     { 'junegunn/vim-easy-align', as = 'easy-align', opt = true },
     { 'mechatroner/rainbow_csv', opt = true },
@@ -71,8 +71,8 @@ local function bootstrap()
 end
 
 local function sync_all()
-    -- package.loaded.paq = nil
-    (require 'paq')(PKGS):sync()
+    package.loaded.plugins = nil
+    require 'paq'(PKGS):sync()
 end
 
 return { bootstrap = bootstrap, sync_all = sync_all }

@@ -1,7 +1,8 @@
-" TODO: Port to lua (operatorfunc doesn't work)
-lua require 'term'
+" TODO: Port to Lua.
+" `operatorfunc` doesn't support Lua functions.
+" See https://github.com/neovim/neovim/issues/14157
 
-" Modified from: learnvimscriptthehardway.stevelosh.com/chapters/34.html
+" Modified from: https://learnvimscriptthehardway.stevelosh.com/chapters/34.html
 function! s:TermOperator(type)
     let reg = getreg()
 
@@ -17,8 +18,6 @@ function! s:TermOperator(type)
     call setreg('', reg)
 endfunction
 
-" Keymap to send things to the REPL
+" Send text to REPL
 nnoremap <silent><leader>e :set operatorfunc=<SID>TermOperator<cr>g@
 vnoremap <silent><leader>e :<c-u>call <SID>TermOperator(visualmode())<cr>
-
-command Vterm vs<bar>term

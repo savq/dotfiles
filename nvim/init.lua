@@ -1,36 +1,148 @@
 setmetatable(_G, { __index = vim })
+
+local command = vim.api.nvim_create_user_command
+local keymap = vim.keymap.set
+
+local function augroup(name, autocmds)
+    local group = api.nvim_create_augroup(name, {})
+    for event, opts in pairs(autocmds) do
+        opts.group = group
+        api.nvim_create_autocmd(event, opts)
+    end
+end
+
+-- Load basic configuration
 cmd 'runtime vimrc'
 
-require 'trailing_whitespace'
-require 'modes'
+do -- Appearance
+    opt.laststatus = 2
+    opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y %8(%l,%c%) %8p%%'
 
-local _utils = require 'utils'
-local command = _utils.command
-local keymap = _utils.keymap
-local augroup = _utils.augroup
+    opt.termguicolors = true
+    cmd.colorscheme 'melange'
+
+    augroup('Highlights', {
+        TextYankPost = {
+            callback = function()
+                highlight.on_yank() -- FIXME
+            end,
+        },
+    })
+
+    -- Set cursor hints according to mode
+    augroup('Enter', {
+        InsertEnter = { command = 'set cursorline' },
+        ModeChanged = { command = 'set cursorcolumn', pattern = '*:[vV\x16]*' },
+    })
+
+    augroup('Leave', {
+        InsertLeave = { command = 'set nocursorline' },
+        ModeChanged = { command = 'set nocursorcolumn', pattern = '[vV\x16]*:*' },
+    })
+end
+
+do -- Trailing whitespace
+    fn.matchadd('WhitespaceTrailing', [[\s\{1,}$]])
+    api.nvim_set_hl(0, 'WhitespaceTrailing', { link = 'diffText' })
+
+    augroup('Whitespace', {
+        BufWritePre = {
+            pattern = { '*' },
+            callback = function()
+                local view = fn.winsaveview()
+                cmd [[%s/\s\+$//e]]
+                fn.winrestview(view)
+            end,
+        },
+    })
+end
+
+do -- "Focus" mode
+    local active = false
+    function focus_toggle() -- global
+        opt.list = active
+        opt.number = active
+        opt.colorcolumn = active and '81,121' or ''
+        opt.conceallevel = active and 0 or 2
+        active = not active
+    end
+    command('Focus', focus_toggle, {})
+    keymap('n', '<leader>z', focus_toggle)
+end
+
+do -- Spelling
+    local i = 1
+    local langs = { '', 'en', 'es', 'de' }
+
+    command('Spell', function()
+        i = (i % #langs) + 1
+        opt.spell = langs[i] ~= ''
+        opt.spelllang = langs[i]
+    end, {})
+
+    -- Fix spelling of previous word
+    keymap({ 'n', 'i' }, '<c-s>', function()
+        fn.execute 'normal! mmb1z=`m'
+    end)
+end
+
+do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `term.vim`)
+    augroup('Term', { TermOpen = { command = 'set nospell nonumber' } })
+
+    -- Use escape key in terminal
+    keymap('t', '<Esc>', [[<C-\><C-n>]])
+
+    -- Open REPLs in small vertical split window
+    for ext, bin in pairs {
+        sh = '/bin/zsh',
+        jl = 'julia --project -q',
+        js = 'deno -q',
+        py = 'python3 -q',
+    } do
+        keymap('n', '<leader>' .. ext, function()
+            cmd '12split'
+            cmd('edit term://' .. bin)
+            cmd 'wincmd k'
+        end)
+    end
+end
+
+do -- Lua
+    show = vim.pretty_print
+    command('L', ':lua _=show(<args>)', { nargs = '*', complete = 'lua' })
+end
+
+----- Plugins ------------------------------------------------------------------
 
 do -- Paq
-    keymap('<leader>pq', function()
-        package.loaded.plugins = nil
-        require('plugins').sync_all()
+    keymap('n', '<leader>pq', require('plugins').sync_all)
+    keymap('n', '<leader>pg', function()
+        cmd.edit(fn.stdpath 'config' .. '/lua/plugins.lua')
     end)
+end
 
-    keymap('<leader>pg', function()
-        cmd('edit ' .. fn.stdpath 'config' .. '/lua/plugins.lua')
-    end)
+do -- Markup
+    g.disable_rainbow_hover = true
+
+    g.markdown_enable_conceal = true
+    g.markdown_enable_insert_mode_mappings = false
+
+    g.vimtex_compiler_method = 'latexmk'
+    g.vimtex_quickfix_mode = 2
+
+    g.wiki_filetypes = { 'wiki', 'md' }
+    g.wiki_root = '~/Documents/wiki'
+    g.wiki_map_text_to_link = function(txt)
+        return { txt:lower():gsub('%s+', '-'), txt }
+    end
 end
 
 do -- Tree-sitter
     opt.foldmethod = 'expr'
     opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
-    -- Use local Julia grammar
-    require 'julia-grammar'
-
-    local langs = { 'c', 'rust', 'julia', 'lua', 'python', 'query', 'comment', 'html', 'javascript', 'typescript' }
-
     require('nvim-treesitter.configs').setup {
-        ensure_installed = langs,
+        -- ensure_installed = { 'c', 'html', 'julia', 'lua', 'python', 'query', 'rust', 'typescript' },
         highlight = { enable = true },
         indent = { enable = true },
         incremental_selection = {
@@ -67,7 +179,7 @@ do -- Auto-completion
             { name = 'buffer' },
             { name = 'omni' },
             { name = 'path' },
-            { name = 'latex_symbols' },
+            -- { name = 'latex_symbols' },
         }),
         mapping = cmp.mapping.preset.insert {
             ['<cr>'] = cmp.mapping.confirm { select = false },
@@ -100,7 +212,7 @@ do -- Auto-completion
 end
 
 do -- LSP & Diagnostics
-    local lsp_cmds = {
+    for name, fn in pairs {
         LspDef = lsp.buf.definition,
         LspRefs = lsp.buf.references,
         LspDocSymbols = lsp.buf.document_symbol,
@@ -110,9 +222,8 @@ do -- LSP & Diagnostics
         LineDiagnostics = diagnostic.open_float,
         LspGotoPrev = diagnostic.goto_prev,
         LspGotoNext = diagnostic.goto_next,
-    }
-    for name, cmd in pairs(lsp_cmds) do
-        command(name, cmd, {})
+    } do
+        command(name, fn, {})
     end
 
     diagnostic.config {
@@ -125,8 +236,8 @@ do -- LSP & Diagnostics
         opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
         pat = { '*.rs', '*.c', '*.h', '<buffer>' }
         augroup('Lsp', {
-            BufWritePre = { pattern = pat, callback = lsp.buf.formatting_sync, desc = 'format' },
-            CursorHold = { pattern = pat, callback = diagnostic.open_float, desc = 'diagnostic floating window' },
+            BufWritePre = { pattern = pat, callback = lsp.buf.formatting_sync },
+            CursorHold = { pattern = pat, callback = diagnostic.open_float },
         })
     end
 
@@ -139,28 +250,6 @@ do -- LSP & Diagnostics
             flags = { debounce_text_changes = 150 },
         }
     end
-end
-
-do -- Markup: markdown, HTML, LaTeX
-    g.markdown_enable_conceal = true
-    g.markdown_enable_insert_mode_mappings = false
-    g.user_emmet_leader_key = '<C-e>'
-
-    g.vimtex_compiler_method = 'latexmk'
-    g.vimtex_quickfix_mode = 2
-
-    g.wiki_filetypes = { 'wiki', 'md' }
-    -- g.wiki_link_target_type = 'md'
-    g.wiki_map_text_to_link = function(txt)
-        return { txt:lower():gsub('%s+', '-'), txt }
-    end
-    g.wiki_root = '~/Documents/wiki'
-    keymap('<leader>wv', function()
-        cmd 'vs'
-        cmd 'WikiIndex'
-    end)
-
-    g.disable_rainbow_hover = true -- rainbow_csv
 end
 
 do -- Git
@@ -178,54 +267,7 @@ do -- Telescope
         },
     }
     local builtin = require 'telescope.builtin'
-    keymap('<leader>ff', builtin.find_files)
-    keymap('<leader>fg', builtin.live_grep)
-    keymap('<leader>fr', builtin.registers)
-end
-
-do -- Spelling
-    local i = 1
-    local langs = { '', 'en', 'es', 'de' }
-
-    keymap('<leader>l', function()
-        i = (i % #langs) + 1
-        opt.spell = langs[i] ~= ''
-        opt.spelllang = langs[i]
-    end)
-
-    keymap('<c-s>', function()
-        vim.fn.execute 'normal! mmb1z=`m'
-    end, { 'n', 'i' })
-end
-
-do -- Focus mode
-    local active = false
-    function focus_toggle()
-        opt.list = active
-        opt.number = active
-        opt.colorcolumn = active and '81,121' or ''
-        opt.conceallevel = active and 0 or 2
-        active = not active
-    end
-    keymap('<leader>z', focus_toggle)
-end
-
-do -- Appearance
-    opt.laststatus = 3 -- global statusline
-    opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y %8(%l,%c%) %8p%%'
-    opt.termguicolors = true
-
-    augroup('Highlights', {
-        TextYankPost = { callback = highlight.on_yank, desc = 'highlight.on_yank' },
-        FileType = { pattern = 'tex', command = 'highlight! link Conceal Normal' },
-    })
-    cmd 'colorscheme melange'
-end
-
-do -- Lua
-    function show(...)
-        print(unpack(vim.tbl_map(vim.inspect, { ... })))
-        return ...
-    end
-    command('L', ':lua _=show(<args>)', { nargs = '*', complete = 'lua' })
+    keymap('n', '<leader>ff', builtin.find_files)
+    keymap('n', '<leader>fg', builtin.live_grep)
+    keymap('n', '<leader>fr', builtin.registers)
 end
