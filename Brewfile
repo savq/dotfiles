@@ -8,7 +8,6 @@ brew "deno"
 brew "juliaup"
 # brew "llvm"
 # brew "python"
-brew "rust-analyzer"
 brew "rustup-init"
 
 brew "neovim"

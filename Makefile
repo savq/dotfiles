@@ -21,8 +21,10 @@ symlinks:
 	ln -s $(XDG_CONFIG_HOME)/zsh/.zshenv  $(HOME)/.zshenv
 
 rust:
-	rustup completions zsh rustup > $(XDG_CONFIG_HOME)/zsh/_rustup
 	rustup completions zsh cargo > $(XDG_CONFIG_HOME)/zsh/_cargo
+	rustup completions zsh rustup > $(XDG_CONFIG_HOME)/zsh/_rustup
+	rustup component add rust-analyzer
+	ln -s $(shell rustup which --toolchain stable rust-analyzer) $(HOME)/.cargo/bin/rust-analyzer
 
 clean: clean.brew clean.nvim clean.symlinks clean.rust
 
