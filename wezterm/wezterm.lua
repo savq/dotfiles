@@ -1,31 +1,51 @@
 local wez = require 'wezterm'
 
--- Color based on system (for some reason the command fails for light mode)
-local _, _, exitcode = os.execute 'defaults read -g AppleInterfaceStyle'
+local hour = tonumber(os.date '%H')
+local light = 6 < hour and hour < 18
 
--- FIXME
-local bg = '#2A2520'
-local overbg = '#352F2A'
-local active   = { bg_color = bg, fg_color = '#ECE1D7' }
-local inactive = { bg_color = overbg, fg_color = '#A38D78' }
-local hover    = { bg_color = overbg, fg_color = '#C1A78E' }
+local melange = {
+    bg = '#2A2520',
+    fg = '#ECE1D7',
+    float = '#34302C',
+}
 
 return {
-    color_scheme = exitcode == 0 and 'melange_dark' or 'melange_light',
+    color_scheme = light and 'melange_light' or 'melange_dark',
+    colors = {
+        tab_bar = { -- Fancy tab bar cannot be styled with TOML
+            active_tab = { bg_color = melange.bg, fg_color = melange.fg },
+            inactive_tab = { bg_color = melange.float, fg_color = melange.fg },
+            new_tab = { bg_color = melange.float, fg_color = melange.fg },
+            inactive_tab_edge = melange.fg,
+        },
+    },
+    force_reverse_video_cursor = true, -- Fix cursor colors in nvim
+
     font = wez.font 'IBM Plex Mono',
     font_size = 14,
-    force_reverse_video_cursor = true,
-    hide_tab_bar_if_only_one_tab = true,
-    window_decorations = 'RESIZE',
-
-    colors = {
-        tab_bar = {
-            background = overbg,
-            active_tab = active,
-            inactive_tab = inactive,
-            new_tab = inactive,
-            inactive_tab_hover = hover,
-            new_tab_hover = hover,
+    font_rules = {
+        { -- Use a lighter weight for italicized text
+            italic = true,
+            font = wez.font('IBM Plex Mono', { weight = 'Light', italic = true }),
         },
+    },
+    harfbuzz_features = {
+        'calt=0', -- Disable contextual ligatures
+        'zero', -- Use slashed zero
+    },
+
+    hide_tab_bar_if_only_one_tab = true,
+    show_new_tab_button_in_tab_bar = false,
+
+    window_frame = {
+        font = wez.font 'IBM Plex Sans',
+        active_titlebar_bg = melange.float,
+    },
+
+    window_padding = {
+        left = 0,
+        right = 0,
+        top = 0,
+        bottom = 0,
     },
 }

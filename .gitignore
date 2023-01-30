@@ -1,7 +1,7 @@
 Brewfile.lock.json
-alacritty/melange_*
 nvim/spell
 qbittorrent/
+wezterm/colors
 zsh/.zcompcache
 zsh/.zcompdump
 zsh/.zsh_history
