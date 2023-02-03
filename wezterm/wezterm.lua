@@ -2,8 +2,11 @@ local wez = require 'wezterm'
 
 local hour = tonumber(os.date '%H')
 local light = 6 < hour and hour < 18
-
-local melange = {
+local melange = light and {
+    bg = '#F1F1F1',
+    fg = '#54433A',
+    float = '#E9E1DB',
+} or {
     bg = '#2A2520',
     fg = '#ECE1D7',
     float = '#34302C',
