@@ -10,7 +10,6 @@ then
     # When calling vi in a :terminal, open a buffer instead of a nested instance
     nvim --server "$NVIM" --remote-silent $@
   }
-  alias wi='nvim -c "WikiIndex" -c "lua focus_toggle()"'
   export VISUAL='nvim'
   export EDITOR=$VISUAL
   export MANPAGER='nvim +Man!'
@@ -27,7 +26,6 @@ alias l='ls -1A'
 alias ll='ls -AFlh'
 alias mkdir='mkdir -p'
 alias rm='rm -v'
-alias sym='ln -s'
 
 alias -s git='git clone --depth=1'
 alias ga='git add --update --verbose'
@@ -41,17 +39,17 @@ alias gr='git remote --verbose'
 alias gs='git status --branch --short .'
 alias gt='git difftool --staged'
 alias gw='git pull'
+alias gz='git switch'
 
-alias cc='clang'
 alias ino='arduino-cli'
 
 alias jl='julia --project --startup-file=no --quiet'
 alias pluto='jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
 
-alias js='deno'
+alias js='deno --quiet'
 alias serve='file_server'
 
-alias pip='pip3'
+alias pip='python3 -m pip'
 alias py='python3 -q'
 alias venv='python3 -m venv'
 alias nb='jupyter notebook'
@@ -134,4 +132,4 @@ function theme {
 ## Zsh plugins
 source '/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
 source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
-ZSH_HIGHLIGHT_STYLES[comment]=fg=white ;
+ZSH_HIGHLIGHT_STYLES[comment]=fg=white
