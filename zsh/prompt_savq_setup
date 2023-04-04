@@ -1,6 +1,5 @@
-autoload -Uz vcs_info # automatically retrieve version control information
+autoload -Uz vcs_info # Automatically retrieve version control information
 
-# Git support
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' stagedstr '!'
 zstyle ':vcs_info:*' unstagedstr  '?'
@@ -10,19 +9,15 @@ zstyle ':vcs_info:*' formats '#%b%c%u'
 
 precmd () { vcs_info }
 
-# Prompt for easy copy-pastying
-PROMPT='%F{blue}: '
-if (($+TAB)); then; PROMPT+="$TAB "; fi # tab-rs
-PROMPT+='%f%F{cyan}%1~%f '              # Current directory
-PROMPT+='%(?.%F{green}.%F{red});%f%f '  # Exit code: 0 => green, not 0 => red
+# The prompt starts with a colon and ends with a semicolon for safe copy-pasting
+PROMPT='%F{white}: %1~%f'                   # Current directory
+PROMPT+=' %(?.%F{green}.%F{red});%f '       # Exit code: 0 => green, _ => red
 
-RPROMPT='%F{yellow}$vcs_info_msg_0_%f'  # Git info on the RHS
-
-# /^:.*; \(.*\)#.*$/\1/
+RPROMPT='%B%F{yellow}$vcs_info_msg_0_%f%b'  # Git info on the RHS
 
 # Docs on Git support and prompt themes:
 # % man zshcontrib
-# or online: <zsh.sourceforge.net/Doc/Release/User-Contributions.html>
+# https://zsh.sourceforge.io/Doc/Release/User-Contributions.html
 # 26.5 Gathering information from version control systems
 # 26.6 Prompt Themes
 

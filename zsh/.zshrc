@@ -114,6 +114,7 @@ function tell {
   else
     time "$@" && say "Done. $@ ." || say "Failed. $?. $@ ."
   fi
+  return $?
 }
 
 
