@@ -59,10 +59,10 @@ end
 
 do -- "Focus" mode
     local active = false
-    function focus_toggle() -- global
+    local function focus_toggle()
         opt.list = active
         opt.number = active
-        opt.colorcolumn = active and '81,121' or ''
+        opt.colorcolumn = active and '100' or ''
         opt.conceallevel = active and 0 or 2
         active = not active
     end
@@ -74,11 +74,11 @@ do -- Spelling
     local i = 1
     local langs = { '', 'en', 'es', 'de' }
 
-    command('Spell', function()
+    keymap('n', '<leader>l', function()
         i = (i % #langs) + 1
         opt.spell = langs[i] ~= ''
         opt.spelllang = langs[i]
-    end, {})
+    end)
 
     -- Fix spelling of previous word
     keymap({ 'n', 'i' }, '<c-s>', function()
@@ -87,7 +87,10 @@ do -- Spelling
 end
 
 do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `term.vim`)
-    augroup('Term', { TermOpen = { command = 'set nospell nonumber' } })
+    augroup('Terminal', { TermOpen = { command = 'set nospell nonumber' } })
+
+    command('Sterminal', ':split | terminal', {})
+    command('Vterminal', ':vsplit | terminal', {})
 
     -- Use escape key in terminal
     keymap('t', '<Esc>', [[<C-\><C-n>]])
@@ -115,7 +118,12 @@ end
 ----- Plugins ------------------------------------------------------------------
 
 do -- Paq
-    keymap('n', '<leader>pq', require('plugins').sync_all)
+    keymap('n', '<leader>pq', function()
+        package.loaded.paq = nil
+        package.loaded.plugins = nil
+        require('plugins').sync_all()
+    end)
+
     keymap('n', '<leader>pg', function()
         cmd.edit(fn.stdpath 'config' .. '/lua/plugins.lua')
     end)
@@ -203,7 +211,7 @@ do -- Auto-completion
         sources = cmp.config.sources({
             { name = 'path' },
         }, {
-            { name = 'cmdline' }, -- keyword_pattern = [[^\@<!Man\s]] },
+            { name = 'cmdline' },
         }),
     })
 
@@ -236,14 +244,18 @@ do -- LSP & Diagnostics
         opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
         pat = { '*.rs', '*.c', '*.h', '<buffer>' }
         augroup('Lsp', {
-            BufWritePre = { pattern = pat, callback = lsp.buf.formatting_sync },
+            BufWritePre = { pattern = pat, callback = lsp.buf.format },
             CursorHold = { pattern = pat, callback = diagnostic.open_float },
         })
     end
 
     local lspconfig = require 'lspconfig'
-    local servers = { 'clangd', 'rust_analyzer', 'tsserver', 'svelte' }
-    for _, ls in ipairs(servers) do
+    for _, ls in ipairs {
+        'clangd',
+        'rust_analyzer',
+        'tsserver',
+        'svelte',
+    } do
         lspconfig[ls].setup {
             capabilities = require('cmp_nvim_lsp').default_capabilities(),
             on_attach = on_attach,

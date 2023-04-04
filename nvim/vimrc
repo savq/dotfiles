@@ -18,7 +18,9 @@ noremap <leader>rc <cmd>edit $MYVIMRC<cr>
 noremap <leader>ss <cmd>mksession! .session.vim<cr>
 noremap <leader>sr <cmd>source     .session.vim<cr>
 
-" Repeat search (`alt <` and `alt >`)
+" Repeat search
+noremap <a-,> ,
+noremap <a-.> ;
 noremap ≤ ,
 noremap ≥ ;
 
@@ -72,7 +74,7 @@ set shortmess+=I        " no intro message
 set showcmd
 set noshowmode
 
-set colorcolumn=81,121
+set colorcolumn=100
 " set cursorcolumn
 " set cursorline
 
@@ -82,13 +84,13 @@ set conceallevel=1
 
 """ Folds
 set foldlevel=2
-" set foldmethod=indent           " when not using tree-sitter
-set fillchars=fold:\ ,eob:\     " less fillchars
+" set foldmethod=indent           " If not using tree-sitter
+set fillchars=fold:\ ,eob:\ ,   " Hide fillchars
 set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
 
 """ Whitespace
 set list
-set listchars=eol:~,nbsp:_,extends:»,precedes:«,tab:├─,multispace:·,trail:•
+set listchars=eol:~,extends:»,precedes:«,leadmultispace:·\ \ \ ,multispace:·,tab:├─,trail:•,nbsp:_
 
 """ Indentation
 set autoindent
@@ -99,8 +101,9 @@ set softtabstop=4
 set tabstop=4
 augroup IndentExceptions
     au!
-    au FileType c,scheme,markdown,javascript,gitcommit
+    au FileType c,javascript,scheme,zsh,gitcommit,markdown,query,wiki
                 \ setlocal shiftwidth=2 softtabstop=2 tabstop=2
+                \ | setlocal listchars+=leadmultispace:·\ ,
 augroup END
 
 """ Files, buffers, windows
