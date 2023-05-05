@@ -7,9 +7,7 @@ noremap Y "+y
 
 " Help
 noremap <C-]> K
-" noremap <leader>h :vert help<space>
 cabbrev vh vert help
-
 
 " Edit configuration
 noremap <leader>rc <cmd>edit $MYVIMRC<cr>
@@ -18,32 +16,27 @@ noremap <leader>rc <cmd>edit $MYVIMRC<cr>
 noremap <leader>ss <cmd>mksession! .session.vim<cr>
 noremap <leader>sr <cmd>source     .session.vim<cr>
 
+" Cursor navigation
+noremap H ^
+noremap L g_
+noremap J 5j
+noremap K 5k
+
+" Buffer and window navigation
+noremap <s-left>  <cmd>bprev<cr>
+noremap <s-right> <cmd>bnext<cr>
+noremap <C-h> <C-w>h
+noremap <C-j> <C-w>j
+noremap <C-k> <C-w>k
+noremap <C-l> <C-w>l
+
 " Repeat search
 noremap <a-,> ,
 noremap <a-.> ;
 noremap ≤ ,
 noremap ≥ ;
-
-noremap n nzz
 noremap N Nzz
-
-" Cursor navigation
-noremap J 5j
-noremap K 5k
-noremap H ^
-noremap L g_
-
-" Buffers
-noremap <s-left>  <cmd>bp<cr>
-noremap <s-right> <cmd>bn<cr>
-noremap <s-down>  <cmd>bd<cr>
-noremap <s-up>    <cmd>b 1<cr>
-
-" Windows
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+noremap n nzz
 
 """ Movement
 set mouse=a
@@ -51,7 +44,7 @@ set nowrap
 set scrolloff=5
 set sidescrolloff=5
 set virtualedit=block
-set whichwrap=<,>,[,]   " L/R arrows keys can move to next line
+set whichwrap=<,>,[,] " Left/Right arrows keys can move to next line
 
 """ Completion
 set completeopt=menuone,noinsert,noselect

@@ -1,7 +1,7 @@
 setmetatable(_G, { __index = vim })
 
-local command = vim.api.nvim_create_user_command
-local keymap = vim.keymap.set
+local command = api.nvim_create_user_command
+local keymap = keymap.set
 
 local function augroup(name, autocmds)
     local group = api.nvim_create_augroup(name, {})
@@ -110,11 +110,6 @@ do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `term.vim`)
     end
 end
 
-do -- Lua
-    show = vim.pretty_print
-    command('L', ':lua _=show(<args>)', { nargs = '*', complete = 'lua' })
-end
-
 ----- Plugins ------------------------------------------------------------------
 
 do -- Paq
@@ -138,7 +133,6 @@ do -- Markup
     g.vimtex_compiler_method = 'latexmk'
     g.vimtex_quickfix_mode = 2
 
-    g.wiki_filetypes = { 'wiki', 'md' }
     g.wiki_root = '~/Documents/wiki'
     g.wiki_map_text_to_link = function(txt)
         return { txt:lower():gsub('%s+', '-'), txt }
@@ -173,50 +167,9 @@ do -- Tree-sitter
 end
 
 do -- Auto-completion
-    local cmp = require 'cmp'
-
-    cmp.setup {
-        completion = {
-            keyword_length = 2,
-            -- keyword_pattern = [[\k\+]], -- autocomplete non-ascii characters
-        },
-        sources = cmp.config.sources({
-            { name = 'nvim_lsp' },
-            { name = 'nvim_lua' },
-        }, {
-            { name = 'buffer' },
-            { name = 'omni' },
-            { name = 'path' },
-            -- { name = 'latex_symbols' },
-        }),
-        mapping = cmp.mapping.preset.insert {
-            ['<cr>'] = cmp.mapping.confirm { select = false },
-            ['<tab>'] = function(fallback)
-                return cmp.visible() and cmp.select_next_item() or fallback()
-            end,
-            ['<s-tab>'] = function(fallback)
-                return cmp.visible() and cmp.select_prev_item() or fallback()
-            end,
-        },
-    }
-
-    cmp.setup.cmdline('/', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-            { name = 'buffer' },
-        },
-    })
-    cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-            { name = 'path' },
-        }, {
-            { name = 'cmdline' },
-        }),
-    })
-
-    -- Don't use julia-vim unicode (use latex_symbols instead)
-    g.latex_to_unicode_tab = 0
+    require('mini.completion').setup()
+    keymap('i', '<Tab>',   [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
+    keymap('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 end
 
 do -- LSP & Diagnostics
@@ -227,7 +180,7 @@ do -- LSP & Diagnostics
         LspCodeAction = lsp.buf.code_action,
         LspRename = lsp.buf.rename,
 
-        LineDiagnostics = diagnostic.open_float,
+        Diagnostics = diagnostic.open_float,
         LspGotoPrev = diagnostic.goto_prev,
         LspGotoNext = diagnostic.goto_next,
     } do
@@ -247,6 +200,9 @@ do -- LSP & Diagnostics
             BufWritePre = { pattern = pat, callback = lsp.buf.format },
             CursorHold = { pattern = pat, callback = diagnostic.open_float },
         })
+
+        -- No lsp highlighting
+        client.server_capabilities.semanticTokensProvider = nil
     end
 
     local lspconfig = require 'lspconfig'
@@ -257,7 +213,6 @@ do -- LSP & Diagnostics
         'svelte',
     } do
         lspconfig[ls].setup {
-            capabilities = require('cmp_nvim_lsp').default_capabilities(),
             on_attach = on_attach,
             flags = { debounce_text_changes = 150 },
         }
@@ -269,17 +224,4 @@ do -- Git
         numhl = true,
         signcolumn = false,
     }
-end
-
-do -- Telescope
-    require('telescope').setup {
-        defaults = {
-            layout_config = { prompt_position = 'top' },
-            sorting_strategy = 'ascending',
-        },
-    }
-    local builtin = require 'telescope.builtin'
-    keymap('n', '<leader>ff', builtin.find_files)
-    keymap('n', '<leader>fg', builtin.live_grep)
-    keymap('n', '<leader>fr', builtin.registers)
 end

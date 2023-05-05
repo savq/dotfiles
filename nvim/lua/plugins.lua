@@ -1,41 +1,29 @@
 local PKGS = {
     -- { 'savq/paq-nvim', pin = true },
-    -- { 'savq/melange', pin = true },
+    -- { 'savq/melange-nvim', pin = true },
 
     -- Tree-sitter
-    { 'nvim-treesitter/nvim-treesitter', run = function() cmd 'TSUpdate' end },
+    -- { 'nvim-treesitter/nvim-treesitter', run = function() cmd 'TSUpdate' end },
     'nvim-treesitter/nvim-treesitter-textobjects',
     'nvim-treesitter/playground',
 
-    -- LSP & Language plugins
+    -- Completion, LSP & Language plugins
+    'echasnovski/mini.nvim',
     'neovim/nvim-lspconfig',
     'rust-lang/rust.vim',
     'JuliaEditorSupport/julia-vim',
 
-    -- Auto-completion
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-cmdline',
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-nvim-lua',
-    'hrsh7th/cmp-omni',
-    'hrsh7th/cmp-path',
-    'hrsh7th/nvim-cmp',
-    'kdheepak/cmp-latex-symbols',
-
     -- Markup
     'lervag/VimTeX',
     'lervag/wiki.vim',
-    'lervag/wiki-ft.vim',
     'rhysd/vim-gfm-syntax',
     { 'mattn/emmet-vim', opt = true },
 
     -- Git
-    'tpope/vim-fugitive',
     'lewis6991/gitsigns.nvim',
+    'tpope/vim-fugitive',
 
     -- Misc
-    'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope.nvim',
     'tpope/vim-commentary',
     'tpope/vim-surround',
     { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },
@@ -71,7 +59,6 @@ local function bootstrap()
 end
 
 local function sync_all()
-    package.loaded.plugins = nil
     require 'paq'(PKGS):sync()
 end
 
