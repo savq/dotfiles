@@ -60,11 +60,10 @@ alias rsd='cargo doc --open'
 alias rsr='cargo run'
 alias rst='cargo test'
 
-alias lmk='latexmk'
 alias lmkc='latexmk -c'
 alias lmkl='latexmk -lualatex'
 alias lmkx='latexmk -xelatex'
-# alias tex='tectonic'
+alias tw='typst watch'
 
 
 ## PATH
@@ -115,18 +114,6 @@ function tell {
     time "$@" && say "Done. $@ ." || say "Failed. $?. $@ ."
   fi
   return $?
-}
-
-
-## Change Neovim's appereance
-function theme {
-  # Check if theme should change to light or dark
-  local BGCOLOR;
-  [ "$1" = '-l' ] && BGCOLOR='light' || BGCOLOR='dark';
-
-  # If there's an nvim instance open, change the background
-  [ -n "$NVIM" ] && nvim --server "$NVIM" --remote-send "<cmd>set bg=$BGCOLOR<cr>"
-  return 0
 }
 
 
