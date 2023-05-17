@@ -47,6 +47,7 @@ set virtualedit=block
 set whichwrap=<,>,[,] " Left/Right arrows keys can move to next line
 
 """ Completion
+set complete-=t     " No tag completion
 set completeopt=menuone,noinsert,noselect
 set shortmess+=c    " no ins-completion-menu messages
 set wildignorecase

@@ -8,7 +8,7 @@ local PKGS = {
     'nvim-treesitter/playground',
 
     -- Completion, LSP & Language plugins
-    'echasnovski/mini.nvim',
+    'echasnovski/mini.completion',
     'neovim/nvim-lspconfig',
     'rust-lang/rust.vim',
     'JuliaEditorSupport/julia-vim',
