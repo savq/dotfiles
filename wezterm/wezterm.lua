@@ -12,6 +12,8 @@ local melange = light and {
     float = '#34302C',
 }
 
+local typeface = 'JuliaMono'
+
 return {
     color_scheme = light and 'melange_light' or 'melange_dark',
     colors = {
@@ -24,17 +26,23 @@ return {
     },
     force_reverse_video_cursor = true, -- Fix cursor colors in nvim
 
-    font = wez.font 'IBM Plex Mono',
-    font_size = 14,
-    font_rules = {
-        { -- Use a lighter weight for italicized text
+    font = wez.font(typeface),
+    font_size = 13,
+
+    font_rules = { -- Use a lighter weight for italicized text (but not for bold italics)
+        {
             italic = true,
-            font = wez.font('IBM Plex Mono', { weight = 'Light', italic = true }),
+            intensity = 'Bold',
+            font = wez.font(typeface, { weight = 'Bold', italic = true }),
+        },
+        {
+            italic = true,
+            font = wez.font(typeface, { weight = 'Light', italic = true }),
         },
     },
     harfbuzz_features = {
         'calt=0', -- Disable contextual ligatures
-        'zero', -- Use slashed zero
+        'zero', -- Enable slashed zero
     },
 
     hide_tab_bar_if_only_one_tab = true,
