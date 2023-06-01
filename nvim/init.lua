@@ -60,11 +60,12 @@ end
 do -- "Focus" mode
     local active = false
     local function focus_toggle()
-        opt.list = active
-        opt.number = active
-        opt.colorcolumn = active and '100' or ''
-        opt.conceallevel = active and 0 or 2
         active = not active
+        opt.colorcolumn = active and '' or '100'
+        opt.conceallevel = active and 2 or 0
+        opt.foldcolumn = active and '0' or '1'
+        opt.list = not active
+        opt.number = not active
     end
     command('Focus', focus_toggle, {})
     keymap('n', '<leader>z', focus_toggle)

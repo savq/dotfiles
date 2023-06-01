@@ -22,7 +22,10 @@ noremap L g_
 noremap J 5j
 noremap K 5k
 
-" Buffer and window navigation
+noremap <up> <C-y>
+noremap <down> <C-e>
+
+" Buffer and window switching
 noremap <s-left>  <cmd>bprev<cr>
 noremap <s-right> <cmd>bnext<cr>
 noremap <C-h> <C-w>h
@@ -38,6 +41,23 @@ noremap ≥ ;
 noremap N Nzz
 noremap n nzz
 
+
+""" UI
+syntax enable
+
+set number
+set foldcolumn=1
+set signcolumn=number   " (don't use this if using gitsigns)
+
+set ruler
+set noshowmode
+set showcmd
+
+set colorcolumn=100
+" set cursorcolumn cursorline
+
+set shortmess+=I        " no intro message
+
 """ Movement
 set mouse=a
 set nowrap
@@ -46,31 +66,18 @@ set sidescrolloff=5
 set virtualedit=block
 set whichwrap=<,>,[,] " Left/Right arrows keys can move to next line
 
-""" Completion
-set complete-=t     " No tag completion
-set completeopt=menuone,noinsert,noselect
-set shortmess+=c    " no ins-completion-menu messages
-set wildignorecase
-set wildmenu
-
 """ Search
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 
-""" UI
-" syntax enable
-set number
-set signcolumn=number   " (don't use this if using gitsigns)
-set ruler
-set shortmess+=I        " no intro message
-set showcmd
-set noshowmode
-
-set colorcolumn=100
-" set cursorcolumn
-" set cursorline
+""" Completion
+set complete-=t     " No tag completion
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c    " no ins-completion-menu messages
+set wildignorecase
+set wildmenu
 
 """ Conceal
 set conceallevel=1
