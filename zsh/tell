@@ -1,0 +1,14 @@
+#! /usr/local/bin/sh
+
+# Notify when a command is done
+
+local exit_code=$?
+
+# If there are no arguments say the result of the previous command.
+if [ $# -eq 0 ]; then
+  [ $exit_code -eq 0 ] && say "Done." || say "Failed. $exit_code."
+else
+  time "$@" && say "Done. $@ ." || say "Failed. $?. $@ ."
+fi
+
+return $?

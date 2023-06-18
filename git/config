@@ -6,6 +6,11 @@
 [credential]
     helper = osxkeychain
 
+[alias]
+    amend = "commit --amend --verbose"
+    patch = "add --patch"
+    unstage = "reset HEAD --"
+
 [commit]
     template = "~/.config/git/template"
 
