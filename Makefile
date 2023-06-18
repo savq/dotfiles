@@ -17,8 +17,8 @@ nvim:
 	nvim --headless -u NONE -c 'lua require("plugins").bootstrap()'
 
 symlinks:
-	ln -s $(XDG_CONFIG_HOME)/nvim/vimrc   $(HOME)/.vimrc
-	ln -s $(XDG_CONFIG_HOME)/zsh/.zshenv  $(HOME)/.zshenv
+	ln -s $(XDG_CONFIG_HOME)/nvim/init.vim $(HOME)/.vimrc
+	ln -s $(XDG_CONFIG_HOME)/zsh/.zshenv   $(HOME)/.zshenv
 
 rust:
 	rustup completions zsh cargo > $(XDG_CONFIG_HOME)/zsh/_cargo

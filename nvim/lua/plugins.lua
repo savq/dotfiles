@@ -5,18 +5,18 @@ local PKGS = {
     -- Tree-sitter
     -- { 'nvim-treesitter/nvim-treesitter', run = function() cmd 'TSUpdate' end },
     'nvim-treesitter/nvim-treesitter-textobjects',
-    'nvim-treesitter/playground',
+    { 'nvim-treesitter/playground', opt = true }, -- Only needed for query editor
 
     -- Completion, LSP & Language plugins
     'echasnovski/mini.completion',
     'neovim/nvim-lspconfig',
     'rust-lang/rust.vim',
     'JuliaEditorSupport/julia-vim',
+    'nono/lezer.vim',
 
     -- Markup
     'lervag/VimTeX',
     'lervag/wiki.vim',
-    'rhysd/vim-gfm-syntax',
     { 'mattn/emmet-vim', opt = true },
 
     -- Git

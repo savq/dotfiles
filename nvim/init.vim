@@ -43,14 +43,10 @@ noremap n nzz
 
 
 """ UI
-syntax enable
-
-set number
 set foldcolumn=1
-set signcolumn=number   " (don't use this if using gitsigns)
-
-set ruler
 set noshowmode
+set number
+set ruler
 set showcmd
 
 set colorcolumn=100
@@ -85,7 +81,6 @@ set conceallevel=1
 
 """ Folds
 set foldlevel=2
-" set foldmethod=indent           " If not using tree-sitter
 set fillchars=fold:\ ,eob:\ ,   " Hide fillchars
 set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
 
@@ -143,5 +138,20 @@ let g:loaded_spellfile_plugin = 1
 " let g:loaded_tutor_mode_plugin = 1
 " let g:loaded_zipPlugin = 1
 
-autocmd FileType Lua setlocal keywordprg=:help
+
+if has('nvim')
+    autocmd FileType Lua setlocal keywordprg=:help
+    lua require 'savq'
+else
+    color lunaperche      " if not melange
+    syntax enable
+
+    set foldmethod=indent " if not tree-sitter
+    set signcolumn=number " if not gitsigns
+endif
+
+" Inform vim how to enable undercurl in wezterm
+let &t_Cs = "\e[60m"
+" Inform vim how to disable undercurl in wezterm (this disables all underline modes)
+let &t_Ce = "\e[24m"
 

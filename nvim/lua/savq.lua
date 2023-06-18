@@ -11,9 +11,6 @@ local function augroup(name, autocmds)
     end
 end
 
--- Load basic configuration
-cmd 'runtime vimrc'
-
 do -- Appearance
     opt.laststatus = 2
     opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y %8(%l,%c%) %8p%%'
@@ -121,7 +118,7 @@ do -- Paq
     end)
 
     keymap('n', '<leader>pg', function()
-        cmd.edit(fn.stdpath 'config' .. '/lua/plugins.lua')
+        cmd.edit(fn.stdpath 'config' .. '/lua/savq/plugins.lua')
     end)
 end
 
@@ -209,9 +206,9 @@ do -- LSP & Diagnostics
     local lspconfig = require 'lspconfig'
     for _, ls in ipairs {
         'clangd',
-        'rust_analyzer',
-        'tsserver',
-        'svelte',
+        -- 'rust_analyzer',
+        -- 'tsserver',
+        -- 'svelte',
     } do
         lspconfig[ls].setup {
             on_attach = on_attach,
