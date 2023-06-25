@@ -8,6 +8,7 @@
 
 [alias]
     amend = "commit --amend --verbose"
+    new = "switch --create" # Alternatively "checkout -b"
     patch = "add --patch"
     unstage = "reset HEAD --"
 
