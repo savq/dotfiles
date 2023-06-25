@@ -49,6 +49,7 @@ return {
     show_new_tab_button_in_tab_bar = false,
 
     window_frame = {
+        border_left_width = '1cell',
         font = wez.font 'IBM Plex Sans',
         active_titlebar_bg = melange.float,
     },
