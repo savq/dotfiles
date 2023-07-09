@@ -24,8 +24,7 @@ alias gg='git log --all --graph --oneline'
 alias gr='git remote --verbose'
 alias gs='git status --branch --short .'
 alias gt='git difftool --staged'
-# alias gw='git pull'
-# alias gz='git switch'
+alias gw='git switch'
 
 alias jl='julia --project --startup-file=no --quiet'
 alias pluto='jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
@@ -101,3 +100,4 @@ autoload tell
 ## Plugins
 source '/usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh'
 source '/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
+ZSH_HIGHLIGHT_STYLES[comment]=fg=white

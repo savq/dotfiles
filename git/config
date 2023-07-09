@@ -8,8 +8,10 @@
 
 [alias]
     amend = "commit --amend --verbose"
+    co = "checkout"
     new = "switch --create" # Alternatively "checkout -b"
     patch = "add --patch"
+    undo = "reset --soft HEAD~1" # Undo last commit without losing changes
     unstage = "reset HEAD --"
 
 [commit]
