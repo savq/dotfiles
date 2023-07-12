@@ -135,9 +135,13 @@ do -- Markup
     g.vimtex_quickfix_mode = 2
 
     g.wiki_root = '~/Documents/wiki'
-    g.wiki_map_text_to_link = function(txt)
-        return { txt:lower():gsub('%s+', '-'), txt }
-    end
+    g.wiki_link_creation = {
+        md = {
+            url_transform = function(txt)
+                return txt:lower():gsub('%s+', '-')
+            end,
+        },
+    }
 end
 
 do -- Tree-sitter
