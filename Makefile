@@ -1,44 +1,63 @@
 XDG_CONFIG_HOME ?= $(HOME)/.config
-XDG_DATA_HOME ?= $(HOME)/.local/share
-PAQ_PATH = $(XDG_DATA_HOME)/nvim/site/pack/paqs
-BREW_SCRIPTS_URL = https://raw.githubusercontent.com/Homebrew/install/HEAD
+ZDOTDIR = $(XDG_CONFIG_HOME)/zsh
 
-.PHONY: install brew nvim symlinks \
-	clean clean.brew clean.nvim clean.symlinks
+install: \
+	homebrew \
+	wezterm \
+	zsh \
+	rust \
+	nvim
 
-install: brew nvim symlinks rust
 
-brew:
-	curl -fsSL '$(BREW_SCRIPTS_URL)/install.sh' > install.sh
-	/bin/bash install.sh
+BREW_SCRIPT = .brew_install.sh
+
+homebrew: Brewfile.lock.json
+
+$(BREW_SCRIPT):
+	curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh' > $@
+
+Brewfile.lock.json: Brewfile $(BREW_SCRIPT)
+	type brew || /bin/bash $(BREW_SCRIPT)
 	brew bundle --file $(XDG_CONFIG_HOME)/Brewfile
 
-nvim:
+
+
+WEZTERMINFO = wezterm/wezterm.terminfo
+
+wezterm: $(WEZTERMINFO) $(ZDOTDIR)/_wezterm
+	tic -x -o ~/.terminfo $<
+
+$(WEZTERMINFO):
+	curl 'https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo' > $@
+
+$(ZDOTDIR)/_wezterm:
+	wezterm shell-completion --shell zsh > $@
+
+
+zsh: $(HOME)/.zshenv
+$(HOME)/.zshenv:
+	ln -s $(ZDOTDIR)/.zshenv $@
+
+
+
+rust: $(HOME)/.cargo/bin/rust-analyzer $(ZDOTDIR)/_cargo $(ZDOTDIR)/_rustup
+
+$(HOME)/.cargo/bin/rust-analyzer:
+	rustup component add rust-analyzer
+	ln -fhs $$(rustup which --toolchain stable rust-analyzer) $@
+
+$(ZDOTDIR)/_cargo:
+	rustup completions zsh cargo > $@
+
+$(ZDOTDIR)/_rustup:
+	rustup completions zsh rustup > $@
+
+
+
+nvim: nvim/lua/plugins.lua $(HOME)/.vimrc
+	# nvim handles cloning Paq
 	nvim --headless -u NONE -c 'lua require("plugins").bootstrap()'
 
-symlinks:
-	ln -s $(XDG_CONFIG_HOME)/nvim/vimrc   $(HOME)/.vimrc
-	ln -s $(XDG_CONFIG_HOME)/zsh/.zshenv  $(HOME)/.zshenv
+$(HOME)/.vimrc:
+	ln -fhs $(XDG_CONFIG_HOME)/nvim/vimrc $@
 
-rust:
-	rustup completions zsh cargo > $(XDG_CONFIG_HOME)/zsh/_cargo
-	rustup completions zsh rustup > $(XDG_CONFIG_HOME)/zsh/_rustup
-	rustup component add rust-analyzer
-	ln -s $(shell rustup which --toolchain stable rust-analyzer) $(HOME)/.cargo/bin/rust-analyzer
-
-clean: clean.brew clean.nvim clean.symlinks clean.rust
-
-clean.brew:
-	curl -fsSL '$(BREW_SCRIPTS_URL)/uninstall.sh' > uninstall.sh
-	/bin/bash uninstall.sh
-
-clean.nvim:
-	rm -rf $(PAQ_PATH)
-
-clean.symlinks:
-	rm $(HOME)/.vimrc
-	rm $(HOME)/.zshenv
-
-clean.rust:
-	rm $(XDG_CONFIG_HOME)/zsh/_rustup
-	rm $(XDG_CONFIG_HOME)/zsh/_cargo

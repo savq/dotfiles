@@ -60,4 +60,6 @@ return {
         top = 0,
         bottom = 0,
     },
+
+    term = 'wezterm',
 }
