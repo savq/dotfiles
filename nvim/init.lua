@@ -24,7 +24,7 @@ do -- Appearance
     augroup('Highlights', {
         TextYankPost = {
             callback = function()
-                highlight.on_yank() -- FIXME
+                highlight.on_yank()
             end,
         },
     })
@@ -173,55 +173,58 @@ end
 
 do -- Auto-completion
     require('mini.completion').setup()
-    keymap('i', '<Tab>',   [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
+    keymap('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
     keymap('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 end
 
 do -- LSP & Diagnostics
-    for name, fn in pairs {
-        LspDef = lsp.buf.definition,
-        LspRefs = lsp.buf.references,
-        LspDocSymbols = lsp.buf.document_symbol,
-        LspCodeAction = lsp.buf.code_action,
-        LspRename = lsp.buf.rename,
-
-        Diagnostics = diagnostic.open_float,
-        LspGotoPrev = diagnostic.goto_prev,
-        LspGotoNext = diagnostic.goto_next,
-    } do
-        command(name, fn, {})
-    end
-
-    diagnostic.config {
-        virtual_text = false,
-        signs = true,
-        float = { focus = false },
-    }
-
-    local function on_attach(client, bufnr)
-        opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
-        pat = { '*.rs', '*.c', '*.h', '<buffer>' }
-        augroup('Lsp', {
-            BufWritePre = { pattern = pat, callback = lsp.buf.format },
-            CursorHold = { pattern = pat, callback = diagnostic.open_float },
-        })
-
-        -- No lsp highlighting
-        client.server_capabilities.semanticTokensProvider = nil
-    end
-
     local lspconfig = require 'lspconfig'
     for _, ls in ipairs {
         'clangd',
         'rust_analyzer',
-        'tsserver',
-        'svelte',
+        'denols',
+        -- 'svelte',
+        -- 'tsserver',
     } do
-        lspconfig[ls].setup {
-            on_attach = on_attach,
-            flags = { debounce_text_changes = 150 },
-        }
+        lspconfig[ls].setup {}
     end
+
+    local function on_attach(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+        -- Disable LSP highlighting
+        client.server_capabilities.semanticTokensProvider = nil
+
+        -- Disable virtual text
+        diagnostic.config {
+            float = { focus = false },
+            virtual_text = false,
+        }
+
+        -- stylua: ignore
+        for name, fn in pairs {
+            LspAction  = lsp.buf.code_action,
+            LspSymbols = lsp.buf.document_symbol,
+            LspFormat  = lsp.buf.format,
+            LspImpls   = lsp.buf.implementation,
+            LspRefs    = lsp.buf.references,
+            LspRename  = lsp.buf.rename,
+        } do
+            command(name, function(_) fn() end, {})
+        end
+
+        keymap('n', '[d', diagnostic.goto_prev)
+        keymap('n', ']d', diagnostic.goto_next)
+        keymap('n', 'gd', lsp.buf.definition)
+
+        -- stylua: ignore
+        augroup('Lsp', {
+            BufWritePre = { buffer = args.buf, callback = function(_) lsp.buf.format() end },
+            CursorHold = { buffer = args.buf, callback = function(_) diagnostic.open_float() end },
+        })
+    end
+
+    augroup('LspConfig', { LspAttach = { callback = on_attach } })
 end
 
 do -- Git
