@@ -11,6 +11,7 @@ alias l='ls -1A'
 alias ll='ls -AFlh'
 alias mkdir='mkdir -p'
 alias rm='rm -v'
+alias t='tell' # See ./tell
 alias vi='echo "Don'\''t use vi. Use e instead."' # See below
 
 alias -s git='git clone --depth=1'
@@ -46,7 +47,6 @@ alias rst='cargo test'
 alias lmkc='latexmk -c'
 alias lmkl='latexmk -lualatex'
 alias lmkx='latexmk -xelatex'
-alias tw='typst watch'
 
 
 ## ENVIRONMENT
