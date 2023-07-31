@@ -26,10 +26,11 @@ cask "iina"           # media player
 cask "itsycal"        # menu bar calendar. Y-MM-dd EEEEE HH:mm
 cask "mactex-no-gui"
 cask "musescore"
-cask "qbittorrent"
+cask "netnewswire"    # RSS reader
 cask "rectangle"      # window manager
 cask "sioyek"         # PDF reader
 cask "the-unarchiver"
+cask "transmission"   # BT client
 cask "wezterm"
 cask "zotero"
 
