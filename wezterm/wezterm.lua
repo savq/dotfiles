@@ -45,11 +45,9 @@ return {
         'zero', -- Enable slashed zero
     },
 
-    hide_tab_bar_if_only_one_tab = true,
-    show_new_tab_button_in_tab_bar = false,
+    window_decorations = 'INTEGRATED_BUTTONS',
 
     window_frame = {
-        border_left_width = '1cell',
         font = wez.font 'IBM Plex Sans',
         active_titlebar_bg = melange.float,
     },
