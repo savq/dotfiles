@@ -3,9 +3,8 @@ local PKGS = {
     -- { 'savq/melange-nvim', pin = true },
 
     -- Tree-sitter
-    -- { 'nvim-treesitter/nvim-treesitter', run = function() cmd 'TSUpdate' end },
+    -- { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
     'nvim-treesitter/nvim-treesitter-textobjects',
-    'nvim-treesitter/playground',
 
     -- Completion, LSP & Language plugins
     'echasnovski/mini.completion',

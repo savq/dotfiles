@@ -23,9 +23,7 @@ do -- Appearance
 
     augroup('Highlights', {
         TextYankPost = {
-            callback = function()
-                highlight.on_yank()
-            end,
+            callback = function() highlight.on_yank() end,
         },
     })
 
@@ -41,18 +39,22 @@ do -- Appearance
     })
 end
 
-do -- Trailing whitespace
+do -- Strip trailing whitespace
     fn.matchadd('WhitespaceTrailing', [[\s\{1,}$]])
     api.nvim_set_hl(0, 'WhitespaceTrailing', { link = 'diffText' })
+
+    local function strip_whitespace()
+        local view = fn.winsaveview()
+        cmd [[%s/\s\+$//e]]
+        fn.winrestview(view)
+    end
+
+    command('StripWhitespace', strip_whitespace, {})
 
     augroup('Whitespace', {
         BufWritePre = {
             pattern = { '*' },
-            callback = function()
-                local view = fn.winsaveview()
-                cmd [[%s/\s\+$//e]]
-                fn.winrestview(view)
-            end,
+            callback = strip_whitespace,
         },
     })
 end
@@ -82,9 +84,7 @@ do -- Spelling
     end)
 
     -- Fix spelling of previous word
-    keymap({ 'n', 'i' }, '<c-s>', function()
-        fn.execute 'normal! mmb1z=`m'
-    end)
+    keymap({ 'n', 'i' }, '<c-s>', function() fn.execute 'normal! mmb1z=`m' end)
 end
 
 do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `term.vim`)
@@ -120,13 +120,13 @@ do -- Paq
         require('plugins').sync_all()
     end)
 
-    keymap('n', '<leader>pg', function()
-        cmd.edit(fn.stdpath 'config' .. '/lua/plugins.lua')
-    end)
+    keymap('n', '<leader>pg', function() cmd.edit(fn.stdpath 'config' .. '/lua/plugins.lua') end)
 end
 
 do -- Markup
     g.disable_rainbow_hover = true
+
+    g.latex_to_unicode_file_types = { 'julia', 'typst' }
 
     g.markdown_enable_conceal = true
     g.markdown_enable_insert_mode_mappings = false
@@ -137,9 +137,7 @@ do -- Markup
     g.wiki_root = '~/Documents/wiki'
     g.wiki_link_creation = {
         md = {
-            url_transform = function(txt)
-                return txt:lower():gsub('%s+', '-')
-            end,
+            url_transform = function(txt) return txt:lower():gsub('%s+', '-') end,
         },
     }
 end
@@ -190,11 +188,6 @@ do -- LSP & Diagnostics
     end
 
     local function on_attach(args)
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-        -- Disable LSP highlighting
-        client.server_capabilities.semanticTokensProvider = nil
-
         -- Disable virtual text
         diagnostic.config {
             float = { focus = false },
@@ -203,6 +196,7 @@ do -- LSP & Diagnostics
 
         -- stylua: ignore
         for name, fn in pairs {
+            Diagnostic = diagnostic.show,
             LspAction  = lsp.buf.code_action,
             LspSymbols = lsp.buf.document_symbol,
             LspFormat  = lsp.buf.format,

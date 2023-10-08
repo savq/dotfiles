@@ -78,6 +78,7 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c    " no ins-completion-menu messages
 set wildignorecase
 set wildmenu
+set wildmode=longest,full
 
 """ Conceal
 set conceallevel=1
