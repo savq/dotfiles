@@ -6,7 +6,7 @@ prompt savq                        # Set prompt
 ## ALIASES
 
 alias brew-tree='brew deps --graph --installed'
-alias fd='find . -path ./.git -prune -o -iname'
+alias fd='find -E . -path ./.git -prune -o -iregex'
 alias l='ls -1A'
 alias ll='ls -AFlh'
 alias mkdir='mkdir -p'
@@ -14,6 +14,7 @@ alias rm='rm -v'
 alias t='tell' # See ./tell
 alias vi='echo "Don'\''t use vi. Use e instead."' # See below
 
+# Most commonly used git commands. the rest are in git/config
 alias -s git='git clone --depth=1'
 alias ga='git add --update --verbose'
 alias gb='git branch --verbose --verbose'
@@ -25,7 +26,7 @@ alias gg='git log --all --graph --oneline'
 alias gr='git remote --verbose'
 alias gs='git status --branch --short .'
 alias gt='git difftool --staged'
-alias gw='git switch'
+alias gz='git switch'
 
 alias jl='julia --project --startup-file=no --quiet'
 alias pluto='jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
@@ -47,6 +48,9 @@ alias rst='cargo test'
 alias lmkc='latexmk -c'
 alias lmkl='latexmk -lualatex'
 alias lmkx='latexmk -xelatex'
+
+alias typc='typst compile --'
+alias typw='typst watch --open --'
 
 
 ## ENVIRONMENT
