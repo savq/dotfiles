@@ -13,7 +13,7 @@ cmd 'runtime vimrc'
 
 do -- Appearance
     opt.laststatus = 2
-    opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y %8(%l,%c%) %8p%%'
+    opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y #%{bufnr()} %8(%l,%c%) %8p%%'
 
     opt.termguicolors = true
     cmd.colorscheme 'melange'
