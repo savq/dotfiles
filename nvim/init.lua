@@ -1,8 +1,5 @@
 setmetatable(_G, { __index = vim })
 
-local command = api.nvim_create_user_command
-local keymap = keymap.set
-
 local function augroup(name, autocmds)
     local group = api.nvim_create_augroup(name, {})
     for event, opts in pairs(autocmds) do
@@ -49,7 +46,7 @@ do -- Strip trailing whitespace
         fn.winrestview(view)
     end
 
-    command('StripWhitespace', strip_whitespace, {})
+    api.nvim_create_user_command('StripWhitespace', strip_whitespace, {})
 
     augroup('Whitespace', {
         BufWritePre = {
@@ -69,32 +66,32 @@ do -- "Focus" mode
         opt.list = not active
         opt.number = not active
     end
-    command('Focus', focus_toggle, {})
-    keymap('n', '<leader>z', focus_toggle)
+    api.nvim_create_user_command('Focus', focus_toggle, {})
+    keymap.set('n', '<leader>z', focus_toggle)
 end
 
 do -- Spelling
     local i = 1
     local langs = { '', 'en', 'es', 'de' }
 
-    keymap('n', '<leader>l', function()
+    keymap.set('n', '<leader>l', function()
         i = (i % #langs) + 1
         opt.spell = langs[i] ~= ''
         opt.spelllang = langs[i]
     end)
 
     -- Fix spelling of previous word
-    keymap({ 'n', 'i' }, '<c-s>', function() fn.execute 'normal! mmb1z=`m' end)
+    keymap.set({ 'n', 'i' }, '<c-s>', function() fn.execute 'normal! mmb1z=`m' end)
 end
 
 do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `term.vim`)
-    augroup('Terminal', { TermOpen = { command = 'set nospell nonumber' } })
+    augroup('Terminal', { TermOpen = { command = 'setlocal nospell nonumber' } })
 
-    command('Sterminal', ':split | terminal', {})
-    command('Vterminal', ':vsplit | terminal', {})
+    api.nvim_create_user_command('Sterminal', ':split | terminal', {})
+    api.nvim_create_user_command('Vterminal', ':vsplit | terminal', {})
 
     -- Use escape key in terminal
-    keymap('t', '<Esc>', [[<C-\><C-n>]])
+    keymap.set('t', '<Esc>', [[<C-\><C-n>]])
 
     -- Open REPLs in small vertical split window
     for ext, bin in pairs {
@@ -103,7 +100,7 @@ do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `term.vim`)
         js = 'deno -q',
         py = 'python3 -q',
     } do
-        keymap('n', '<leader>' .. ext, function()
+        keymap.set('n', '<leader>' .. ext, function()
             cmd '12split'
             cmd('edit term://' .. bin)
             cmd 'wincmd k'
@@ -114,13 +111,13 @@ end
 ----- Plugins ------------------------------------------------------------------
 
 do -- Paq
-    keymap('n', '<leader>pq', function()
+    keymap.set('n', '<leader>pq', function()
         package.loaded.paq = nil
         package.loaded.plugins = nil
         require('plugins').sync_all()
     end)
 
-    keymap('n', '<leader>pg', function() cmd.edit(fn.stdpath 'config' .. '/lua/plugins.lua') end)
+    keymap.set('n', '<leader>pg', function() cmd.edit(fn.stdpath 'config' .. '/lua/plugins.lua') end)
 end
 
 do -- Markup
@@ -171,8 +168,8 @@ end
 
 do -- Auto-completion
     require('mini.completion').setup()
-    keymap('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
-    keymap('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
+    keymap.set('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
+    keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 end
 
 do -- LSP & Diagnostics
@@ -204,14 +201,13 @@ do -- LSP & Diagnostics
             LspRefs    = lsp.buf.references,
             LspRename  = lsp.buf.rename,
         } do
-            command(name, function(_) fn() end, {})
+            api.nvim_create_user_command(name, function(_) fn() end, {})
         end
 
-        keymap('n', '[d', diagnostic.goto_prev)
-        keymap('n', ']d', diagnostic.goto_next)
-        keymap('n', 'gd', lsp.buf.definition)
+        keymap.set('n', '[d', diagnostic.goto_prev)
+        keymap.set('n', ']d', diagnostic.goto_next)
+        keymap.set('n', 'gd', lsp.buf.definition)
 
-        -- stylua: ignore
         augroup('Lsp', {
             BufWritePre = { buffer = args.buf, callback = function(_) lsp.buf.format() end },
             CursorHold = { buffer = args.buf, callback = function(_) diagnostic.open_float() end },
