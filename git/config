@@ -8,11 +8,11 @@
 
 [alias]
     amend = "commit --amend --verbose"
-    co = "checkout"
-    new = "switch --create" # Alternatively "checkout -b"
+    co = "restore" # TODO: Remove alias
+    new = "switch --create"
     patch = "add --patch"
     undo = "reset --soft HEAD~1" # Undo last commit without losing changes
-    unstage = "reset HEAD --"
+    unstage = "reset HEAD --" # Remove file changes from index
     wt = "worktree"
 
 [commit]
