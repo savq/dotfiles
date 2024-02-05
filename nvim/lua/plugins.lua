@@ -25,6 +25,7 @@ local PKGS = {
     -- Misc
     'tpope/vim-commentary',
     'tpope/vim-surround',
+    'echasnovski/mini.trailspace',
     { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },
     { 'junegunn/vim-easy-align', as = 'easy-align', opt = true },
     { 'mechatroner/rainbow_csv', opt = true },

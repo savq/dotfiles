@@ -61,3 +61,5 @@ nvim: nvim/lua/plugins.lua $(HOME)/.vimrc
 $(HOME)/.vimrc:
 	ln -fhs $(XDG_CONFIG_HOME)/nvim/vimrc $@
 
+$(HOME)/.editorconfig:
+	ln -fhs $(XDG_CONFIG_HOME)/nvim/.editorconfig $@

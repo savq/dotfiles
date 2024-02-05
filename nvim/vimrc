@@ -94,19 +94,9 @@ set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
 set list
 set listchars=eol:~,extends:»,precedes:«,leadmultispace:·\ \ \ ,multispace:·,tab:├─,trail:•,nbsp:_
 
-""" Indentation
+""" Indentation (see editorconfig file)
 set autoindent
 set smartindent
-set expandtab       " <tab> inserts spaces
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
-augroup IndentExceptions
-    au!
-    au FileType c,javascript,scheme,zsh,gitcommit,markdown,query,wiki
-                \ setlocal shiftwidth=2 softtabstop=2 tabstop=2
-                \ | setlocal listchars+=leadmultispace:·\ ,
-augroup END
 
 """ Files, buffers, windows
 set autoread

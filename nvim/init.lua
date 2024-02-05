@@ -36,25 +36,6 @@ do -- Appearance
     })
 end
 
-do -- Strip trailing whitespace
-    fn.matchadd('WhitespaceTrailing', [[\s\{1,}$]])
-    api.nvim_set_hl(0, 'WhitespaceTrailing', { link = 'diffText' })
-
-    local function strip_whitespace()
-        local view = fn.winsaveview()
-        cmd [[%s/\s\+$//e]]
-        fn.winrestview(view)
-    end
-
-    api.nvim_create_user_command('StripWhitespace', strip_whitespace, {})
-
-    augroup('Whitespace', {
-        BufWritePre = {
-            pattern = { '*' },
-            callback = strip_whitespace,
-        },
-    })
-end
 
 do -- "Focus" mode
     local active = false
@@ -217,9 +198,6 @@ do -- LSP & Diagnostics
     augroup('LspConfig', { LspAttach = { callback = on_attach } })
 end
 
-do -- Git
-    require('gitsigns').setup {
-        numhl = true,
-        signcolumn = false,
-    }
-end
+require('gitsigns').setup { numhl = true, signcolumn = false }
+
+require('mini.trailspace').setup()
