@@ -52,17 +52,13 @@ do -- "Focus" mode
 end
 
 do -- Spelling
-    local i = 1
-    local langs = { '', 'en', 'es', 'de' }
-
+    -- NOTE: Use i_CTRL-X_s to correct spelling of previous misspelled word
     keymap.set('n', '<leader>l', function()
-        i = (i % #langs) + 1
-        opt.spell = langs[i] ~= ''
-        opt.spelllang = langs[i]
+        ui.select({ 'en', 'es', 'de' }, {}, function(lang)
+            opt.spell = lang ~= nil
+            opt.spelllang = lang
+        end)
     end)
-
-    -- Fix spelling of previous word
-    keymap.set({ 'n', 'i' }, '<c-s>', function() fn.execute 'normal! mmb1z=`m' end)
 end
 
 do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `term.vim`)
