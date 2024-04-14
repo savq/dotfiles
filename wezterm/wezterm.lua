@@ -1,7 +1,7 @@
 local wez = require 'wezterm'
 
 local hour = tonumber(os.date '%H')
-local light = 6 < hour and hour < 18
+local light = 6 < hour and hour < 17
 local melange = light and {
     bg = '#F1F1F1',
     fg = '#54433A',
@@ -17,7 +17,7 @@ local typeface = 'JuliaMono'
 return {
     color_scheme = light and 'melange_light' or 'melange_dark',
     colors = {
-        tab_bar = { -- Fancy tab bar cannot be styled with TOML
+        tab_bar = { -- Fancy tab bar cannot be styled with TOML. See wez/wezterm#2615
             active_tab = { bg_color = melange.bg, fg_color = melange.fg },
             inactive_tab = { bg_color = melange.float, fg_color = melange.fg },
             new_tab = { bg_color = melange.float, fg_color = melange.fg },
@@ -27,7 +27,6 @@ return {
     force_reverse_video_cursor = true, -- Fix cursor colors in nvim
 
     font = wez.font(typeface),
-    font_size = 13,
 
     font_rules = { -- Use a lighter weight for italicized text (but not for bold italics)
         {
@@ -44,6 +43,7 @@ return {
         'calt=0', -- Disable contextual ligatures
         'zero', -- Enable slashed zero
     },
+    line_height = 1.2,
 
     window_decorations = 'INTEGRATED_BUTTONS',
 
