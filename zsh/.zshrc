@@ -45,10 +45,6 @@ alias rsd='cargo doc --open'
 alias rsr='cargo run'
 alias rst='cargo test'
 
-alias lmkc='latexmk -c'
-alias lmkl='latexmk -lualatex'
-alias lmkx='latexmk -xelatex'
-
 alias typc='typst compile --'
 alias typw='typst watch --open --'
 
@@ -60,9 +56,7 @@ export LC_ALL=$LANG
 export CLICOLOR=1
 export LSCOLORS='gxfxcxdxbxEfEdBxGxCxDx'
 
-export TEXDIR="$HOME/.latex"
 
-PATH="$HOME/.latex/bin:$PATH"
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="$HOME/.deno/bin:$PATH"
 

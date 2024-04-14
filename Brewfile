@@ -24,7 +24,6 @@ cask "font-ibm-plex"
 cask "font-juliamono"
 cask "iina"           # media player
 cask "itsycal"        # menu bar calendar. Y-MM-dd EEEEE HH:mm
-cask "mactex-no-gui"
 cask "musescore"
 cask "netnewswire"    # RSS reader
 cask "rectangle"      # window manager

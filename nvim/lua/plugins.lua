@@ -13,7 +13,6 @@ local PKGS = {
     'JuliaEditorSupport/julia-vim',
 
     -- Markup
-    'lervag/VimTeX',
     'lervag/wiki.vim',
     'rhysd/vim-gfm-syntax',
     { 'mattn/emmet-vim', opt = true },

@@ -105,9 +105,6 @@ do -- Markup
     g.markdown_enable_conceal = true
     g.markdown_enable_insert_mode_mappings = false
 
-    g.vimtex_compiler_method = 'latexmk'
-    g.vimtex_quickfix_mode = 2
-
     g.wiki_root = '~/Documents/wiki'
     g.wiki_link_creation = {
         md = {
