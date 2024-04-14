@@ -33,6 +33,8 @@ alias pluto='jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
 
 alias js='deno --quiet'
 alias serve='file_server'
+alias npm='pnpm'
+alias npx='pnpx'
 
 alias -s ipynb='python3 -m jupyter notebook'
 alias pip='python3 -m pip'
@@ -59,6 +61,7 @@ export LSCOLORS='gxfxcxdxbxEfEdBxGxCxDx'
 
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="$HOME/.deno/bin:$PATH"
+PATH="/usr/local/opt/node@20/bin:$PATH" # Add node-lts to path manually
 
 
 ## VISUAL EDITOR

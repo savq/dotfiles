@@ -2,6 +2,8 @@ tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 
 brew "deno"
+brew "node@20" # Active LTS until 2024-10-22
+brew "pnpm"
 brew "janet"
 brew "juliaup"
 # brew "llvm"
