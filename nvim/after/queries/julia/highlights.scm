@@ -9,6 +9,7 @@
 
 ; Distinguish syntactic operators
 [
+  "$"
   "."
   "..."
   "::"
@@ -19,10 +20,12 @@
     "&&" "||"
     ".&&" ".||"))
 
+; Distinguish syntactic operators for function definitions
 (function_expression "->" @keyword.function)
-(short_function_definition "=" @keyword.function)
+(assignment . (call_expression) (operator) @keyword.function (_))
 
 ; Conceal `end` (and preserve highlight)
 ("end" @keyword (#set! conceal "¶"))
 (function_definition ("end" @keyword.function (#set! conceal "¶")))
 (do_clause ("end" @keyword.function (#set! conceal "¶")))
+(module_definition ("end" @include (#set! conceal "¶")))
