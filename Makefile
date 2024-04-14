@@ -1,4 +1,5 @@
 XDG_CONFIG_HOME ?= $(HOME)/.config
+XDG_DATA_HOME ?= $(HOME)/.local/share
 ZDOTDIR = $(XDG_CONFIG_HOME)/zsh
 
 install: \
@@ -53,9 +54,10 @@ $(ZDOTDIR)/_rustup:
 	rustup completions zsh rustup > $@
 
 
+PAQ_DIR = "$(XDG_DATA_HOME)/nvim/site/pack/paqs/start/paq-nvim"
 
 nvim: nvim/lua/plugins.lua $(HOME)/.vimrc
-	# nvim handles cloning Paq
+	[ -d $(PAQ_DIR) ] || git clone --depth=1 'https://github.com/savq/paq-nvim.git' $(PAQ_DIR)
 	nvim --headless -u NONE -c 'lua require("plugins").bootstrap()'
 
 $(HOME)/.vimrc:
