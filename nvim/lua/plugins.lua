@@ -18,7 +18,7 @@ local PKGS = {
     { 'mattn/emmet-vim', opt = true },
 
     -- Git
-    'lewis6991/gitsigns.nvim',
+    'echasnovski/mini.diff',
     'tpope/vim-fugitive',
 
     -- Misc

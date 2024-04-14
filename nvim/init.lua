@@ -140,12 +140,6 @@ do -- Tree-sitter
     }
 end
 
-do -- Auto-completion
-    require('mini.completion').setup()
-    keymap.set('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
-    keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
-end
-
 do -- LSP & Diagnostics
     local lspconfig = require 'lspconfig'
     for _, ls in ipairs {
@@ -191,6 +185,11 @@ do -- LSP & Diagnostics
     augroup('LspConfig', { LspAttach = { callback = on_attach } })
 end
 
-require('gitsigns').setup { numhl = true, signcolumn = false }
+do -- Auto-completion
+    require('mini.completion').setup()
+    keymap.set('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
+    keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
+end
 
+require('mini.diff').setup()
 require('mini.trailspace').setup()
