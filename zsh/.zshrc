@@ -5,8 +5,6 @@ prompt savq                        # Set prompt
 
 ## ALIASES
 
-alias brew-tree='brew deps --graph --installed'
-alias fd='find -E . -path ./.git -prune -o -iregex'
 alias l='ls -1A'
 alias ll='ls -AFlh'
 alias mkdir='mkdir -p'
@@ -28,8 +26,11 @@ alias gs='git status --branch --short .'
 alias gt='git difftool --staged'
 alias gz='git switch'
 
+alias bb='brew bundle install --cleanup --no-upgrade --global'
+alias brew-tree='brew deps --graph --installed'
+
 alias jl='julia --project --startup-file=no --quiet'
-alias pluto='jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
+alias pluto='julia -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
 
 alias js='deno --quiet'
 alias serve='file_server'
@@ -41,7 +42,6 @@ alias pip='python3 -m pip'
 alias py='python3 -q'
 alias venv='python3 -m venv'
 
-# alias rsb='cargo build'
 alias rsc='cargo check'
 alias rsd='cargo doc --open'
 alias rsr='cargo run'
@@ -57,7 +57,7 @@ export LANG='en_US.UTF-8'
 export LC_ALL=$LANG
 export CLICOLOR=1
 export LSCOLORS='gxfxcxdxbxEfEdBxGxCxDx'
-
+export HOMEBREW_BUNDLE_FILE_GLOBAL="$HOME/.config/Brewfile"
 
 PATH="$HOME/.cargo/bin:$PATH"
 PATH="$HOME/.deno/bin:$PATH"
@@ -76,6 +76,10 @@ else
   alias e=$VISUAL
 fi
 
+## Simpler `find`
+function fd {
+  find -E '.' -path "./.git" -prune -o -iregex ".*/$1.*"
+}
 
 ## OPTIONS
 

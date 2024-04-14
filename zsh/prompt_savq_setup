@@ -9,9 +9,11 @@ zstyle ':vcs_info:*' formats '#%b%c%u'
 
 precmd () { vcs_info }
 
-# The prompt starts with a colon and ends with a semicolon for safe copy-pasting
-PROMPT='%F{white}: %1~%f'                   # Current directory
-PROMPT+=' %(?.%F{green}.%F{red});%f '       # Exit code: 0 => green, _ => red
+# Start with colon and end with semicolon for safe copy-pasting
+PROMPT='%F{white}: '
+PROMPT+='[%*] '                         # Current time of day in 24-hour format, with seconds
+PROMPT+='%1~%f '                        # Current directory
+PROMPT+='%(?.%F{green}.%F{red});%f '    # Exit code: 0 => green, _ => red
 
 RPROMPT='%B%F{yellow}$vcs_info_msg_0_%f%b'  # Git info on the RHS
 
