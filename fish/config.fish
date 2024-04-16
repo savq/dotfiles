@@ -79,10 +79,6 @@ end
 
 ## notify after long commands
 
-set -g _delta 0
-set -g _threshold 10
-set _interactive_cmds e nvim man gc gd gt
-
 alias say_fast='say --rate=300'
 
 function _set_start_time --on-event fish_preexec
@@ -91,13 +87,17 @@ end
 
 function _notify_long_cmd --on-event fish_postexec
     set -l laststatus $status
-    set _delta (math $(date +'%s') - $_start_time)
+    set -l _interactive_cmds e nvim man gc gd gt
+    set -l dt (math $(date +'%s') - $_start_time)
 
-    if [ "$_delta" -ge "$_threshold" ] && not contains (string split ' ' $argv)[1] $_interactive_cmds
+    if [ "$dt" -ge 10 ] && not contains (string split ' ' $argv)[1] $_interactive_cmds
         if [ "$laststatus" -eq 0 ]
             say_fast 'Done.' $argv
         else
             say_fast 'Failed.' $laststatus $argv
         end
+        set -g _delta ' ['$dt's]' # used in prompt
+    else
+        set -g _delta ''
     end
 end
