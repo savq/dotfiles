@@ -11,6 +11,7 @@ brew "juliaup"
 brew "rustup-init"
 brew "stylua"
 
+brew "fish"
 brew "jq"
 brew "neovim"
 brew "pandoc"
