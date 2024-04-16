@@ -4,6 +4,7 @@ ZDOTDIR = $(XDG_CONFIG_HOME)/zsh
 
 install: \
 	homebrew \
+	brew \
 	wezterm \
 	zsh \
 	rust \
@@ -12,14 +13,15 @@ install: \
 
 BREW_SCRIPT = .brew_install.sh
 
-homebrew: Brewfile.lock.json
-
 $(BREW_SCRIPT):
 	curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh' > $@
 
-Brewfile.lock.json: Brewfile $(BREW_SCRIPT)
+homebrew: $(BREW_SCRIPT)
 	type brew || /bin/bash $(BREW_SCRIPT)
-	brew bundle --file $(XDG_CONFIG_HOME)/Brewfile
+
+brew: Brewfile.lock.json
+Brewfile.lock.json: Brewfile
+	brew bundle install --cleanup --no-upgrade --file $(XDG_CONFIG_HOME)/Brewfile
 
 
 

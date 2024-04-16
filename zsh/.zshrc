@@ -26,7 +26,6 @@ alias gs='git status --branch --short .'
 alias gt='git difftool --staged'
 alias gz='git switch'
 
-alias bb='brew bundle install --cleanup --no-upgrade --global'
 alias brew-tree='brew deps --graph --installed'
 
 alias jl='julia --project --startup-file=no --quiet'
