@@ -73,4 +73,4 @@ $(HOME)/.vimrc:
 	ln -fhs $(XDG_CONFIG_HOME)/nvim/vimrc $@
 
 $(HOME)/.editorconfig:
-	ln -fhs $(XDG_CONFIG_HOME)/nvim/.editorconfig $@
+	ln -fhs $(XDG_CONFIG_HOME)/.editorconfig $@

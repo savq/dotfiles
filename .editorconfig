@@ -6,5 +6,8 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*{.c,.js,.json,.ts,.scm,.sh,.yaml,.gitcommit,.md}]
+[*.{gitcommit,md}]
 indent_size = 2
+
+[{M,m}akefile]
+indent_style = tab
