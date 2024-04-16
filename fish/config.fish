@@ -16,7 +16,7 @@ alias gt='git difftool --staged'
 alias gz='git switch'
 
 function _gclone; echo git clone --depth=1 $argv; end
-abbr -a auto_clone --position command --regex ".+\.git" --function _gclone # "suffix" alias
+abbr -a auto_clone --position command --regex '.+\.git' --function _gclone # suffix alias
 
 alias jl='julia --project --startup-file=no --quiet'
 alias pluto='julia -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
@@ -48,7 +48,7 @@ fish_add_path /usr/local/opt/node@20/bin # Add node-lts to path manually
 
 
 set -gx LANG 'en_US.UTF-8'
-set -gx LC_ALL "$LANG"
+set -gx LC_ALL $LANG
 
 set -gx CLICOLOR 1
 set -gx LSCOLORS 'gxfxcxdxbxEfEdBxGxCxDx'
@@ -62,17 +62,17 @@ set __fish_git_prompt_color_merging 'yellow'
 
 if type nvim &> /dev/null
     set -gx VISUAL nvim
-    set -gx MANPAGER "nvim +Man!"
-    function e -d "Edit"
+    set -gx MANPAGER 'nvim +Man!'
+    function e -d 'Edit'
         nvim --server $NVIM --remote-silent $argv # Prevent nested nvim
     end
 else
     set -gx VISUAL vim
-    alias e="$VISUAL"
+    alias e=$VISUAL
 end
 
 
-function fd -d "Simpler find"
+function fd -d 'Simpler find'
     find -E '.' -path '.*/.git' -prune -o -iregex ".*$argv.*" -print
 end
 
@@ -88,7 +88,7 @@ end
 function _notify_long_cmd --on-event fish_postexec
     set -l laststatus $status
     set -l _interactive_cmds e nvim man gc gd gt
-    set -l dt (math $(date +'%s') - $_start_time)
+    set -l dt (math (date +'%s') - $_start_time)
 
     if [ "$dt" -ge 10 ] && not contains (string split ' ' $argv)[1] $_interactive_cmds
         if [ "$laststatus" -eq 0 ]
