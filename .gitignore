@@ -1,5 +1,6 @@
 .brew_install.sh
 Brewfile.lock.json
+fish/fish_variables
 nvim/spell
 qbittorrent/
 wezterm/colors
@@ -8,6 +9,4 @@ zsh/.zcompcache
 zsh/.zcompdump
 zsh/.zsh_history
 zsh/.zsh_sessions
-zsh/_cargo
-zsh/_rustup
-zsh/_wezterm
+zsh/_*
