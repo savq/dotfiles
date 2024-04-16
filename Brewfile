@@ -19,8 +19,6 @@ brew "ripgrep"
 brew "tokei"
 brew "typst"
 brew "zola"
-brew "zsh-autosuggestions"
-brew "zsh-syntax-highlighting"
 
 cask "firefox"
 cask "font-ibm-plex"
