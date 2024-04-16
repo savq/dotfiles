@@ -1,5 +1,6 @@
 .brew_install.sh
 Brewfile.lock.json
+fish/completions
 fish/fish_variables
 nvim/spell
 qbittorrent/

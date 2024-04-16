@@ -1,6 +1,7 @@
 XDG_CONFIG_HOME ?= $(HOME)/.config
 XDG_DATA_HOME ?= $(HOME)/.local/share
 ZDOTDIR = $(XDG_CONFIG_HOME)/zsh
+FISHCOMP ?= $(XDG_CONFIG_HOME)/fish/completions
 
 install: \
 	homebrew \
@@ -27,11 +28,14 @@ Brewfile.lock.json: Brewfile
 
 WEZTERMINFO = wezterm/wezterm.terminfo
 
-wezterm: $(WEZTERMINFO) $(ZDOTDIR)/_wezterm
+wezterm: $(WEZTERMINFO) $(FISHCOMP)/wezterm.fish $(ZDOTDIR)/_wezterm
 	tic -x -o ~/.terminfo $<
 
 $(WEZTERMINFO):
 	curl 'https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo' > $@
+
+$(FISHCOMP)/wezterm.fish:
+	wezterm shell-completion --shell fish > $@
 
 $(ZDOTDIR)/_wezterm:
 	wezterm shell-completion --shell zsh > $@
@@ -39,15 +43,18 @@ $(ZDOTDIR)/_wezterm:
 
 zsh: $(HOME)/.zshenv
 $(HOME)/.zshenv:
-	ln -s $(ZDOTDIR)/.zshenv $@
+	ln -fhs $(ZDOTDIR)/.zshenv $@
 
 
 
-rust: $(HOME)/.cargo/bin/rust-analyzer $(ZDOTDIR)/_cargo $(ZDOTDIR)/_rustup
+rust: $(HOME)/.cargo/bin/rust-analyzer  $(FISHCOMP)/rustup.fish $(ZDOTDIR)/_cargo $(ZDOTDIR)/_rustup
 
 $(HOME)/.cargo/bin/rust-analyzer:
 	rustup component add rust-analyzer
 	ln -fhs $$(rustup which --toolchain stable rust-analyzer) $@
+
+$(FISHCOMP)/rustup.fish:
+	rustup completions fish rustup > $@
 
 $(ZDOTDIR)/_cargo:
 	rustup completions zsh cargo > $@
