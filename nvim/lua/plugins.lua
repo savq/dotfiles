@@ -14,7 +14,6 @@ local PKGS = {
 
     -- Markup
     'lervag/wiki.vim',
-    'rhysd/vim-gfm-syntax',
     { 'mattn/emmet-vim', opt = true },
 
     -- Git
@@ -22,7 +21,7 @@ local PKGS = {
     'tpope/vim-fugitive',
 
     -- Misc
-    'tpope/vim-commentary',
+    'tpope/vim-commentary', -- Remove in nvim 0.10
     'tpope/vim-surround',
     'echasnovski/mini.trailspace',
     { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },

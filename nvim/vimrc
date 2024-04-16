@@ -19,8 +19,10 @@ noremap <leader>sr <cmd>source     .session.vim<cr>
 " Cursor navigation
 noremap H ^
 noremap L g_
-noremap J 5j
-noremap K 5k
+noremap gh ^
+noremap gl g_
+" noremap J 5j
+" noremap K 5k
 
 noremap <up> <C-y>
 noremap <down> <C-e>
@@ -60,10 +62,12 @@ set shortmess+=I        " no intro message
 
 """ Movement
 set mouse=a
-set nowrap
 set scrolloff=5
 set sidescrolloff=5
 set virtualedit=block
+
+set linebreak
+set nowrap
 set whichwrap=<,>,[,] " Left/Right arrows keys can move to next line
 
 """ Search
@@ -85,7 +89,7 @@ set conceallevel=1
 " set concealcursor=n  " conceal in normal mode
 
 """ Folds
-set foldlevel=2
+set foldlevel=9
 " set foldmethod=indent           " If not using tree-sitter
 set fillchars=fold:\ ,eob:\ ,   " Hide fillchars
 set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
@@ -133,6 +137,7 @@ let g:loaded_spellfile_plugin = 1
 " let g:loaded_tarPlugin = 1
 " let g:loaded_tutor_mode_plugin = 1
 " let g:loaded_zipPlugin = 1
+let g:omni_sql_default_compl_type = 'syntax' " github.com/neovim/neovim/issues/14433
 
 autocmd FileType Lua setlocal keywordprg=:help
-
+autocmd FileType yaml setlocal lisp

@@ -36,7 +36,6 @@ do -- Appearance
     })
 end
 
-
 do -- "Focus" mode
     local active = false
     local function focus_toggle()
@@ -61,7 +60,7 @@ do -- Spelling
     end)
 end
 
-do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `term.vim`)
+do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `plugin/term.vim`)
     augroup('Terminal', { TermOpen = { command = 'setlocal nospell nonumber' } })
 
     api.nvim_create_user_command('Sterminal', ':split | terminal', {})
@@ -72,7 +71,7 @@ do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `term.vim`)
 
     -- Open REPLs in small vertical split window
     for ext, bin in pairs {
-        sh = '/bin/zsh',
+        sh = vim.opt.shell:get(),
         jl = 'julia --project -q',
         js = 'deno -q',
         py = 'python3 -q',
@@ -118,7 +117,7 @@ do -- Tree-sitter
     opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
     require('nvim-treesitter.configs').setup {
-        -- ensure_installed = { 'c', 'html', 'julia', 'lua', 'python', 'query', 'rust', 'typescript' },
+        -- ensure_installed = { 'c', 'html', 'julia', 'lua', 'python', 'query', 'rust', 'typescript', 'markdown', 'markdown_inline' },
         highlight = { enable = true },
         indent = { enable = true },
         incremental_selection = {
