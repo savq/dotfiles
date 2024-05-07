@@ -79,22 +79,22 @@ end
 
 ## notify after long commands
 
-alias say_fast='say --rate=300'
-
 function _set_start_time --on-event fish_preexec
     set -g _start_time (date +'%s')
 end
 
 function _notify_long_cmd --on-event fish_postexec
     set -l laststatus $status
-    set -l _interactive_cmds e nvim man gc gd gt
     set -l dt (math (date +'%s') - $_start_time)
 
-    if [ "$dt" -ge 10 ] && not contains (string split ' ' $argv)[1] $_interactive_cmds
+    if [ "$dt" -ge 10 ] &&
+        # not string match -- '.*' $argv &&
+        not contains (string split ' ' $argv)[1] e man gc gd gt
+
         if [ "$laststatus" -eq 0 ]
-            say_fast 'Done.' $argv
+            say --rate=300 'Done.' $argv
         else
-            say_fast 'Failed.' $laststatus $argv
+            say --rate=300 'Failed.' $argv
         end
         set -g _delta ' ['$dt's]' # used in prompt
     else
