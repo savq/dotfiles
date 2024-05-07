@@ -1,8 +1,8 @@
 local wez = require 'wezterm'
 
-local hour = tonumber(os.date '%H')
-local light = 6 < hour and hour < 17
-local melange = light and {
+local appearance = wez.gui.get_appearance() -- 'Dark' or 'Light'
+
+local melange = appearance == 'Light' and {
     bg = '#F1F1F1',
     fg = '#54433A',
     float = '#E9E1DB',
@@ -15,7 +15,7 @@ local melange = light and {
 local typeface = 'JuliaMono'
 
 return {
-    color_scheme = light and 'melange_light' or 'melange_dark',
+    color_scheme = 'melange' .. appearance,
     colors = {
         tab_bar = { -- Fancy tab bar cannot be styled with TOML. See wez/wezterm#2615
             active_tab = { bg_color = melange.bg, fg_color = melange.fg },
