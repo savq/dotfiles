@@ -26,23 +26,29 @@ return {
     },
     force_reverse_video_cursor = true, -- Fix cursor colors in nvim
 
-    font = wez.font(typeface),
+    -- FIXME
+    font = wez.font {
+        family = typeface,
+        assume_emoji_presentation = false,
+    },
 
     font_rules = { -- Use a lighter weight for italicized text (but not for bold italics)
         {
             italic = true,
             intensity = 'Bold',
-            font = wez.font(typeface, { weight = 'Bold', italic = true }),
+            font = wez.font { family = typeface, weight = 'Bold', italic = true, assume_emoji_presentation = false },
         },
         {
             italic = true,
-            font = wez.font(typeface, { weight = 'Light', italic = true }),
+            font = wez.font { family = typeface, weight = 'Light', italic = true, assume_emoji_presentation = false },
         },
     },
+
     harfbuzz_features = {
         'calt=0', -- Disable contextual ligatures
         'zero', -- Enable slashed zero
     },
+
     line_height = 1.2,
 
     window_decorations = 'INTEGRATED_BUTTONS',
