@@ -2,6 +2,7 @@ alias l='ls -1A'
 alias ll='ls -AFlh'
 alias mkdir='mkdir -p'
 alias rm='rm -v'
+alias todo 'rg -i "fixme|note|todo"'
 
 alias ga='git add --update --verbose'
 alias gb='git branch --verbose --verbose'
@@ -15,11 +16,11 @@ alias gs='git status --branch --short .'
 alias gt='git difftool --staged'
 alias gz='git switch'
 
-function _gclone; echo git clone --depth=1 $argv; end
+alias _gclone='echo git clone --depth=1'
 abbr -a auto_clone --position command --regex '.+\.git' --function _gclone # suffix alias
 
 alias jl='julia --project --startup-file=no --quiet'
-alias pluto='julia -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
+alias pluto='jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
 
 alias js='deno --quiet'
 alias serve='file_server'
@@ -76,6 +77,10 @@ function fd -d 'Simpler find'
     find -E '.' -path '.*/.git' -prune -o -iregex ".*$argv.*" -print
 end
 
+function notify
+    printf '\e]9;%s\e\\' $argv # OSC 9
+    say --rate=300 $argv
+end
 
 ## notify after long commands
 
@@ -92,9 +97,9 @@ function _notify_long_cmd --on-event fish_postexec
         not contains (string split ' ' $argv)[1] e man gc gd gt
 
         if [ "$laststatus" -eq 0 ]
-            say --rate=300 'Done.' $argv
+            notify "Done. $argv"
         else
-            say --rate=300 'Failed.' $argv
+            notify "Failed. $argv"
         end
         set -g _delta ' ['$dt's]' # used in prompt
     else
