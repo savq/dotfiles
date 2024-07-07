@@ -6,8 +6,15 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{gitcommit,md}]
+[*.{css,html,js,ts,wat}]
+indent_size = 2
+
+[*.{gitcommit,md,typ,txt}]
 indent_size = 2
 
 [{M,m}akefile]
+indent_style = tab
+
+# Pluto uses tabs :/
+[*.nb.jl]
 indent_style = tab
