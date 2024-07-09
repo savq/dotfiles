@@ -60,30 +60,6 @@ do -- Spelling
     end)
 end
 
-do -- Embedded terminal (NOTE: send-to-REPL keymaps are in `plugin/term.vim`)
-    augroup('Terminal', { TermOpen = { command = 'setlocal nospell nonumber' } })
-
-    api.nvim_create_user_command('Sterminal', ':split | terminal', {})
-    api.nvim_create_user_command('Vterminal', ':vsplit | terminal', {})
-
-    -- Use escape key in terminal
-    keymap.set('t', '<Esc>', [[<C-\><C-n>]])
-
-    -- Open REPLs in small vertical split window
-    for ext, bin in pairs {
-        sh = vim.opt.shell:get(),
-        jl = 'julia --project -q',
-        js = 'deno -q',
-        py = 'python3 -q',
-    } do
-        keymap.set('n', '<leader>' .. ext, function()
-            cmd '12split'
-            cmd('edit term://' .. bin)
-            cmd 'wincmd k'
-        end)
-    end
-end
-
 ----- Plugins ------------------------------------------------------------------
 
 do -- Paq
