@@ -1,15 +1,13 @@
-local TERM_ID
-
 local function open_repl(lang)
     local repls = {
-        julia = { 'julia', '--project', '-q' },
+        julia = { 'julia', '--project', '--startup-file=no', '-q' },
         python = { 'python3', '-q' },
         typescript = { 'deno', '-q' },
         javascript = { 'deno', '-q' },
     }
-    local repl = repls[opt.filetype:get()] or { opt.shell:get() }
+    local repl = repls[lang] or { opt.shell:get() }
     cmd '12new'
-    TERM_ID = fn.termopen(repl)
+    g.term_id = fn.termopen(repl)
     cmd 'wincmd k'
 end
 
@@ -22,7 +20,7 @@ function _send_to_repl(mode)
     end
     local lines = fn.getregion(start, fin)
     table.insert(lines, '')
-    fn.chansend(TERM_ID, lines)
+    fn.chansend(g.term_id, lines) -- :h nvim_list_chans()
 end
 
 api.nvim_create_autocmd('TermOpen', {
@@ -34,7 +32,10 @@ api.nvim_create_user_command('Sterminal', 'horizontal terminal', {})
 api.nvim_create_user_command('Vterminal', 'vertical terminal', {})
 
 -- FIXME
-keymap.set('n', '<leader>e', ':set operatorfunc=v:lua._send_to_terminal<cr>g@', { silent = true })
-keymap.set('v', '<leader>e', ':<c-u>call v:lua._send_to_terminal(visualmode())<cr>', { silent = true })
-keymap.set('n', '<leader>t', open_repl)
+keymap.set('n', '<leader>e', ':set operatorfunc=v:lua._send_to_repl<cr>g@', { silent = true })
+keymap.set('v', '<leader>e', ':<c-u>call v:lua._send_to_repl(visualmode())<cr>', { silent = true })
+keymap.set('n', '<leader>jl', function() open_repl 'julia' end)
+keymap.set('n', '<leader>py', function() open_repl 'python' end)
+keymap.set('n', '<leader>sh', function() open_repl() end)
+keymap.set('n', '<leader>t', function() open_repl(opt.filetype:get()) end)
 keymap.set('t', '<Esc>', [[<C-\><C-n>]])
