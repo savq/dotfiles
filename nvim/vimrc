@@ -82,10 +82,10 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c    " no ins-completion-menu messages
 set wildignorecase
 set wildmenu
-set wildmode=longest,full
+set wildoptions+=fuzzy
 
 """ Conceal
-set conceallevel=1
+set conceallevel=2
 " set concealcursor=n  " conceal in normal mode
 
 """ Folds

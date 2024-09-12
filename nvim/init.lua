@@ -9,20 +9,13 @@ local function augroup(name, autocmds)
 end
 
 -- Load basic configuration
-cmd 'runtime vimrc'
+cmd.runtime 'vimrc'
 
 do -- Appearance
-    opt.laststatus = 2
     opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y #%{bufnr()} %8(%l,%c%) %8p%%'
-
-    opt.termguicolors = true
     cmd.colorscheme 'melange'
 
-    augroup('Highlights', {
-        TextYankPost = {
-            callback = function() highlight.on_yank() end,
-        },
-    })
+    augroup('Highlights', { TextYankPost = { callback = function() highlight.on_yank() end } })
 
     -- Set cursor hints according to mode
     augroup('Enter', {
