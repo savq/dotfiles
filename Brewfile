@@ -7,13 +7,12 @@ brew "janet"
 brew "juliaup"
 # brew "llvm"
 # brew "python"
-brew "rustup-init"
+brew "rustup"
 brew "stylua"
 
 brew "fish"
 brew "jq"
 brew "neovim"
-brew "pandoc"
 brew "ripgrep"
 brew "tokei"
 brew "typst"
@@ -36,7 +35,6 @@ cask "zotero"
 
 cask "discord"
 cask "protonvpn"
-cask "slack"
 cask "spotify"
 
 # vim:filetype=ruby
