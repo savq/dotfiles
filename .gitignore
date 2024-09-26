@@ -3,11 +3,5 @@ Brewfile.lock.json
 fish/completions
 fish/fish_variables
 nvim/spell
-qbittorrent/
 wezterm/colors
 wezterm/wezterm.terminfo
-zsh/.zcompcache
-zsh/.zcompdump
-zsh/.zsh_history
-zsh/.zsh_sessions
-zsh/_*

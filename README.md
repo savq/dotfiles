@@ -15,12 +15,6 @@ make
   (tree-sitter, LSP, etc.)
 
 
-### Shell: [Zsh](https://www.zsh.org/)
-
-- [`zsh/.zshrc`](./zsh/.zshrc) includes aliases and some basic options.
-- [`zsh/prompt_savq_setup`](./zsh/prompt_savq_setup) has a minimal prompt with git support.
-
-
 ### Other stuff
 
 Listed on the [`Brewfile`](./Brewfile)
