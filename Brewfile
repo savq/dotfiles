@@ -5,7 +5,6 @@ brew "node@20" # Active LTS until 2024-10-22
 brew "pnpm"
 brew "janet"
 brew "juliaup"
-# brew "llvm"
 # brew "python"
 brew "rustup"
 brew "stylua"
@@ -26,15 +25,9 @@ cask "iina"           # media player
 cask "itsycal"        # menu bar calendar. Y-MM-dd EEEEE HH:mm
 cask "musescore"
 cask "netnewswire"    # RSS reader
+cask "protonvpn"
 cask "rectangle"      # window manager
-cask "sioyek"         # PDF reader
-cask "the-unarchiver"
+cask "spotify"        # absolutely proprietary
 cask "transmission"   # BT client
 cask "wezterm"
 cask "zotero"
-
-cask "discord"
-cask "protonvpn"
-cask "spotify"
-
-# vim:filetype=ruby

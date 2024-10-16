@@ -1,27 +1,21 @@
 CONFIG_HOME ?= $(HOME)/.config
-DATA_HOME ?= $(HOME)/.local/share
 FISH_COMPL ?= $(CONFIG_HOME)/fish/completions
 
-install: \
-	homebrew \
-	brew \
-	wezterm \
-	rust \
-	nvim
+install:\
+	brew\
+	julia\
+	nvim\
+	rust\
+	wezterm
 
-
-BREW_SCRIPT = .brew_install.sh
-
-$(BREW_SCRIPT):
-	curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh' > $@
-
-homebrew: $(BREW_SCRIPT)
-	type brew || /bin/bash $<
 
 brew: Brewfile.lock.json
-Brewfile.lock.json: Brewfile
-	brew bundle install --cleanup --no-upgrade --file $<
+Brewfile.lock.json: .brew_install.sh Brewfile
+	type brew || /bin/bash '.brew_install.sh'
+	brew bundle install --cleanup --no-upgrade --file 'Brewfile'
 
+.brew_install.sh:
+	curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh' > $@
 
 
 WEZTERMINFO = wezterm/wezterm.terminfo
@@ -36,21 +30,9 @@ $(FISH_COMPL)/wezterm.fish:
 	wezterm shell-completion --shell fish > $@
 
 
+PAQ_DIR = "$(HOME)/.local/share/nvim/site/pack/paqs/start/paq-nvim"
 
-rust: $(HOME)/.cargo/bin/rust-analyzer $(FISH_COMPL)/rustup.fish
-
-$(HOME)/.cargo/bin/rust-analyzer:
-	rustup component add rust-analyzer
-	ln -fhs $$(rustup which --toolchain stable rust-analyzer) $@
-
-$(FISH_COMPL)/rustup.fish:
-	rustup completions fish rustup > $@
-
-
-
-PAQ_DIR = "$(DATA_HOME)/nvim/site/pack/paqs/start/paq-nvim"
-
-nvim: nvim/lua/plugins.lua $(HOME)/.vimrc
+nvim: $(HOME)/.editorconfig $(HOME)/.vimrc nvim/lua/plugins.lua
 	[ -d $(PAQ_DIR) ] || git clone --depth=1 'https://github.com/savq/paq-nvim.git' $(PAQ_DIR)
 	nvim --headless -u NONE -c 'lua require("plugins").bootstrap()'
 
@@ -59,3 +41,18 @@ $(HOME)/.vimrc:
 
 $(HOME)/.editorconfig:
 	ln -fhs $(CONFIG_HOME)/.editorconfig $@
+
+
+julia:
+	juliaup add release
+
+
+rust: $(HOME)/.cargo/bin/rust-analyzer $(FISH_COMPL)/rustup.fish
+	rustup update
+
+$(HOME)/.cargo/bin/rust-analyzer:
+	rustup component add rust-analyzer
+	ln -fhs $$(rustup which --toolchain stable rust-analyzer) $@
+
+$(FISH_COMPL)/rustup.fish:
+	rustup completions fish rustup > $@
