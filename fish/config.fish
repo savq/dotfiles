@@ -2,7 +2,7 @@ alias l='ls -1A'
 alias ll='ls -AFlh'
 alias mkdir='mkdir -p'
 alias rm='rm -v'
-alias todo 'rg -i "fixme|note|todo"'
+alias todo='rg -i "fixme|note|todo"'
 
 alias ga='git add --update --verbose'
 alias gb='git branch --verbose --verbose'
@@ -41,25 +41,13 @@ alias typc='typst compile --'
 alias typw='typst watch --open --'
 
 abbr -a brew-tree 'brew deps --graph --installed'
-
-
-fish_add_path ~/.cargo/bin
-fish_add_path ~/.deno/bin
-fish_add_path /usr/local/opt/node@20/bin # Add node-lts to path manually
-
+abbr -a fd-empty 'find "." -type f -empty'
+abbr -a rm-dsstore 'find "." -name ".DS_Store" -type f -print -delete'
 
 set -gx LANG 'en_US.UTF-8'
 set -gx LC_ALL $LANG
-
 set -gx CLICOLOR 1
 set -gx LSCOLORS 'gxfxcxdxbxEfEdBxGxCxDx'
-
-set __fish_git_prompt_showcolorhints 1
-set __fish_git_prompt_showdirtystate 1
-set __fish_git_prompt_color 'grey'
-set __fish_git_prompt_color_branch 'bryellow'
-set __fish_git_prompt_color_merging 'yellow'
-
 
 if type nvim &> /dev/null
     set -gx VISUAL nvim
@@ -79,7 +67,7 @@ end
 
 function notify
     printf '\e]9;%s\e\\' $argv # OSC 9
-    say --rate=300 $argv
+    say $argv
 end
 
 ## notify after long commands
@@ -93,15 +81,15 @@ function _notify_long_cmd --on-event fish_postexec
     set -l dt (math (date +'%s') - $_start_time)
 
     if [ "$dt" -ge 10 ] &&
-        # not string match -- '.*' $argv &&
-        not contains (string split ' ' $argv)[1] e man gc gd gt
-
-        if [ "$laststatus" -eq 0 ]
-            notify "Done. $argv"
-        else
-            notify "Failed. $argv"
+        set cmd (string split ' ' $argv)[1]
+        if not functions -q $cmd
+            if [ "$laststatus" -eq 0 ]
+                notify "Done. $argv"
+            else
+                notify "Failed. $argv"
+            end
+            set -g _delta ' ['$dt's]' # used in prompt
         end
-        set -g _delta ' ['$dt's]' # used in prompt
     else
         set -g _delta ''
     end

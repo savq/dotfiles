@@ -3,11 +3,14 @@ FISH_COMPL ?= $(CONFIG_HOME)/fish/completions
 
 install:\
 	brew\
+	fish\
 	julia\
 	nvim\
 	rust\
+	tree-sitter\
 	wezterm
 
+.PHONY: fish nvim
 
 brew: Brewfile.lock.json
 Brewfile.lock.json: .brew_install.sh Brewfile
@@ -18,16 +21,22 @@ Brewfile.lock.json: .brew_install.sh Brewfile
 	curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh' > $@
 
 
-WEZTERMINFO = wezterm/wezterm.terminfo
-
-wezterm: $(WEZTERMINFO) $(FISH_COMPL)/wezterm.fish
-	tic -x -o ~/.terminfo $<
-
-$(WEZTERMINFO):
-	curl 'https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo' > $@
-
-$(FISH_COMPL)/wezterm.fish:
-	wezterm shell-completion --shell fish > $@
+fish:
+	mkdir -pv $(FISH_COMPL)
+	fish\
+		-c 'set -U fish_greeting'\
+		-c 'set -U fish_color_command green'\
+		-c 'set -U fish_color_comment white'\
+		-c 'set -U fish_color_param'\
+		-c 'set -U fish_color_quote blue'\
+		-c 'set -U __fish_git_prompt_showcolorhints 1'\
+		-c 'set -U __fish_git_prompt_showdirtystate 1'\
+		-c 'set -U __fish_git_prompt_color grey'\
+		-c 'set -U __fish_git_prompt_color_branch bryellow'\
+		-c 'set -U __fish_git_prompt_color_merging yellow'\
+		-c 'fish_add_path -U ~/.cargo/bin'\
+		-c 'fish_add_path -U ~/.deno/bin'\
+		-c 'fish_add_path -U /usr/local/opt/node@22/bin' # Add node LTS to path manually
 
 
 PAQ_DIR = "$(HOME)/.local/share/nvim/site/pack/paqs/start/paq-nvim"
@@ -47,12 +56,35 @@ julia:
 	juliaup add release
 
 
-rust: $(HOME)/.cargo/bin/rust-analyzer $(FISH_COMPL)/rustup.fish
-	rustup update
+rust: rustup-init $(FISH_COMPL)/rustup.fish
+	rustup update stable
 
-$(HOME)/.cargo/bin/rust-analyzer:
-	rustup component add rust-analyzer
-	ln -fhs $$(rustup which --toolchain stable rust-analyzer) $@
+rustup-init:
+	rustup-init -y
 
 $(FISH_COMPL)/rustup.fish:
 	rustup completions fish rustup > $@
+
+
+WEZTERMINFO = wezterm/wezterm.terminfo
+
+WEZTERM_THEMES_URL = https://raw.githubusercontent.com/savq/melange-nvim/refs/heads/master/term/wezterm/
+
+wezterm: $(WEZTERMINFO) $(FISH_COMPL)/wezterm.fish wezterm/colors/melangeDark.toml wezterm/colors/melangeLight.toml
+	tic -x -o ~/.terminfo $<
+
+wezterm/colors/melangeDark.toml:
+	curl --create-dirs "$(WEZTERM_THEMES_URL)melange_dark.toml" > $@
+
+wezterm/colors/melangeLight.toml:
+	curl --create-dirs "$(WEZTERM_THEMES_URL)melange_light.toml" > $@
+
+$(WEZTERMINFO):
+	curl 'https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo' > $@
+
+$(FISH_COMPL)/wezterm.fish:
+	wezterm shell-completion --shell fish > $@
+
+tree-sitter: $(FISH_COMPL)/tree-sitter.fish
+$(FISH_COMPL)/tree-sitter.fish:
+	tree-sitter complete --shell fish > $@

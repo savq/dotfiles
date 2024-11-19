@@ -1,7 +1,7 @@
 tap "homebrew/bundle"
 
 brew "deno"
-brew "node@20" # Active LTS until 2024-10-22
+brew "node@22" # Active LTS until 2025-10-21
 brew "pnpm"
 brew "janet"
 brew "juliaup"
