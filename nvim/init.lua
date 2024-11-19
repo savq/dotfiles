@@ -79,6 +79,11 @@ do -- Markup
             url_transform = function(txt) return txt:lower():gsub('%s+', '-') end,
         },
     }
+
+    --- TODO: Refactor
+    api.nvim_create_user_command('WikiPick', function()
+        MiniPick.builtin.grep_live(nil, { source = { cwd = g.wiki_root } })
+    end, {})
 end
 
 do -- Tree-sitter
@@ -160,4 +165,5 @@ do -- Auto-completion
 end
 
 require('mini.diff').setup()
+require('mini.pick').setup()
 require('mini.trailspace').setup()

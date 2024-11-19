@@ -23,6 +23,7 @@ local PKGS = {
     -- Misc
     'tpope/vim-commentary', -- Remove in nvim 0.10
     'tpope/vim-surround',
+    'echasnovski/mini.pick',
     'echasnovski/mini.trailspace',
     { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },
     { 'junegunn/vim-easy-align', as = 'easy-align', opt = true },
