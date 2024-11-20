@@ -21,11 +21,11 @@
     ".&&" ".||"))
 
 ; Distinguish syntactic operators for function definitions
-(function_expression "->" @keyword.function)
+(arrow_function_expression "->" @keyword.function)
 (assignment . (call_expression) (operator) @keyword.function (_))
 
 ; Conceal `end` (and preserve highlight)
 ("end" @keyword (#set! conceal "¶"))
 (function_definition ("end" @keyword.function (#set! conceal "¶")))
 (do_clause ("end" @keyword.function (#set! conceal "¶")))
-(module_definition ("end" @include (#set! conceal "¶")))
+(module_definition ("end" @keyword.import (#set! conceal "¶")))
