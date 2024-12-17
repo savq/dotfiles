@@ -13,12 +13,12 @@ install:\
 .PHONY: fish nvim
 
 brew: Brewfile.lock.json
-Brewfile.lock.json: .brew_install.sh Brewfile
-	type brew || /bin/bash '.brew_install.sh'
-	brew bundle install --cleanup --no-upgrade --file 'Brewfile'
+Brewfile.lock.json: Brewfile .brew_install.sh
+	brew bundle install --cleanup --no-upgrade --file "$<"
 
 .brew_install.sh:
 	curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh' > $@
+	type brew || /bin/bash '.brew_install.sh'
 
 
 fish:
@@ -52,8 +52,11 @@ $(HOME)/.editorconfig:
 	ln -fhs $(CONFIG_HOME)/.editorconfig $@
 
 
-julia:
+julia: $(FISH_COMPL)/juliaup.fish
 	juliaup add release
+
+$(FISH_COMPL)/juliaup.fish:
+	juliaup completions fish > $@
 
 
 rust: rustup-init $(FISH_COMPL)/rustup.fish
