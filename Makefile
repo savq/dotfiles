@@ -8,6 +8,7 @@ install:\
 	nvim\
 	rust\
 	tree-sitter\
+	ghostty\
 	wezterm
 
 .PHONY: fish nvim
@@ -69,18 +70,27 @@ $(FISH_COMPL)/rustup.fish:
 	rustup completions fish rustup > $@
 
 
-WEZTERMINFO = wezterm/wezterm.terminfo
+MELANGE_URL = https://raw.githubusercontent.com/savq/melange-nvim/refs/heads/master/term
 
-WEZTERM_THEMES_URL = https://raw.githubusercontent.com/savq/melange-nvim/refs/heads/master/term/wezterm/
+ghostty: ghostty/themes/melange_dark ghostty/themes/melange_light
+
+ghostty/themes/melange_dark:
+	curl --create-dirs "$(MELANGE_URL)/ghostty/melange_dark" > $@
+
+ghostty/themes/melange_light:
+	curl --create-dirs "$(MELANGE_URL)/ghostty/melange_light" > $@
+
+
+WEZTERMINFO = wezterm/wezterm.terminfo
 
 wezterm: $(WEZTERMINFO) $(FISH_COMPL)/wezterm.fish wezterm/colors/melangeDark.toml wezterm/colors/melangeLight.toml
 	tic -x -o ~/.terminfo $<
 
 wezterm/colors/melangeDark.toml:
-	curl --create-dirs "$(WEZTERM_THEMES_URL)melange_dark.toml" > $@
+	curl --create-dirs "$(MELANGE_URL)/wezterm/melange_dark.toml" > $@
 
 wezterm/colors/melangeLight.toml:
-	curl --create-dirs "$(WEZTERM_THEMES_URL)melange_light.toml" > $@
+	curl --create-dirs "$(MELANGE_URL)/wezterm/melange_light.toml" > $@
 
 $(WEZTERMINFO):
 	curl 'https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo' > $@

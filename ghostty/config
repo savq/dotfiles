@@ -1,0 +1,10 @@
+cursor-invert-fg-bg = true
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+font-family = "JuliaMono"
+font-family-italic = "JuliaMono Light"
+font-feature = -calt
+font-feature = zero
+
+theme = dark:melange_dark,light:melange_light

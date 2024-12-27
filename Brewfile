@@ -21,6 +21,7 @@ cask "firefox"
 cask "font-atkinson-hyperlegible"
 cask "font-ibm-plex"
 cask "font-juliamono"
+cask "ghostty"
 cask "iina"           # media player
 cask "itsycal"        # menu bar calendar. Y-MM-dd EEEEE HH:mm
 cask "musescore"
