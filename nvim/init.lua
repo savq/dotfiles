@@ -11,37 +11,11 @@ end
 -- Load basic configuration
 cmd.runtime 'vimrc'
 
-do -- Appearance
-    opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y #%{bufnr()} %8(%l,%c%) %8p%%'
-    cmd.colorscheme 'melange'
+-- NOTE: UI config is in plugin/ui.lua
 
-    augroup('Highlights', { TextYankPost = { callback = function() highlight.on_yank() end } })
+cmd.colorscheme 'melange'
 
-    -- Set cursor hints according to mode
-    augroup('Enter', {
-        InsertEnter = { command = 'set cursorline' },
-        ModeChanged = { command = 'set cursorcolumn', pattern = '*:[vV\x16]*' },
-    })
-
-    augroup('Leave', {
-        InsertLeave = { command = 'set nocursorline' },
-        ModeChanged = { command = 'set nocursorcolumn', pattern = '[vV\x16]*:*' },
-    })
-end
-
-do -- "Focus" mode
-    local active = false
-    local function focus_toggle()
-        active = not active
-        opt.colorcolumn = active and '' or '100'
-        opt.conceallevel = active and 2 or 0
-        opt.foldcolumn = active and '0' or '1'
-        opt.list = not active
-        opt.number = not active
-    end
-    api.nvim_create_user_command('Focus', focus_toggle, {})
-    keymap.set('n', '<leader>z', focus_toggle)
-end
+opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y #%{bufnr()} %8(%l,%c%) %8p%%'
 
 do -- Spelling
     -- NOTE: Use i_CTRL-X_s to correct spelling of previous misspelled word

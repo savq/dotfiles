@@ -95,7 +95,7 @@ set fillchars=fold:\ ,eob:\ ,   " Hide fillchars
 set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
 
 """ Whitespace
-set list
+" set list
 set listchars=eol:~,extends:»,precedes:«,leadmultispace:·\ \ \ ,multispace:·,tab:├─,trail:•,nbsp:_
 
 """ Indentation (see editorconfig file)
