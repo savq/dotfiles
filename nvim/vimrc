@@ -16,14 +16,13 @@ noremap <leader>rc <cmd>edit $MYVIMRC<cr>
 noremap <leader>ss <cmd>mksession! .session.vim<cr>
 noremap <leader>sr <cmd>source     .session.vim<cr>
 
-" Cursor navigation
+" Motions
 noremap H ^
 noremap L g_
 noremap gh ^
 noremap gl g_
-" noremap J 5j
-" noremap K 5k
 
+" Arrow keys move window view, not cursor
 noremap <up> <C-y>
 noremap <down> <C-e>
 
@@ -44,31 +43,35 @@ noremap N Nzz
 noremap n nzz
 
 
-""" UI
-syntax enable
+" EDITING
 
-set number
-set foldcolumn=1
-set signcolumn=number   " (don't use this if using gitsigns)
+set spelloptions=camel
 
-set ruler
-set noshowmode
-set showcmd
+""" Insert Mode Completion
+set complete-=t     " No tag completion
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c    " no ins-completion-menu messages
 
-set colorcolumn=100
-" set cursorcolumn cursorline
+""" Command Line Completion
+set wildignorecase
+set wildmenu
+set wildoptions+=fuzzy
 
-set shortmess+=I        " no intro message
+""" Indentation. See `:h editorconfig` and `../.editorconfig`
+set autoindent
+set smartindent
 
-""" Movement
+
+" MOVING AROUND
+
+""" Buffer Navigation
 set mouse=a
 set scrolloff=5
 set sidescrolloff=5
 set virtualedit=block
-
 set linebreak
 set nowrap
-set whichwrap=<,>,[,] " Left/Right arrows keys can move to next line
+set whichwrap=<,>,[,]   " Left/Right arrows keys can move to next line
 
 """ Search
 set hlsearch
@@ -76,44 +79,49 @@ set incsearch
 set ignorecase
 set smartcase
 
-""" Completion
-set complete-=t     " No tag completion
-set completeopt=menuone,noinsert,noselect
-set shortmess+=c    " no ins-completion-menu messages
-set wildignorecase
-set wildmenu
-set wildoptions+=fuzzy
 
-""" Conceal
+" APPEARANCE
+
+syntax enable
+set shortmess+=I    " no intro message
+set colorcolumn=100
+
+""" Conceal & Whitespace
 set conceallevel=2
-" set concealcursor=n  " conceal in normal mode
+set listchars=eol:~,extends:»,precedes:«,multispace:·,tab:├─,trail:•,nbsp:_
+set listchars+=leadmultispace:▹\ \ \    " TODO: set depending on indentation level
 
 """ Folds
 set foldlevel=9
-" set foldmethod=indent           " If not using tree-sitter
+" set foldmethod=indent         " If not using tree-sitter
 set fillchars=fold:\ ,eob:\ ,   " Hide fillchars
 set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
 
-""" Whitespace
-" set list
-set listchars=eol:~,extends:»,precedes:«,leadmultispace:·\ \ \ ,multispace:·,tab:├─,trail:•,nbsp:_
+""" Status Column (Gutter)
+set number
+set foldcolumn=1
+set signcolumn=number
 
-""" Indentation (see editorconfig file)
-set autoindent
-set smartindent
+""" Status Line
+set ruler
+set noshowmode
+set showcmd
 
-""" Files, buffers, windows
+
+" FILES & BUFFERS
+
+""" Files
 set autoread
 set confirm             " ask to save stuff
 set fileencoding=utf-8  " encoding written to file
-set hidden              " hide buffers instead of closing them
 set noswapfile
-set spelllang=
-set spelloptions=camel
+
+""" Buffers
+set hidden              " hide buffers instead of closing them
 set splitbelow
 set splitright
 
-""" Persistent undo
+""" Persistent Undo
 set undodir="$HOME/.local/share/nvim/undo"
 set undofile
 set undolevels=100      " How many undos
@@ -125,7 +133,9 @@ let g:netrw_banner = 0        " no banner
 let g:netrw_dirhistmax = 0    " no history
 let g:netrw_liststyle = 3     " tree style listing
 
-""" Disable plugins (:help standard-plugin-list)
+
+" DISABLE STANDARD PLUGINS (:help standard-plugin-list)
+
 let g:loaded_2html_plugin = 1
 let g:loaded_gzip = 1
 " let g:loaded_man = 1
@@ -138,6 +148,9 @@ let g:loaded_spellfile_plugin = 1
 " let g:loaded_tutor_mode_plugin = 1
 " let g:loaded_zipPlugin = 1
 let g:omni_sql_default_compl_type = 'syntax' " github.com/neovim/neovim/issues/14433
+
+
+" FILETYPE SPECIFIC OPTIONS
 
 autocmd FileType Lua setlocal keywordprg=:help
 autocmd FileType yaml setlocal lisp
