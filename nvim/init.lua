@@ -119,8 +119,9 @@ do -- LSP & Diagnostics
         'clangd',
         'rust_analyzer',
         'denols',
+        -- 'ocamllsp',
         -- 'svelte',
-        -- 'tsserver',
+        -- 'ts_ls',
     } do
         lspconfig[ls].setup {}
     end
@@ -134,19 +135,20 @@ do -- LSP & Diagnostics
 
         -- stylua: ignore
         for name, fn in pairs {
-            Diagnostic = diagnostic.show,
-            LspAction  = lsp.buf.code_action,
-            LspSymbols = lsp.buf.document_symbol,
-            LspFormat  = lsp.buf.format,
-            LspImpls   = lsp.buf.implementation,
-            LspRefs    = lsp.buf.references,
-            LspRename  = lsp.buf.rename,
+            DxList      = diagnostic.setloclist,
+            DxShow      = diagnostic.show,
+            LspAction   = lsp.buf.code_action,
+            LspSymbols  = lsp.buf.document_symbol,
+            LspFormat   = lsp.buf.format,
+            LspImpl     = lsp.buf.implementation,
+            LspRefs     = lsp.buf.references,
+            LspRename   = lsp.buf.rename,
+            LspTypeDef  = lsp.buf.type_definition,
         } do
             api.nvim_create_user_command(name, function(_) fn() end, {})
         end
 
-        keymap.set('n', '[d', diagnostic.goto_prev)
-        keymap.set('n', ']d', diagnostic.goto_next)
+        -- NOTE: By default: ]d -> goto_next, [d -> goto_prev, K -> hover
         keymap.set('n', 'gd', lsp.buf.definition)
 
         augroup('Lsp', {
