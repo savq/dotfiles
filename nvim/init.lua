@@ -1,13 +1,5 @@
 setmetatable(_G, { __index = vim })
 
-local function augroup(name, autocmds)
-    local group = api.nvim_create_augroup(name, {})
-    for event, opts in pairs(autocmds) do
-        opts.group = group
-        api.nvim_create_autocmd(event, opts)
-    end
-end
-
 -- Load basic configuration
 cmd.runtime 'vimrc'
 
@@ -100,38 +92,44 @@ do -- LSP & Diagnostics
         lspconfig[ls].setup {}
     end
 
-    local function on_attach(args)
-        -- Disable virtual text
-        diagnostic.config {
-            float = { focus = false },
-            virtual_text = false,
-        }
+    api.nvim_create_autocmd('LspAttach', {
+        group = api.nvim_create_augroup('LspConfig', {}),
+        callback = function(args)
+            -- Disable virtual text
+            diagnostic.config {
+                float = { focus = false },
+                virtual_text = false,
+            }
 
-        -- stylua: ignore
-        for name, fn in pairs {
-            DxList      = diagnostic.setloclist,
-            DxShow      = diagnostic.show,
-            LspAction   = lsp.buf.code_action,
-            LspSymbols  = lsp.buf.document_symbol,
-            LspFormat   = lsp.buf.format,
-            LspImpl     = lsp.buf.implementation,
-            LspRefs     = lsp.buf.references,
-            LspRename   = lsp.buf.rename,
-            LspTypeDef  = lsp.buf.type_definition,
-        } do
-            api.nvim_create_user_command(name, function(_) fn() end, {})
-        end
+            -- stylua: ignore
+            for name, fn in pairs {
+                DxList      = diagnostic.setloclist,
+                DxShow      = diagnostic.show,
+                LspAction   = lsp.buf.code_action,
+                LspSymbols  = lsp.buf.document_symbol,
+                LspFormat   = lsp.buf.format,
+                LspImpl     = lsp.buf.implementation,
+                LspRefs     = lsp.buf.references,
+                LspRename   = lsp.buf.rename,
+                LspTypeDef  = lsp.buf.type_definition,
+            } do
+                api.nvim_create_user_command(name, function(_) fn() end, {})
+            end
 
-        -- NOTE: By default: ]d -> goto_next, [d -> goto_prev, K -> hover
-        keymap.set('n', 'gd', lsp.buf.definition)
+            -- NOTE: By default: ]d -> goto_next, [d -> goto_prev, K -> hover
+            keymap.set('n', 'gd', lsp.buf.definition)
 
-        augroup('Lsp', {
-            BufWritePre = { buffer = args.buf, callback = function(_) lsp.buf.format() end },
-            CursorHold = { buffer = args.buf, callback = function(_) diagnostic.open_float() end },
-        })
-    end
-
-    augroup('LspConfig', { LspAttach = { callback = on_attach } })
+            local gr = api.nvim_create_augroup('Lsp', {})
+            api.nvim_create_autocmd(
+                'BufWritePre',
+                { buffer = args.buf, callback = function(_) lsp.buf.format() end, group = gr }
+            )
+            api.nvim_create_autocmd(
+                'CursorHold',
+                { buffer = args.buf, callback = function(_) diagnostic.open_float() end, group = gr }
+            )
+        end,
+    })
 end
 
 do -- Auto-completion
