@@ -45,12 +45,10 @@ noremap n nzz
 
 " EDITING
 
-set spelloptions=camel
-
 """ Insert Mode Completion
 set complete-=t     " No tag completion
 set completeopt=menuone,noinsert,noselect
-set shortmess+=c    " no ins-completion-menu messages
+set shortmess+=c    " No ins-completion-menu messages
 
 """ Command Line Completion
 set wildignorecase
@@ -61,11 +59,17 @@ set wildoptions+=fuzzy
 set autoindent
 set smartindent
 
+""" Spelling
+" set spell
+" set spelllang=en
+set spelloptions=camel
+
 
 " MOVING AROUND
 
 """ Buffer Navigation
 set mouse=a
+set mousescroll=hor:1,ver:1
 set scrolloff=5
 set sidescrolloff=5
 set virtualedit=block
@@ -83,11 +87,11 @@ set smartcase
 " APPEARANCE
 
 syntax enable
-set shortmess+=I    " no intro message
+set shortmess+=I    " No intro message
 set colorcolumn=100
 
 """ Conceal & Whitespace
-set conceallevel=2
+set conceallevel=1
 set listchars=eol:~,extends:»,precedes:«,multispace:·,tab:├─,trail:•,nbsp:_
 set listchars+=leadmultispace:▹\ \ \    " TODO: set depending on indentation level
 
@@ -99,7 +103,7 @@ set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
 
 """ Status Column (Gutter)
 set number
-set foldcolumn=1
+" set foldcolumn=1
 set signcolumn=number
 
 """ Status Line
@@ -112,12 +116,12 @@ set showcmd
 
 """ Files
 set autoread
-set confirm             " ask to save stuff
-set fileencoding=utf-8  " encoding written to file
+set confirm             " Ask to save stuff
+set fileencoding=utf-8  " Encoding written to file
 set noswapfile
 
 """ Buffers
-set hidden              " hide buffers instead of closing them
+set hidden              " Hide buffers instead of closing them
 set splitbelow
 set splitright
 
@@ -125,13 +129,13 @@ set splitright
 set undodir="$HOME/.local/share/nvim/undo"
 set undofile
 set undolevels=100      " How many undos
-set undoreload=1000     " number of lines to save for undo
+set undoreload=1000     " Number of lines to save for undo
 set updatetime=500
 
 """ Netrw
-let g:netrw_banner = 0        " no banner
-let g:netrw_dirhistmax = 0    " no history
-let g:netrw_liststyle = 3     " tree style listing
+let g:netrw_banner = 0        " No banner
+let g:netrw_dirhistmax = 0    " No history
+let g:netrw_liststyle = 3     " Tree-style listing
 
 
 " DISABLE STANDARD PLUGINS (:help standard-plugin-list)

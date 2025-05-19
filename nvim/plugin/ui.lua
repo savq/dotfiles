@@ -6,7 +6,7 @@ autocmd('TextYankPost', { callback = function() highlight.on_yank() end, group =
 -- Insert
 autocmd('InsertEnter', { command = 'set conceallevel=0 nocursorcolumn cursorline list', group = group })
 
-autocmd('InsertLeave', { command = 'set conceallevel=2 nocursorcolumn nocursorline nolist', group = group })
+autocmd('InsertLeave', { command = 'set conceallevel=1 nocursorcolumn nocursorline nolist', group = group })
 
 -- Visual
 autocmd(
@@ -16,7 +16,7 @@ autocmd(
 
 autocmd(
     'ModeChanged',
-    { pattern = '[vV\x16]*:*', command = 'set conceallevel=2 nocursorcolumn nocursorline nolist', group = group }
+    { pattern = '[vV\x16]*:*', command = 'set conceallevel=1 nocursorcolumn nocursorline nolist', group = group }
 )
 
 -- Track which windows have visible gutters

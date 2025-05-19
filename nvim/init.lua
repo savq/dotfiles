@@ -14,7 +14,7 @@ do -- Spelling
     keymap.set('n', '<leader>l', function()
         ui.select({ 'en', 'es', 'de' }, {}, function(lang)
             opt.spell = lang ~= nil
-            opt.spelllang = lang
+            opt.spelllang = lang or ''
         end)
     end)
 end
@@ -47,9 +47,11 @@ do -- Markup
     }
 
     --- TODO: Refactor
-    api.nvim_create_user_command('WikiPick', function()
-        MiniPick.builtin.grep_live(nil, { source = { cwd = g.wiki_root } })
-    end, {})
+    api.nvim_create_user_command(
+        'WikiPick',
+        function() MiniPick.builtin.grep_live(nil, { source = { cwd = g.wiki_root } }) end,
+        {}
+    )
 end
 
 do -- Tree-sitter

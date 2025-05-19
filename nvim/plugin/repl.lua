@@ -23,11 +23,6 @@ function _send_to_repl(mode)
     fn.chansend(g.term_id, lines) -- :h nvim_list_chans()
 end
 
-api.nvim_create_autocmd('TermOpen', {
-    command = 'setlocal nonumber nospell',
-    group = api.nvim_create_augroup('Terminal', {}),
-})
-
 api.nvim_create_user_command('Sterminal', 'horizontal terminal', {})
 api.nvim_create_user_command('Vterminal', 'vertical terminal', {})
 
