@@ -1,10 +1,18 @@
 cursor-invert-fg-bg = true
 cursor-style-blink = false
+macos-option-as-alt = right
 shell-integration-features = no-cursor
 
+adjust-cell-height = 20%
 font-family = "JuliaMono"
 font-family-italic = "JuliaMono Light"
 font-feature = -calt
+font-feature = -dlig
+font-feature = -liga
 font-feature = zero
+font-size = 12
 
+# melange dev
+minimum-contrast = 1
 theme = dark:melange_dark,light:melange_light
+unfocused-split-opacity = 1
