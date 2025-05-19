@@ -3,5 +3,4 @@ Brewfile.lock.json
 fish/completions
 fish/fish_variables
 nvim/spell
-wezterm/colors
-wezterm/wezterm.terminfo
+ghostty/themes

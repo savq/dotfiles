@@ -8,8 +8,7 @@ install:\
 	nvim\
 	rust\
 	tree-sitter\
-	ghostty\
-	wezterm
+	ghostty
 
 .PHONY: fish nvim
 
@@ -81,23 +80,5 @@ ghostty/themes/melange_light:
 	curl --create-dirs "$(MELANGE_URL)/ghostty/melange_light" > $@
 
 
-WEZTERMINFO = wezterm/wezterm.terminfo
-
-wezterm: $(WEZTERMINFO) $(FISH_COMPL)/wezterm.fish wezterm/colors/melangeDark.toml wezterm/colors/melangeLight.toml
-	tic -x -o ~/.terminfo $<
-
-wezterm/colors/melangeDark.toml:
-	curl --create-dirs "$(MELANGE_URL)/wezterm/melange_dark.toml" > $@
-
-wezterm/colors/melangeLight.toml:
-	curl --create-dirs "$(MELANGE_URL)/wezterm/melange_light.toml" > $@
-
-$(WEZTERMINFO):
-	curl 'https://raw.githubusercontent.com/wez/wezterm/main/termwiz/data/wezterm.terminfo' > $@
-
-$(FISH_COMPL)/wezterm.fish:
-	wezterm shell-completion --shell fish > $@
-
-tree-sitter: $(FISH_COMPL)/tree-sitter.fish
 $(FISH_COMPL)/tree-sitter.fish:
 	tree-sitter complete --shell fish > $@
