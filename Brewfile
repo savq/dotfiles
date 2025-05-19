@@ -9,6 +9,7 @@ brew "juliaup"
 brew "rustup"
 brew "stylua"
 
+brew "fd"
 brew "fish"
 brew "jq"
 brew "neovim"

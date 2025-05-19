@@ -1,6 +1,5 @@
 alias l='ls -1A'
 alias ll='ls -AFlh'
-alias mkdir='mkdir -p'
 alias rm='rm -v'
 alias todo='rg -i "fixme|note|todo"'
 
@@ -48,6 +47,7 @@ set -gx LANG 'en_US.UTF-8'
 set -gx LC_ALL $LANG
 set -gx CLICOLOR 1
 set -gx LSCOLORS 'gxfxcxdxbxEfEdBxGxCxDx'
+set -gx LS_COLORS $LSCOLORS
 
 if type nvim &> /dev/null
     set -gx VISUAL nvim
@@ -61,13 +61,18 @@ else
 end
 
 
-function fd -d 'Simpler find'
-    find -E '.' -path '.*/.git' -prune -o -iregex ".*$argv.*" -print
+function mkd -d 'mkdir and cd'
+    mkdir -p $argv; and cd $argv
 end
+
+function multicd
+    echo cd (string repeat -n (math (string length -- $argv[1]) - 1) ../)
+end
+abbr --add dotdot --regex '^\.\.+$' --function multicd
 
 function notify
     printf '\e]9;%s\e\\' $argv # OSC 9
-    say $argv
+    say --rate=250 $argv
 end
 
 ## notify after long commands
