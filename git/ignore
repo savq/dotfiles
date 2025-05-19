@@ -1,18 +1,14 @@
-#### macOS
+## General
 .DS_Store
+*.pdf
+,*
 
-#### Nvim
-tags
-[._]*.un~
-.session.vim
+## C
+*.o
 
-#### Rust
-debug/
-target/
-**/*.rs.bk
-
-#### Julia
+## Julia
 Manifest.toml
 
-####
-,*
+## Rust
+debug/
+target/
