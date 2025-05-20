@@ -35,8 +35,7 @@ fish:
 		-c 'set -U __fish_git_prompt_color_branch bryellow'\
 		-c 'set -U __fish_git_prompt_color_merging yellow'\
 		-c 'fish_add_path -U ~/.cargo/bin'\
-		-c 'fish_add_path -U ~/.deno/bin'\
-		-c 'fish_add_path -U /usr/local/opt/node@22/bin' # Add node LTS to path manually
+		-c 'fish_add_path -U ~/.deno/bin'
 
 
 PAQ_DIR = "$(HOME)/.local/share/nvim/site/pack/paqs/start/paq-nvim"

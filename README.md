@@ -16,8 +16,3 @@ make
 - [`nvim/vimrc`](./nvim/vimrc) has a minimal setup. It's vim 8 compatible and uses no plugins.
 - [`nvim/init.lua`](./nvim/init.lua) has configurations for plugins and Neovim specific features
   (tree-sitter, LSP, etc.)
-
-
-### Other stuff
-
-Listed on the [`Brewfile`](./Brewfile)

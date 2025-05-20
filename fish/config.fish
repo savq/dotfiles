@@ -22,14 +22,12 @@ alias jl='julia --project --startup-file=no --quiet'
 alias pluto='jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
 
 alias js='deno --quiet'
-alias serve='file_server'
-alias npm='pnpm'
-alias npx='pnpx'
 
 alias py='python3 -q'
 alias pip='python3 -m pip'
 alias venv='python3 -m venv'
 alias ipynb='python3 -m jupyter notebook'
+alias serve='python3 -m http.server'
 
 alias rsc='cargo check'
 alias rsd='cargo doc --open'
