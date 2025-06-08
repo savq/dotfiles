@@ -81,59 +81,6 @@ do -- Tree-sitter
     }
 end
 
-do -- LSP & Diagnostics
-    local lspconfig = require 'lspconfig'
-    for _, ls in ipairs {
-        'clangd',
-        'rust_analyzer',
-        'denols',
-        -- 'ocamllsp',
-        -- 'svelte',
-        -- 'ts_ls',
-    } do
-        lspconfig[ls].setup {}
-    end
-
-    api.nvim_create_autocmd('LspAttach', {
-        group = api.nvim_create_augroup('LspConfig', {}),
-        callback = function(args)
-            -- Disable virtual text
-            diagnostic.config {
-                float = { focus = false },
-                virtual_text = false,
-            }
-
-            -- stylua: ignore
-            for name, fn in pairs {
-                DxList      = diagnostic.setloclist,
-                DxShow      = diagnostic.show,
-                LspAction   = lsp.buf.code_action,
-                LspSymbols  = lsp.buf.document_symbol,
-                LspFormat   = lsp.buf.format,
-                LspImpl     = lsp.buf.implementation,
-                LspRefs     = lsp.buf.references,
-                LspRename   = lsp.buf.rename,
-                LspTypeDef  = lsp.buf.type_definition,
-            } do
-                api.nvim_create_user_command(name, function(_) fn() end, {})
-            end
-
-            -- NOTE: By default: ]d -> goto_next, [d -> goto_prev, K -> hover
-            keymap.set('n', 'gd', lsp.buf.definition)
-
-            local gr = api.nvim_create_augroup('Lsp', {})
-            api.nvim_create_autocmd(
-                'BufWritePre',
-                { buffer = args.buf, callback = function(_) lsp.buf.format() end, group = gr }
-            )
-            api.nvim_create_autocmd(
-                'CursorHold',
-                { buffer = args.buf, callback = function(_) diagnostic.open_float() end, group = gr }
-            )
-        end,
-    })
-end
-
 do -- Auto-completion
     require('mini.completion').setup()
     keymap.set('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
