@@ -1,6 +1,7 @@
 alias l='ls -1A'
 alias ll='ls -AFlh'
-alias rm='rm -v'
+alias mv='mv -nv'
+alias rm='trash -v'
 alias todo='rg -i "fixme|note|todo"'
 
 alias ga='git add --update --verbose'
