@@ -3,23 +3,9 @@ setmetatable(_G, { __index = vim })
 -- Load basic configuration
 cmd.runtime 'vimrc'
 
--- NOTE: UI config is in plugin/ui.lua
-
 cmd.colorscheme 'melange'
 
 opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y #%{bufnr()} %8(%l,%c%) %8p%%'
-
-do -- Spelling
-    -- NOTE: Use i_CTRL-X_s to correct spelling of previous misspelled word
-    keymap.set('n', '<leader>l', function()
-        ui.select({ 'en', 'es', 'de' }, {}, function(lang)
-            opt.spell = lang ~= nil
-            opt.spelllang = lang or ''
-        end)
-    end)
-end
-
------ Plugins ------------------------------------------------------------------
 
 do -- Paq
     keymap.set('n', '<leader>pq', function()

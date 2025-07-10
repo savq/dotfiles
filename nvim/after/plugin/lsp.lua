@@ -5,8 +5,18 @@ lsp.enable {
     -- 'julials',
     -- 'ocamllsp',
     -- 'svelte',
-    -- 'ts_ls',
+    'tinymist',
+    'ts_ls', -- npm add --save-dev typescript-language-server typescript;
 }
+
+lsp.config('ts_ls', {
+    cmd = { 'npx', 'typescript-language-server', '--stdio' },
+    filetypes = { 'javascript', 'typescript' },
+    init_options = {
+        hostInfo = 'neovim',
+    },
+    root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json' },
+})
 
 local lsp_augroup = api.nvim_create_augroup('Lsp', {})
 api.nvim_create_autocmd('LspAttach', {
@@ -31,10 +41,11 @@ api.nvim_create_autocmd('LspAttach', {
         -- NOTE: By default: ]d -> jump +1, [d -> jump -1, K -> hover
         keymap.set('n', 'gd', lsp.buf.definition)
 
-        api.nvim_create_autocmd(
-            'BufWritePre',
-            { buffer = args.buf, callback = function(_) lsp.buf.format() end, group = lsp_augroup }
-        )
+        api.nvim_create_autocmd('BufWritePre', {
+            buffer = args.buf,
+            callback = function(_) lsp.buf.format() end,
+            group = lsp_augroup,
+        })
         api.nvim_create_autocmd('CursorHold', {
             buffer = args.buf,
             callback = function(_)
@@ -43,9 +54,10 @@ api.nvim_create_autocmd('LspAttach', {
             end,
             group = lsp_augroup,
         })
-        api.nvim_create_autocmd(
-            'CursorMoved',
-            { buffer = args.buf, callback = function(_) lsp.buf.clear_references() end, group = lsp_augroup }
-        )
+        api.nvim_create_autocmd('CursorMoved', {
+            buffer = args.buf,
+            callback = function(_) lsp.buf.clear_references() end,
+            group = lsp_augroup,
+        })
     end,
 })

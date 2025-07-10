@@ -1,7 +1,10 @@
 local autocmd = vim.api.nvim_create_autocmd
 local group = api.nvim_create_augroup('BufferDecor', {})
 
-autocmd('TextYankPost', { callback = function() highlight.on_yank() end, group = group })
+autocmd('TextYankPost', {
+    callback = function() highlight.on_yank() end,
+    group = group,
+})
 
 -- Insert
 autocmd('InsertEnter', { command = 'set conceallevel=0 nocursorcolumn cursorline list', group = group })
