@@ -1,7 +1,5 @@
 cursor-invert-fg-bg = true
-cursor-style-blink = false
-macos-option-as-alt = right
-shell-integration-features = no-cursor
+macos-option-as-alt = left
 
 adjust-cell-height = 20%
 font-family = "JuliaMono"

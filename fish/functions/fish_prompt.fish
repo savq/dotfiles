@@ -7,5 +7,6 @@ function fish_prompt
         $grey ': ' \
         (prompt_pwd) \
         $grey $_delta \
-        $status_color ' ; '
+        $status_color ' ; ' \
+        (set_color normal)
 end

@@ -18,3 +18,9 @@ indent_style = tab
 # Pluto uses tabs :/
 [*.nb.jl]
 indent_style = tab
+
+[*.ml]
+indent_size = 2
+
+[*.scm]
+indent_size = 2

@@ -1,7 +1,8 @@
 ## General
-.DS_Store
 *.pdf
 ,*
+.DS_Store
+.mise.local.toml
 
 ## C
 *.o

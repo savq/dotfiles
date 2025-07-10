@@ -8,7 +8,9 @@ cd ~/.config
 make
 ```
 
-- Set `fish` as [default shell](https://fishshell.com/docs/current/index.html#default-shell),
+### Shell: [fish](https://fishshell.com/docs/current/index.html)
+
+- Set `fish` as [default shell](https://fishshell.com/docs/current/index.html#default-shell).
 
 
 ### Editor: [Neovim](https://github.com/neovim/neovim/)

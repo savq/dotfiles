@@ -1,6 +1,8 @@
 .brew_install.sh
 Brewfile.lock.json
+containers
 fish/completions
+fish/conf.d
 fish/fish_variables
-nvim/spell
 ghostty/themes
+nvim/spell

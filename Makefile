@@ -10,7 +10,7 @@ install:\
 	tree-sitter\
 	ghostty
 
-.PHONY: fish nvim
+.PHONY: fish nvim brew-check
 
 brew: Brewfile.lock.json
 Brewfile.lock.json: Brewfile .brew_install.sh
@@ -20,23 +20,15 @@ Brewfile.lock.json: Brewfile .brew_install.sh
 	curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh' > $@
 	type brew || /bin/bash '.brew_install.sh'
 
+brew-check:
+	brew bundle check --verbose
 
 fish:
 	mkdir -pv $(FISH_COMPL)
-	fish\
-		-c 'set -U fish_greeting'\
-		-c 'set -U fish_color_command green'\
-		-c 'set -U fish_color_comment white'\
-		-c 'set -U fish_color_param'\
-		-c 'set -U fish_color_quote blue'\
-		-c 'set -U __fish_git_prompt_showcolorhints 1'\
-		-c 'set -U __fish_git_prompt_showdirtystate 1'\
-		-c 'set -U __fish_git_prompt_color grey'\
-		-c 'set -U __fish_git_prompt_color_branch bryellow'\
-		-c 'set -U __fish_git_prompt_color_merging yellow'\
-		-c 'fish_add_path -U ~/.cargo/bin'\
-		-c 'fish_add_path -U ~/.deno/bin'
-
+	fish -c 'set fish_greeting' \
+		-c 'set fish_color_command --bold' \
+		-c 'set fish_color_param normal' \
+		-c 'set fish_color_quote brblue'
 
 PAQ_DIR = "$(HOME)/.local/share/nvim/site/pack/paqs/start/paq-nvim"
 
@@ -79,5 +71,6 @@ ghostty/themes/melange_light:
 	curl --create-dirs "$(MELANGE_URL)/ghostty/melange_light" > $@
 
 
+tree-sitter: $(FISH_COMPL)/tree-sitter.fish
 $(FISH_COMPL)/tree-sitter.fish:
 	tree-sitter complete --shell fish > $@
