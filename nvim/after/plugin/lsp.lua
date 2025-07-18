@@ -9,15 +9,6 @@ lsp.enable {
     'ts_ls', -- npm add --save-dev typescript-language-server typescript;
 }
 
-lsp.config('ts_ls', {
-    cmd = { 'npx', 'typescript-language-server', '--stdio' },
-    filetypes = { 'javascript', 'typescript' },
-    init_options = {
-        hostInfo = 'neovim',
-    },
-    root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json' },
-})
-
 local lsp_augroup = api.nvim_create_augroup('Lsp', {})
 api.nvim_create_autocmd('LspAttach', {
     group = lsp_augroup,
@@ -41,11 +32,19 @@ api.nvim_create_autocmd('LspAttach', {
         -- NOTE: By default: ]d -> jump +1, [d -> jump -1, K -> hover
         keymap.set('n', 'gd', lsp.buf.definition)
 
-        api.nvim_create_autocmd('BufWritePre', {
-            buffer = args.buf,
-            callback = function(_) lsp.buf.format() end,
-            group = lsp_augroup,
-        })
+        local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+
+        if
+            not client:supports_method 'textDocument/willSaveWaitUntil'
+            and client:supports_method 'textDocument/formatting'
+        then
+            api.nvim_create_autocmd('BufWritePre', {
+                buffer = args.buf,
+                callback = function(_) lsp.buf.format() end,
+                group = lsp_augroup,
+            })
+        end
+
         api.nvim_create_autocmd('CursorHold', {
             buffer = args.buf,
             callback = function(_)
@@ -61,3 +60,13 @@ api.nvim_create_autocmd('LspAttach', {
         })
     end,
 })
+
+-- SERVER SPECIFIC CONFIG
+
+local config_typst = vim.lsp.config['tinymist']
+config_typst.root_markers = { 'main.typ' }
+lsp.config('tinymist', config_typst)
+
+local config_tsls = vim.lsp.config['ts_ls']
+config_tsls.cmd = { 'npx', 'typescript-language-server', '--stdio' }
+lsp.config('ts_ls', config_tsls)
