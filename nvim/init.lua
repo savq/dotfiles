@@ -20,7 +20,7 @@ end
 do -- Markup
     g.disable_rainbow_hover = true
 
-    g.latex_to_unicode_file_types = { 'julia', 'typst' }
+    g.latex_to_unicode_file_types = { 'julia' }
 
     g.markdown_enable_conceal = true
     g.markdown_enable_insert_mode_mappings = false
