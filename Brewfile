@@ -18,6 +18,8 @@ brew "zola"
 
 cask "anki"
 cask "firefox"
+cask "font-ancizar-sans"
+cask "font-ancizar-serif"
 cask "font-atkinson-hyperlegible"
 cask "font-ibm-plex"
 cask "font-juliamono"
