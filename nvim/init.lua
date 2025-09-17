@@ -40,33 +40,6 @@ do -- Markup
     )
 end
 
-do -- Tree-sitter
-    opt.foldmethod = 'expr'
-    opt.foldexpr = 'nvim_treesitter#foldexpr()'
-
-    require('nvim-treesitter.configs').setup {
-        -- ensure_installed = { 'c', 'html', 'julia', 'lua', 'python', 'query', 'rust', 'typescript', 'markdown', 'markdown_inline' },
-        highlight = { enable = true },
-        indent = { enable = true },
-        incremental_selection = {
-            enable = true,
-            keymaps = { init_selection = '+', node_incremental = '+', node_decremental = '_' },
-        },
-        textobjects = {
-            select = {
-                enable = true,
-                keymaps = {
-                    ['ac'] = '@call.outer',
-                    ['af'] = '@function.outer',
-                    ['if'] = '@function.inner',
-                    ['ak'] = '@conditional.outer',
-                    ['at'] = '@class.outer',
-                },
-            },
-        },
-    }
-end
-
 do -- Auto-completion
     require('mini.completion').setup()
     keymap.set('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })

@@ -2,8 +2,8 @@ local PKGS = {
     -- { 'savq/paq-nvim', pin = true },
     -- { 'savq/melange-nvim', pin = true },
     'neovim/nvim-lspconfig',
-    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
-    'nvim-treesitter/nvim-treesitter-textobjects',
+    { 'nvim-treesitter/nvim-treesitter', branch = 'main', build = ':TSUpdate' },
+    { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
     'rust-lang/rust.vim',
     'JuliaEditorSupport/julia-vim',
 
