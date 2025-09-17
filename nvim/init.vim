@@ -173,4 +173,10 @@ augroup FileTypeSpecificOptions
     autocmd FileType yaml setlocal lisp
 augroup END
 
+lua << EOF
+    require('mini.diff').setup()
+    require('mini.pick').setup()
+    require('mini.trailspace').setup()
+EOF
+
 end

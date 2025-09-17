@@ -32,12 +32,12 @@ fish:
 
 PAQ_DIR = "$(HOME)/.local/share/nvim/site/pack/paqs/start/paq-nvim"
 
-nvim: $(HOME)/.editorconfig $(HOME)/.vimrc nvim/lua/plugins.lua
+nvim: $(HOME)/.editorconfig $(HOME)/.vimrc nvim/after/plugin/paq.lua
 	[ -d $(PAQ_DIR) ] || git clone --depth=1 'https://github.com/savq/paq-nvim.git' $(PAQ_DIR)
-	nvim --headless -u NONE -c 'lua require("plugins").bootstrap()'
+	nvim --headless -c 'lua _paq_bootstrap()'
 
 $(HOME)/.vimrc:
-	ln -fhs $(CONFIG_HOME)/nvim/vimrc $@
+	ln -fhs $(CONFIG_HOME)/nvim/init.vim $@
 
 $(HOME)/.editorconfig:
 	ln -fhs $(CONFIG_HOME)/.editorconfig $@

@@ -7,11 +7,11 @@ local PKGS = {
     'rust-lang/rust.vim',
     'JuliaEditorSupport/julia-vim',
 
-    'echasnovski/mini.completion',
-    'echasnovski/mini.diff',
-    'echasnovski/mini.pick',
-    'echasnovski/mini.trailspace',
     'lervag/wiki.vim',
+    'nvim-mini/mini.completion',
+    'nvim-mini/mini.diff',
+    'nvim-mini/mini.pick',
+    'nvim-mini/mini.trailspace',
     'tpope/vim-fugitive',
     'tpope/vim-repeat',
     'tpope/vim-surround',
@@ -21,16 +21,18 @@ local PKGS = {
     { 'mechatroner/rainbow_csv', opt = true },
 }
 
-return {
-    bootstrap = function()
-        -- NOTE: Makefile handles paq installation
-        vim.cmd 'packadd paq-nvim'
-        vim.cmd 'autocmd User PaqDoneInstall quit'
-        require 'paq'(PKGS):install()
-    end,
+function _paq_bootstrap ()
+    -- NOTE: Makefile handles paq installation
+    vim.cmd 'packadd paq-nvim'
+    vim.cmd 'autocmd User PaqDoneInstall quit'
+    require 'paq'(PKGS):install()
+end
 
-    sync_all = function()
-        -- package.loaded.paq = nil -- For development only
-        require 'paq'(PKGS):sync()
-    end,
-}
+local function sync_all()
+    package.loaded.paq = nil
+    require 'paq'(PKGS):sync()
+end
+
+vim.keymap.set('n', '<leader>pq', sync_all)
+
+vim.keymap.set('n', '<leader>pg', function() vim.cmd.edit(vim.fn.stdpath 'config' .. '/after/plugin/paq.lua') end)
