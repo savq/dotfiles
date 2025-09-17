@@ -11,11 +11,14 @@ iabbrev implies ⟹
 iabbrev in ∈
 iabbrev infty ∞
 iabbrev mapsto ↦
-iabbrev neq ≠
 iabbrev subseteq ⊆
 iabbrev supseteq ⊇
 iabbrev tol ←
 iabbrev tor →
+
+iabbrev geq ≥
+iabbrev leq ≤
+iabbrev neq ≠
 
 iabbrev alfa α
 iabbrev beta β
