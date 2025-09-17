@@ -2,13 +2,13 @@ local fts = { 'c', 'html', 'julia', 'lua', 'python', 'query', 'rust', 'typescrip
 
 -- require'nvim-treesitter'.install(fts)
 
-api.nvim_create_autocmd('FileType', {
+vim.api.nvim_create_autocmd('FileType', {
     pattern = fts,
     callback = function()
         vim.treesitter.start()
-        wo.foldmethod = 'expr'
-        wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-        bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        vim.wo.foldmethod = 'expr'
+        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     end,
 })
 
@@ -27,5 +27,5 @@ for keys, obj in pairs {
     ['ak'] = '@conditional.outer',
     ['at'] = '@class.outer',
 } do
-    keymap.set({ 'x', 'o' }, keys, function() select_textobject(obj, 'textobjects') end)
+    vim.keymap.set({ 'x', 'o' }, keys, function() select_textobject(obj, 'textobjects') end)
 end

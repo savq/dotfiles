@@ -1,14 +1,14 @@
 local autocmd = vim.api.nvim_create_autocmd
-local group = api.nvim_create_augroup('BufferDecor', {})
+local group = vim.api.nvim_create_augroup('BufferDecor', {})
 
 --- Status line
-opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y #%{bufnr()} %8(%l,%c%) %8p%%'
+vim.opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y #%{bufnr()} %8(%l,%c%) %8p%%'
 
 
 --- Mode indicators
 
 autocmd('TextYankPost', {
-    callback = function() highlight.on_yank() end,
+    callback = function() vim.highlight.on_yank() end,
     group = group,
 })
 
@@ -32,12 +32,12 @@ autocmd(
 local window_gutters = {}
 
 local function toggle_gutter()
-    local win = api.nvim_get_current_win()
+    local win = vim.api.nvim_get_current_win()
     local is_enabled = window_gutters[win] == true
-    opt.number = is_enabled
-    opt.foldcolumn = is_enabled and '1' or '0'
-    opt.colorcolumn = is_enabled and '100' or '' -- not in the gutter...
+    vim.opt.number = is_enabled
+    vim.opt.foldcolumn = is_enabled and '1' or '0'
+    vim.opt.colorcolumn = is_enabled and '100' or '' -- not in the gutter...
     window_gutters[win] = not is_enabled
 end
 
-keymap.set('n', '<leader>z', toggle_gutter)
+vim.keymap.set('n', '<leader>z', toggle_gutter)
