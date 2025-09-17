@@ -42,12 +42,14 @@ noremap ≥ ;
 noremap N Nzz
 noremap n nzz
 
+" Allow `gf` to create file under cursor
+noremap gf <cmd>e <cfile><cr>
 
 " EDITING
 
 """ Insert Mode Completion
 set complete-=t     " No tag completion
-set completeopt=menuone,noinsert,noselect
+set completeopt=menuone,noinsert,noselect,popup
 set shortmess+=c    " No ins-completion-menu messages
 
 """ Command Line Completion
@@ -69,7 +71,6 @@ set spelloptions=camel
 
 """ Buffer Navigation
 set mouse=a
-set mousescroll=hor:1,ver:1
 set scrolloff=5
 set sidescrolloff=5
 set virtualedit=block
@@ -148,13 +149,28 @@ let g:loaded_gzip = 1
 " let g:loaded_netrwPlugin = 1
 let g:loaded_remote_plugins = 1
 let g:loaded_spellfile_plugin = 1
-" let g:loaded_tarPlugin = 1
+let g:loaded_tarPlugin = 1
 " let g:loaded_tutor_mode_plugin = 1
-" let g:loaded_zipPlugin = 1
+let g:loaded_zipPlugin = 1
 let g:omni_sql_default_compl_type = 'syntax' " github.com/neovim/neovim/issues/14433
 
+" CONFIGURE 3RD PARTY PLUGINS
+"
+let g:disable_rainbow_hover = 1     " rainbow_csv
+let g:latex_to_unicode_tab = 0      " julia.vim
 
-" FILETYPE SPECIFIC OPTIONS
 
-autocmd FileType Lua setlocal keywordprg=:help
-autocmd FileType yaml setlocal lisp
+" NEOVIM SPECIFIC STUFF
+
+if has('nvim')
+
+colorscheme melange
+set mousescroll=hor:1,ver:1
+
+augroup FileTypeSpecificOptions
+    autocmd!
+    autocmd FileType lua setlocal keywordprg=:help
+    autocmd FileType yaml setlocal lisp
+augroup END
+
+end

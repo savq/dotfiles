@@ -1,6 +1,12 @@
 local autocmd = vim.api.nvim_create_autocmd
 local group = api.nvim_create_augroup('BufferDecor', {})
 
+--- Status line
+opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y #%{bufnr()} %8(%l,%c%) %8p%%'
+
+
+--- Mode indicators
+
 autocmd('TextYankPost', {
     callback = function() highlight.on_yank() end,
     group = group,
@@ -22,7 +28,7 @@ autocmd(
     { pattern = '[vV\x16]*:*', command = 'set conceallevel=1 nocursorcolumn nocursorline nolist', group = group }
 )
 
--- Track which windows have visible gutters
+--- Track which windows have visible gutters
 local window_gutters = {}
 
 local function toggle_gutter()
