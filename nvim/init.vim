@@ -181,6 +181,10 @@ augroup FileTypeSpecificOptions
 augroup END
 
 lua << EOF
+    require('mini.completion').setup()
+    vim.keymap.set('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
+    vim.keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
+
     require('mini.diff').setup()
     require('mini.pick').setup()
     require('mini.trailspace').setup()
