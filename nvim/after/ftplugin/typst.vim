@@ -16,6 +16,7 @@ iabbrev supseteq ⊇
 iabbrev tol ←
 iabbrev tor →
 
+iabbrev equiv ≡
 iabbrev geq ≥
 iabbrev leq ≤
 iabbrev neq ≠
@@ -25,3 +26,10 @@ iabbrev beta β
 iabbrev gama γ
 iabbrev delta δ
 iabbrev eps ε
+iabbrev sigma σ
+iabbrev pi π
+
+iabbrev NN ℕ
+iabbrev QQ ℚ
+iabbrev RR ℝ
+iabbrev ZZ ℤ

@@ -2,7 +2,7 @@ alias l='ls -1A'
 alias ll='ls -AFlh'
 alias mv='mv -nv'
 alias rm='trash -v'
-alias todo='rg -i "fixme|note|todo"'
+alias todo='rg -i "\b(fixme|note|todo)\b"'
 
 alias ga='git add --update --verbose'
 alias gb='git branch --verbose --verbose'
@@ -84,7 +84,7 @@ function _notify_long_cmd --on-event fish_postexec
     set -l laststatus $status
     set -l dt (math (date +'%s') - $_start_time)
 
-    if [ "$dt" -ge 10 ] &&
+    if [ "$dt" -ge 10 ]
         set cmd (string split ' ' $argv)[1]
         if not functions -q $cmd
             if [ "$laststatus" -eq 0 ]

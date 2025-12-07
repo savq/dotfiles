@@ -11,6 +11,7 @@ brew "ripgrep"
 brew "rustup"
 brew "tinymist"
 brew "tokei"
+brew "tree-sitter-cli"
 brew "typst"
 brew "wasm-tools"
 brew "wasmtime"
@@ -18,20 +19,18 @@ brew "zola"
 
 cask "anki"
 cask "firefox"
-cask "font-ancizar-sans"
-cask "font-ancizar-serif"
 cask "font-atkinson-hyperlegible"
 cask "font-ibm-plex"
 cask "font-juliamono"
 cask "ghostty"
-cask "iina"           # media player
-cask "itsycal"        # menu bar calendar. Y-MM-dd EEEEE HH:mm
+cask "iina"
+cask "itsycal"        # Y-MM-dd EEEEE HH:mm
 cask "libreoffice"
-cask "mochi"         # (proprietary) spaced repetition app
+cask "mochi"          # (p)
 cask "musescore"
-cask "netnewswire"    # RSS reader
+cask "netnewswire"
 cask "protonvpn"
-cask "rectangle"      # window manager
-cask "spotify"        # (proprietary)
-cask "transmission"   # BT client
+cask "rectangle"
+cask "spotify"        # (p)
+cask "transmission"
 cask "zotero"
