@@ -1,5 +1,3 @@
-tap "homebrew/bundle"
-
 brew "fd"
 brew "fish"
 brew "jq"
