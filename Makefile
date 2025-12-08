@@ -25,10 +25,15 @@ brew-check:
 
 fish:
 	mkdir -pv $(FISH_COMPL)
-	fish -c 'set fish_greeting' \
+	fish -c 'set -U fish_greeting' \
 		-c 'set fish_color_command --bold' \
 		-c 'set fish_color_param normal' \
-		-c 'set fish_color_quote brblue'
+		-c 'set fish_color_quote brblue'\
+		-c 'set __fish_git_prompt_showcolorhints 1'\
+		-c 'set __fish_git_prompt_showdirtystate 1'\
+		-c 'set __fish_git_prompt_color grey'\
+		-c 'set __fish_git_prompt_color_branch bryellow'\
+		-c 'set __fish_git_prompt_color_merging yellow'
 
 PAQ_DIR = "$(HOME)/.local/share/nvim/site/pack/paqs/start/paq-nvim"
 
