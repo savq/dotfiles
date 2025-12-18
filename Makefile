@@ -70,10 +70,10 @@ MELANGE_URL = https://raw.githubusercontent.com/savq/melange-nvim/refs/heads/mas
 ghostty: ghostty/themes/melange_dark ghostty/themes/melange_light
 
 ghostty/themes/melange_dark:
-	curl --create-dirs "$(MELANGE_URL)/ghostty/melange_dark" > $@
+	curl --create-dirs  --output $@ "$(MELANGE_URL)/ghostty/melange_dark"
 
 ghostty/themes/melange_light:
-	curl --create-dirs "$(MELANGE_URL)/ghostty/melange_light" > $@
+	curl --create-dirs --output $@ "$(MELANGE_URL)/ghostty/melange_light"
 
 
 tree-sitter: $(FISH_COMPL)/tree-sitter.fish
