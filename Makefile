@@ -11,7 +11,7 @@ install:\
 	tree-sitter\
 	macos
 
-.PHONY: fish nvim brew-check
+.PHONY: fish nvim brew-check brew-graph
 
 brew: Brewfile.lock.json
 Brewfile.lock.json: Brewfile .brew_install.sh
@@ -23,6 +23,9 @@ Brewfile.lock.json: Brewfile .brew_install.sh
 
 brew-check:
 	brew bundle check --verbose
+
+brew-graph:
+	brew deps --graph --installed
 
 
 fish:

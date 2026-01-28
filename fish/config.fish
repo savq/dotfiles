@@ -38,7 +38,6 @@ alias rst='cargo test'
 alias typc='typst compile --'
 alias typw='typst watch --open --'
 
-abbr -a brew-tree 'brew deps --graph --installed'
 abbr -a fd-empty 'find "." -type f -empty'
 abbr -a rm-dsstore 'find "." -name ".DS_Store" -type f -print -delete'
 
