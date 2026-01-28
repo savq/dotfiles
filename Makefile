@@ -4,11 +4,12 @@ FISH_COMPL ?= $(CONFIG_HOME)/fish/completions
 install:\
 	brew\
 	fish\
+	ghostty\
 	julia\
 	nvim\
 	rust\
 	tree-sitter\
-	ghostty
+	macos
 
 .PHONY: fish nvim brew-check
 
@@ -18,10 +19,11 @@ Brewfile.lock.json: Brewfile .brew_install.sh
 
 .brew_install.sh:
 	curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh' > $@
-	type brew || /bin/bash '.brew_install.sh'
+	type brew || /bin/bash '.brew_install.sh' && eval "$$(/opt/homebrew/bin/brew shellenv)"
 
 brew-check:
 	brew bundle check --verbose
+
 
 fish:
 	mkdir -pv $(FISH_COMPL)
@@ -34,6 +36,18 @@ fish:
 		-c 'set __fish_git_prompt_color grey'\
 		-c 'set __fish_git_prompt_color_branch bryellow'\
 		-c 'set __fish_git_prompt_color_merging yellow'
+
+
+MELANGE_URL = https://raw.githubusercontent.com/savq/melange-nvim/refs/heads/master/term
+
+ghostty: ghostty/themes/melange_dark ghostty/themes/melange_light
+
+ghostty/themes/melange_dark:
+	curl --create-dirs  --output $@ "$(MELANGE_URL)/ghostty/melange_dark"
+
+ghostty/themes/melange_light:
+	curl --create-dirs --output $@ "$(MELANGE_URL)/ghostty/melange_light"
+
 
 PAQ_DIR = "$(HOME)/.local/share/nvim/site/pack/paqs/start/paq-nvim"
 
@@ -50,6 +64,7 @@ $(HOME)/.editorconfig:
 
 julia: $(FISH_COMPL)/juliaup.fish
 	juliaup add release
+	juliaup update
 
 $(FISH_COMPL)/juliaup.fish:
 	juliaup completions fish > $@
@@ -65,17 +80,10 @@ $(FISH_COMPL)/rustup.fish:
 	rustup completions fish rustup > $@
 
 
-MELANGE_URL = https://raw.githubusercontent.com/savq/melange-nvim/refs/heads/master/term
-
-ghostty: ghostty/themes/melange_dark ghostty/themes/melange_light
-
-ghostty/themes/melange_dark:
-	curl --create-dirs  --output $@ "$(MELANGE_URL)/ghostty/melange_dark"
-
-ghostty/themes/melange_light:
-	curl --create-dirs --output $@ "$(MELANGE_URL)/ghostty/melange_light"
-
-
 tree-sitter: $(FISH_COMPL)/tree-sitter.fish
 $(FISH_COMPL)/tree-sitter.fish:
 	tree-sitter complete --shell fish > $@
+
+
+macos:
+	./macos.sh
