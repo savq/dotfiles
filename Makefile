@@ -29,7 +29,6 @@ brew-graph:
 
 
 fish:
-	mkdir -pv $(FISH_COMPL)
 	fish -c 'set -U fish_greeting' \
 		-c 'set fish_color_command --bold' \
 		-c 'set fish_color_param normal' \
@@ -39,6 +38,9 @@ fish:
 		-c 'set __fish_git_prompt_color grey'\
 		-c 'set __fish_git_prompt_color_branch bryellow'\
 		-c 'set __fish_git_prompt_color_merging yellow'
+
+$(FISH_COMPL):
+	mkdir -pv $@
 
 
 MELANGE_URL = https://raw.githubusercontent.com/savq/melange-nvim/refs/heads/master/term
@@ -69,7 +71,7 @@ julia: $(FISH_COMPL)/juliaup.fish
 	juliaup add release
 	juliaup update
 
-$(FISH_COMPL)/juliaup.fish:
+$(FISH_COMPL)/juliaup.fish: $(FISH_COMPL)
 	juliaup completions fish > $@
 
 
@@ -79,12 +81,12 @@ rust: rustup-init $(FISH_COMPL)/rustup.fish
 rustup-init:
 	rustup-init -y
 
-$(FISH_COMPL)/rustup.fish:
+$(FISH_COMPL)/rustup.fish: $(FISH_COMPL)
 	rustup completions fish rustup > $@
 
 
 tree-sitter: $(FISH_COMPL)/tree-sitter.fish
-$(FISH_COMPL)/tree-sitter.fish:
+$(FISH_COMPL)/tree-sitter.fish: $(FISH_COMPL)
 	tree-sitter complete --shell fish > $@
 
 
