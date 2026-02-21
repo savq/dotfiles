@@ -5,7 +5,6 @@ install:\
 	brew\
 	fish\
 	ghostty\
-	julia\
 	nvim\
 	rust\
 	tree-sitter\
@@ -65,14 +64,6 @@ $(HOME)/.vimrc:
 
 $(HOME)/.editorconfig:
 	ln -fhs $(CONFIG_HOME)/.editorconfig $@
-
-
-julia: $(FISH_COMPL)/juliaup.fish
-	juliaup add release
-	juliaup update
-
-$(FISH_COMPL)/juliaup.fish: $(FISH_COMPL)
-	juliaup completions fish > $@
 
 
 rust: rustup-init $(FISH_COMPL)/rustup.fish
