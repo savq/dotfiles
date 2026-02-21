@@ -1,6 +1,5 @@
 brew "fd"
 brew "fish"
-brew "jq"
 brew "mise"
 brew "neovim"
 brew "podman"
