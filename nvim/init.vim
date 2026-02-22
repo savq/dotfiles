@@ -63,7 +63,7 @@ set smartindent
 
 """ Spelling
 " set spell
-" set spelllang=en
+set spelllang=
 set spelloptions=camel
 
 
@@ -170,7 +170,12 @@ let g:wiki_link_creation = {
 
 if has('nvim')
 
-colorscheme melange
+"if system('defaults read com.apple.universalaccess grayscale') =~ '0'
+    colorscheme melange
+"else
+"    colorscheme lunaperche
+"endif
+
 set mousescroll=hor:1,ver:1
 
 augroup FileTypeSpecificOptions
