@@ -24,11 +24,11 @@ alias pluto='jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
 
 alias js='deno --quiet'
 
-alias py='python3 -q'
-alias pip='python3 -m pip'
-alias venv='python3 -m venv'
-alias ipynb='python3 -m jupyter notebook'
-alias serve='python3 -m http.server'
+alias py='uv run python3'
+alias pip='uv pip'
+alias venv='uv venv'
+alias ipynb='uv run --with jupyter jupyter notebook'
+alias serve='uv run -m http.server'
 
 alias rsc='cargo check'
 alias rsd='cargo doc --open'
