@@ -1,4 +1,4 @@
-cursor-invert-fg-bg = true
+cursor-color = cell-foreground
 macos-option-as-alt = left
 
 adjust-cell-height = 20%
@@ -14,3 +14,5 @@ font-size = 12
 minimum-contrast = 1
 theme = dark:melange_dark,light:melange_light
 unfocused-split-opacity = 1
+
+quit-after-last-window-closed = true
