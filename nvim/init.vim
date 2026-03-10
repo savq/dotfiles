@@ -176,6 +176,7 @@ if has('nvim')
 "    colorscheme lunaperche
 "endif
 
+set diffopt+=algorithm:histogram,indent-heuristic
 set mousescroll=hor:1,ver:1
 
 augroup FileTypeSpecificOptions

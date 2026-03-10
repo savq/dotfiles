@@ -20,17 +20,14 @@
     template = "~/.config/git/template"
 
 [diff]
-    tool = nvimdiff2
+    algorithm = histogram
+    indentHeuristic = true
+
 [difftool]
     prompt = false
-[difftool "nvimdiff2"]
-    cmd = nvim -d $LOCAL $REMOTE
 
 [merge]
-    tool = nvimdiff4
-[mergetool "nvimdiff4"]
-    cmd = nvim -d $LOCAL $BASE $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+    tool = nvimdiff
 
 [pull]
     ff = only
-
