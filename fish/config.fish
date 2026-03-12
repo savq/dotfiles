@@ -70,7 +70,7 @@ abbr --add dotdot --regex '^\.\.+$' --function multicd
 
 function notify
     printf '\e]9;%s\e\\' $argv # OSC 9
-    say --rate=250 $argv
+    say --rate=250 $argv &
 end
 
 ## notify after long commands
