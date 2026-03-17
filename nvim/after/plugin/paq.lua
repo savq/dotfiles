@@ -1,8 +1,8 @@
 local PKGS = {
     -- { 'savq/paq-nvim', pin = true },
     -- { 'savq/melange-nvim', pin = true },
-    { 'nvim-treesitter/nvim-treesitter', branch = 'main', build = ':TSUpdate' },
-    { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
+    { 'nvim-treesitter/nvim-treesitter', build = ':TSUpdate' },
+    { 'nvim-treesitter/nvim-treesitter-textobjects' },
     'neovim/nvim-lspconfig',
     'rust-lang/rust.vim',
     'lervag/wiki.vim',
@@ -19,7 +19,7 @@ local PKGS = {
     { 'mechatroner/rainbow_csv', opt = true },
 }
 
-function _paq_bootstrap ()
+function _paq_bootstrap()
     -- NOTE: Makefile handles paq installation
     vim.cmd 'packadd paq-nvim'
     vim.cmd 'autocmd User PaqDoneInstall quit'
