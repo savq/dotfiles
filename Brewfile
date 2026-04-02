@@ -13,20 +13,19 @@ brew "wasm-tools"
 brew "wasmtime"
 brew "zola"
 
-cask "anki"
 cask "firefox"
-cask "font-atkinson-hyperlegible"
+cask "font-atkinson-hyperlegible-next"
+cask "font-atkinson-hyperlegible-mono"
 cask "font-ibm-plex"
 cask "font-juliamono"
 cask "ghostty"
 cask "iina"
-cask "itsycal"        # Y-MM-dd EEEEE HH:mm
+cask "itsycal"
 cask "libreoffice"
 cask "mochi"          # (p)
 cask "musescore"
 cask "netnewswire"
 cask "protonvpn"
 cask "rectangle"
-cask "spotify"        # (p)
 cask "transmission"
 cask "zotero"
