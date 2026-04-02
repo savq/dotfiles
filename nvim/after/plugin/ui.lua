@@ -4,13 +4,7 @@ local group = vim.api.nvim_create_augroup('BufferDecor', {})
 --- Status line
 vim.opt.statusline = '%2{mode()} | %f %m %r %= %{&spelllang} %y #%{bufnr()} %8(%l,%c%) %8p%%'
 
-
 --- Mode indicators
-
-autocmd('TextYankPost', {
-    callback = function() vim.highlight.on_yank() end,
-    group = group,
-})
 
 -- Insert
 autocmd('InsertEnter', { command = 'set conceallevel=0 nocursorcolumn cursorline list', group = group })
@@ -27,6 +21,16 @@ autocmd(
     'ModeChanged',
     { pattern = '[vV\x16]*:*', command = 'set conceallevel=1 nocursorcolumn nocursorline nolist', group = group }
 )
+
+autocmd('TextYankPost', { callback = function(_) vim.highlight.on_yank() end, group = group })
+
+--- Set leadmultispace dynamically
+autocmd({ 'BufEnter', 'BufWinEnter', 'FileType' }, {
+    callback = function(_)
+        vim.opt_local.listchars:append { leadmultispace = '┆' .. string.rep(' ', vim.fn.shiftwidth() - 1) }
+    end,
+    group = group,
+})
 
 --- Track which windows have visible gutters
 local window_gutters = {}

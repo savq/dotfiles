@@ -93,8 +93,8 @@ set colorcolumn=100
 
 """ Conceal & Whitespace
 set conceallevel=1
-set listchars=eol:~,extends:»,precedes:«,multispace:·,tab:├─,trail:•,nbsp:_
-set listchars+=leadmultispace:▹\ \ \    " TODO: set depending on indentation level
+set listchars=eol:~,extends:»,precedes:«,multispace:·,tab:├─,trail:•,nbsp:⎵
+" NOTE: leadmultispace is set dynamically in after/plugin/ui.lua
 
 """ Folds
 set foldlevel=9
