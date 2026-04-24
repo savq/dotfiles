@@ -93,13 +93,13 @@ set colorcolumn=100
 
 """ Conceal & Whitespace
 set conceallevel=1
-set listchars=eol:~,extends:»,precedes:«,multispace:·,tab:├─,trail:•,nbsp:⎵
+set listchars=eol:~,extends:»,precedes:«,multispace:·,tab:├─,trail:•,nbsp:⎵,
 " NOTE: leadmultispace is set dynamically in after/plugin/ui.lua
 
 """ Folds
 set foldlevel=9
-" set foldmethod=indent         " If not using tree-sitter
-set fillchars=fold:\ ,eob:\ ,   " Hide fillchars
+" set foldmethod=indent                 " If not using tree-sitter
+set fillchars=diff:╱,fold:\ ,eob:\ ,    " Better char for DeleteText. Hide others
 set foldtext=getline(v:foldstart).'\ …\ '.trim(getline(v:foldend))
 
 """ Status Column (Gutter)
