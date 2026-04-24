@@ -38,3 +38,5 @@ vim.keymap.set('n', '<leader>py', open_repl 'python')
 vim.keymap.set('n', '<leader>sh', open_repl())
 vim.keymap.set('n', '<leader>t', open_repl(vim.opt.filetype:get()))
 vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]])
+
+vim.api.nvim_create_autocmd('TermOpen', { pattern = '*', command = 'setlocal nospell' })

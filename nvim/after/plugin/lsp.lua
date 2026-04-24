@@ -1,4 +1,5 @@
 local lsp_buf = vim.lsp.buf
+local autocmd = vim.api.nvim_create_autocmd
 
 vim.lsp.enable {
     'clangd',
@@ -12,7 +13,7 @@ vim.lsp.enable {
 }
 
 local lsp_augroup = vim.api.nvim_create_augroup('Lsp', {})
-vim.api.nvim_create_autocmd('LspAttach', {
+autocmd('LspAttach', {
     group = lsp_augroup,
     callback = function(args)
         -- stylua: ignore
@@ -40,22 +41,22 @@ vim.api.nvim_create_autocmd('LspAttach', {
             not client:supports_method 'textDocument/willSaveWaitUntil'
             and client:supports_method 'textDocument/formatting'
         then
-            vim.api.nvim_create_autocmd('BufWritePre', {
+            autocmd('BufWritePre', {
                 buffer = args.buf,
                 callback = function(_) lsp_buf.format() end,
                 group = lsp_augroup,
             })
         end
 
-        vim.api.nvim_create_autocmd('CursorHold', {
+        autocmd('CursorHold', {
             buffer = args.buf,
             callback = function(_)
                 lsp_buf.document_highlight()
-                vim.diagnostic.open_float(nil, {focusable = false})
+                vim.diagnostic.open_float(nil, { focusable = false })
             end,
             group = lsp_augroup,
         })
-        vim.api.nvim_create_autocmd('CursorMoved', {
+        autocmd('CursorMoved', {
             buffer = args.buf,
             callback = function(_) lsp_buf.clear_references() end,
             group = lsp_augroup,
