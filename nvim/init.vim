@@ -168,31 +168,32 @@ let g:wiki_link_creation = {
 
 " NEOVIM SPECIFIC STUFF
 
-if has('nvim')
+if exists('g:vscode')
+    set noloadplugins
+    finish
+elseif has('nvim')
+    "if system('defaults read com.apple.universalaccess grayscale') =~ '0'
+        colorscheme melange
+    "else
+    "    colorscheme lunaperche
+    "endif
 
-"if system('defaults read com.apple.universalaccess grayscale') =~ '0'
-    colorscheme melange
-"else
-"    colorscheme lunaperche
-"endif
+    set diffopt+=algorithm:histogram,indent-heuristic
+    set mousescroll=hor:1,ver:1
 
-set diffopt+=algorithm:histogram,indent-heuristic
-set mousescroll=hor:1,ver:1
+    augroup FileTypeSpecificOptions
+        autocmd!
+        autocmd FileType lua setlocal keywordprg=:help
+        autocmd FileType yaml setlocal lisp
+    augroup END
 
-augroup FileTypeSpecificOptions
-    autocmd!
-    autocmd FileType lua setlocal keywordprg=:help
-    autocmd FileType yaml setlocal lisp
-augroup END
+    lua << trim EOF
+        require('mini.completion').setup()
+        vim.keymap.set('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
+        vim.keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 
-lua << EOF
-    require('mini.completion').setup()
-    vim.keymap.set('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
-    vim.keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
-
-    require('mini.diff').setup()
-    require('mini.pick').setup()
-    require('mini.trailspace').setup()
-EOF
-
+        require('mini.diff').setup()
+        require('mini.pick').setup()
+        require('mini.trailspace').setup()
+    EOF
 end
