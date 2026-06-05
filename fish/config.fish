@@ -19,17 +19,6 @@ alias gz='git switch'
 alias _gclone='echo git clone --depth=1'
 abbr -a auto_clone --position command --regex '.+\.git' --function _gclone # suffix alias
 
-alias jl='julia --project --startup-file=no --quiet'
-alias pluto='jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
-
-alias js='deno --quiet'
-
-alias py='uv run python3'
-alias pip='uv pip'
-alias venv='uv venv'
-alias ipynb='uv run --with jupyter jupyter notebook'
-alias serve='uv run -m http.server'
-
 alias rsc='cargo check'
 alias rsd='cargo doc --open'
 alias rsr='cargo run'

@@ -2,5 +2,17 @@
 idiomatic_version_file_enable_tools = ["python"]
 
 [tools]
+deno = "latest"
 julia = "1.12"
 uv = "latest"
+
+[shell_alias]
+js = 'deno'
+
+jl = 'julia --project --startup-file=no --quiet'
+pluto = 'jl -e "import Pluto; Pluto.run(;auto_reload_from_file=true)"'
+
+py = 'uv run python3'
+pip = 'uv pip'
+ipynb = 'uv run --with jupyter jupyter notebook'
+serve = 'uv run -m http.server'
