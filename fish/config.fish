@@ -48,6 +48,10 @@ else
 end
 
 
+function rgw -d 'ripgrep word'
+    rg -i "\b($argv)\b"
+end
+
 function mkd -d 'mkdir and cd'
     mkdir -p $argv; and cd $argv
 end
