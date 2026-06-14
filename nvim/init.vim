@@ -27,12 +27,9 @@ noremap <up> <C-y>
 noremap <down> <C-e>
 
 " Buffer and window switching
+noremap <leader>w <c-w>
 noremap <s-left>  <cmd>bprev<cr>
 noremap <s-right> <cmd>bnext<cr>
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
 
 " Repeat search
 noremap <a-,> ,
@@ -43,7 +40,7 @@ noremap N Nzz
 noremap n nzz
 
 " Allow `gf` to create file under cursor
-noremap gf <cmd>e <cfile><cr>
+noremap gf <cmd>edit <cfile><cr>
 
 " EDITING
 
