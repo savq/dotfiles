@@ -86,7 +86,7 @@ set smartcase
 
 syntax enable
 set shortmess+=I    " No intro message
-set colorcolumn=100
+set colorcolumn=+1
 
 """ Conceal & Whitespace
 set conceallevel=1

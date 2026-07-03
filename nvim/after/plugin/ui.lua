@@ -40,7 +40,7 @@ local function toggle_gutter()
     local is_enabled = window_gutters[win] == true
     vim.opt.number = is_enabled
     vim.opt.foldcolumn = is_enabled and '1' or '0'
-    vim.opt.colorcolumn = is_enabled and '100' or '' -- not in the gutter...
+    vim.opt.colorcolumn = is_enabled and '+1' or '' -- Not part of gutter
     window_gutters[win] = not is_enabled
 end
 
