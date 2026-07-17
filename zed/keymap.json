@@ -1,0 +1,34 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      ";": "command_palette::Toggle",
+      "shift-h": "vim::FirstNonWhitespace",
+      "shift-l": "vim::EndOfLine",
+      "space z": [
+        "action::Sequence",
+        ["editor::ToggleIndentGuides", "editor::ToggleLineNumbers"],
+      ],
+    },
+  },
+  {
+    "context": "ProjectPanel",
+    "bindings": {
+      // cmd-shift-.
+      "cmd->": [
+        "action::Sequence",
+        [
+          "project_panel::ToggleHideHidden",
+          "project_panel::ToggleHideGitIgnore",
+        ],
+      ],
+    },
+  },
+]

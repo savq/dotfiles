@@ -1,0 +1,49 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  // Appearance
+  "buffer_font_family": "JuliaMono",
+  "buffer_font_features": {
+    "calt": false,
+  },
+  "buffer_font_size": 12.0,
+
+  // Keymap
+  "vim_mode": true,
+
+  // Window & Layout
+  "preview_tabs": {
+    "enabled": false
+  },
+  "title_bar": {
+    "show_sign_in": false,
+  },
+
+  // Panels
+  "collaboration_panel": {
+    "button": false,
+  },
+  "project_panel": {
+    "bold_folder_labels": true,
+    "file_icons": false,
+    "hide_gitignore": true,
+    "hide_hidden": true,
+    "hide_root": true,
+  },
+
+  // Version Control
+  "git": {
+    "inline_blame": {
+      "delay_ms": 2000
+    }
+  },
+
+  // AI
+  "show_edit_predictions": false,
+}
