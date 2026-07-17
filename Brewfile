@@ -1,6 +1,6 @@
 brew "fd"
 brew "fish"
-brew "languagetool"
+brew "languagetool" # brew services start languagetool
 brew "mise"
 brew "neovim"
 brew "pandoc"
