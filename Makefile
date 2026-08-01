@@ -27,16 +27,19 @@ brew-graph:
 	brew deps --graph --installed
 
 
+.PHONY: fish
 fish:
-	fish -c 'set -U fish_greeting' \
-		-c 'set fish_color_command --bold' \
-		-c 'set fish_color_param normal' \
-		-c 'set fish_color_quote brblue'\
-		-c 'set __fish_git_prompt_showcolorhints 1'\
-		-c 'set __fish_git_prompt_showdirtystate 1'\
-		-c 'set __fish_git_prompt_color grey'\
-		-c 'set __fish_git_prompt_color_branch bryellow'\
-		-c 'set __fish_git_prompt_color_merging yellow'
+	fish\
+		-c 'set -U __fish_git_prompt_color grey'\
+		-c 'set -U __fish_git_prompt_color_branch bryellow'\
+		-c 'set -U __fish_git_prompt_color_merging yellow'\
+		-c 'set -U __fish_git_prompt_showcolorhints 1'\
+		-c 'set -U __fish_git_prompt_showdirtystate 1'\
+		-c 'set -U fish_color_command --bold' \
+		-c 'set -U fish_color_comment grey' \
+		-c 'set -U fish_color_param normal' \
+		-c 'set -U fish_color_quote brblue'\
+		-c 'set -U fish_greeting'
 
 $(FISH_COMPL):
 	mkdir -pv $@
