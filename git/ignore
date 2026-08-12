@@ -7,6 +7,9 @@
 ## C
 *.o
 
+## JavaScript
+node_modules/
+
 ## Julia
 Manifest.toml
 

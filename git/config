@@ -8,13 +8,13 @@
 
 [alias]
     amend = "commit --amend --verbose"
-    co = "restore" # TODO: Remove alias
     new = "switch --create"
+    open = "!open $(git config remote.origin.url | sed 's/:/\\//;s/git@/https:\\/\\//;s/\\.git//')"
     patch = "add --patch"
+    showdiff = "!f() { git difftool ${1}~ ${1}; }; f"
     undo = "reset --soft HEAD~1" # Undo last commit without losing changes
     unstage = "reset HEAD --" # Remove file changes from index
     wt = "worktree"
-    open = "!open $(git config remote.origin.url | sed 's/:/\\//;s/git@/https:\\/\\//;s/\\.git//')"
 
 [commit]
     template = "~/.config/git/template"
