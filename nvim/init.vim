@@ -153,7 +153,6 @@ let g:omni_sql_default_compl_type = 'syntax' " github.com/neovim/neovim/issues/1
 
 " CONFIGURE 3RD PARTY PLUGINS
 
-let g:disable_rainbow_hover = 1         " rainbow_csv
 let g:wiki_root = '~/Documents/wiki'    " wiki.vim
 let g:wiki_link_creation = {
     \ 'md': {

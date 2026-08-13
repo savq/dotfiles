@@ -16,7 +16,6 @@ local PKGS = {
     { 'mattn/emmet-vim', opt = true },
     { 'norcalli/nvim-colorizer.lua', as = 'colorizer', opt = true },
     { 'junegunn/vim-easy-align', as = 'easy-align', opt = true },
-    { 'mechatroner/rainbow_csv', opt = true },
 }
 
 function _paq_bootstrap()

@@ -1,9 +1,14 @@
-local fts = { 'c', 'html', 'julia', 'lua', 'python', 'query', 'rust', 'typescript', 'markdown', 'markdown_inline' }
+local filetypes = {
+    'julia',
+    'python',
+    'rust',
+    'typescript',
+}
 
--- require'nvim-treesitter'.install(fts)
+-- require('nvim-treesitter').install(filetypes)
 
 vim.api.nvim_create_autocmd('FileType', {
-    pattern = fts,
+    pattern = filetypes,
     callback = function()
         vim.treesitter.start()
         vim.wo.foldmethod = 'expr'

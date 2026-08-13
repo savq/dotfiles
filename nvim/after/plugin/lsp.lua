@@ -9,7 +9,7 @@ vim.lsp.enable {
     -- 'ocamllsp',
     -- 'svelte',
     'tinymist',
-    'ts_ls', -- npm add --save-dev typescript-language-server typescript;
+    'tsc', -- pnpm install --save-dev typescript@7 typescript-language-server
 }
 
 local lsp_augroup = vim.api.nvim_create_augroup('Lsp', {})
@@ -26,6 +26,7 @@ autocmd('LspAttach', {
             LspImpl     = lsp_buf.implementation,
             LspRefs     = lsp_buf.references,
             LspRename   = lsp_buf.rename,
+            LspSig      = lsp_buf.signature_help,
             LspSymbols  = lsp_buf.document_symbol,
             LspTypeDef  = lsp_buf.type_definition,
         } do
@@ -66,10 +67,6 @@ autocmd('LspAttach', {
 
 -- SERVER SPECIFIC CONFIG
 
-local config_typst = vim.lsp.config['tinymist']
-config_typst.root_markers = { 'main.typ' }
-vim.lsp.config('tinymist', config_typst)
-
-local config_tsls = vim.lsp.config['ts_ls']
-config_tsls.cmd = { 'npx', 'typescript-language-server', '--stdio' }
-vim.lsp.config('ts_ls', config_tsls)
+vim.lsp.config('tinymist', {
+    root_markers = { 'main.typ' },
+})
