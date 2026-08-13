@@ -10,7 +10,6 @@ install:\
 	tree-sitter\
 	macos
 
-.PHONY: fish nvim brew-check brew-graph
 
 brew: Brewfile.lock.json
 Brewfile.lock.json: Brewfile .brew_install.sh
@@ -20,6 +19,7 @@ Brewfile.lock.json: Brewfile .brew_install.sh
 	curl -fsSL 'https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh' > $@
 	type brew || /bin/bash '.brew_install.sh' && eval "$$(/opt/homebrew/bin/brew shellenv)"
 
+.PHONY: brew-check brew-graph
 brew-check:
 	brew bundle check --verbose
 
@@ -58,6 +58,7 @@ ghostty/themes/melange_light:
 
 PAQ_DIR = "$(HOME)/.local/share/nvim/site/pack/paqs/start/paq-nvim"
 
+.PHONY: nvim
 nvim: $(HOME)/.editorconfig $(HOME)/.vimrc nvim/after/plugin/paq.lua
 	[ -d $(PAQ_DIR) ] || git clone --depth=1 'https://github.com/savq/paq-nvim.git' $(PAQ_DIR)
 	nvim --headless -c 'lua _paq_bootstrap()'
@@ -69,11 +70,9 @@ $(HOME)/.editorconfig:
 	ln -fhs $(CONFIG_HOME)/.editorconfig $@
 
 
-rust: rustup-init $(FISH_COMPL)/rustup.fish
+rust: brew $(FISH_COMPL)/rustup.fish
 	rustup update stable
-
-rustup-init:
-	rustup-init -y
+	rustup component add rust-analyzer
 
 $(FISH_COMPL)/rustup.fish: $(FISH_COMPL)
 	rustup completions fish rustup > $@
