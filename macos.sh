@@ -4,10 +4,11 @@
 
 # defaults delete com.apple.dock
 defaults write com.apple.dock autohide -bool true
+defaults write com.apple.dock launchanim -bool false
 defaults write com.apple.dock mineffect -string scale
 defaults write com.apple.dock minimize-to-application -bool true
 defaults write com.apple.dock show-recents -bool false
-defaults write com.apple.dock launchanim -bool false
+defaults write com.apple.dock size-immutable -bool yes
 killall Dock
 
 
@@ -20,6 +21,11 @@ defaults write com.apple.finder NewWindowTarget -string PfHm
 defaults write com.apple.finder ShowPathbar -bool true
 defaults write com.apple.finder _FXSortFoldersFirst  -bool true
 killall Finder
+
+
+## Trackpad
+
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
 
 
 ## Itsycal
@@ -39,6 +45,11 @@ then
     defaults write com.apple.menuextra.clock IsAnalog -bool true
 fi
 
-## Trackpad
 
-defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+## Rectangle
+
+if [ -f "$HOME/Library/Preferences/com.knollsoft.Rectangle.plist" ]
+then
+    defaults write com.knollsoft.Rectangle alternateDefaultShortcuts -bool true
+    defaults write com.knollsoft.Rectangle launchOnLogin -bool true
+fi
